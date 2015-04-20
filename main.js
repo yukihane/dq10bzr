@@ -1,4 +1,209 @@
+var OAUTH_URL = "https://secure.square-enix.com/oauth/oa/";
+
+function createCharaList(characters){
+  var res = "<table>";
+  for(var i = 0; i < characters.length; i++) {
+    var chara = characters[i];
+    var name = chara.characterName + " (" + chara.smileUniqueNo +")";
+    var webPcNo = chara.webPcNo;
+    
+    var r = "<tr><td>" + name + "</td><td>" + webPcNo + "</td></tr>";
+    res = res + r;
+  }
+  res = res + "</table>";
+  return res;
+}
+
+function loginCompleted(cisSessid, c) {
+  var action = "https://happy.dqx.jp/capi/login/securelogin/";
+/*
+  var action = form.getAttribute("action");
+  console.log(action);
+
+  var inputCisSessid = form.querySelector("input[name='cis_sessid']");
+  var cisSessid = inputCisSessid.value;
+  var inputC = form.querySelector("input[name='_c']");
+  var c = inputC.value;
+*/
+
+  console.log("cis_sessid: " + cisSessid + ", _c: " + c);
+
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState == 4) {
+      console.log("status: " + xhr.status);
+//      console.log(xhr.response);
+      
+      var json = xhr.response;
+      var characters = json["characterList"];
+      var charaList = createCharaList(characters);
+      document.querySelector("#charaList").innerHTML = charaList;
+/*
+      var xml = xhr.response;
+      var form = xml.querySelector("form");
+      console.log(form);
+      var inputCisSessid = form.querySelector("input[name='cis_sessid']");
+      var inputC = form.querySelector("input[name='_c']");
+      console.log("inputCisSessid: " + inputCisSessid + ", inputC: " + inputC);
+
+      if(inputCisSessid && inputC){
+        loginCompleted(form);
+      }
+*/
+    }
+  };
+  
+  xhr.open("POST", action, true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.responseType = "json";
+  xhr.send("cis_sessid=" + cisSessid + "&_c=" + c);
+}
+
+function requireOtppw(form) {
+  var sendIdButton = document.getElementById("sendIdButton");
+  sendIdButton.disabled = true;
+
+  var sendOtpButton = document.getElementById("sendOtpButton");
+  sendOtpButton.disabled = false;
+  
+  sendOtpButton.addEventListener("click", function(){
+    var action = form.getAttribute("action");
+    console.log(action);
+
+    var otppw = encodeURIComponent(document.getElementById("otppw").value);
+    console.log("otppw: " + otppw);
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState == 4) {
+        console.log("status: " + xhr.status);
+        console.log(xhr.response);
+
+        var xml = xhr.response;
+        var form = xml.querySelector("form");
+        console.log(form);
+        var inputCisSessid = form.querySelector("input[name='cis_sessid']");
+        var inputC = form.querySelector("input[name='_c']");
+        console.log("inputCisSessid: " + inputCisSessid + ", inputC: " + inputC);
+
+        if(inputCisSessid && inputC){
+          var cisSessid = inputCisSessid.value;
+          var c = inputC.value;
+
+          chrome.storage.sync.set({"login.cis_sessid": cisSessid, "login._c": c}, function(){
+            console.log("data stored");
+          });
+          
+          loginCompleted(cisSessid, c);
+        }
+      }
+    };
+    
+    xhr.open("POST", OAUTH_URL + action, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.responseType = "document";
+    xhr.send("otppw=" + otppw);
+  });
+}
+
+function requireLogin(form) {
+  var sendIdButton = document.getElementById("sendIdButton");
+  sendIdButton.disabled = false;
+
+  var sendOtpButton = document.getElementById("sendOtpButton");
+  sendOtpButton.disabled = true;
+
+  sendIdButton.addEventListener("click", function(){
+    var action = form.getAttribute("action");
+    console.log(action);
+    var sqexid = encodeURIComponent(document.getElementById("sqexid").value);
+    var password = encodeURIComponent(document.getElementById("password").value);
+    console.log("sqexid: " + sqexid + ", password: " + password);
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState == 4) {
+        console.log("status: " + xhr.status);
+        console.log(xhr.response);
+
+        var xml = xhr.response;
+        var form = xml.querySelector("form");
+        console.log(form);
+        var inputOtppw = form.querySelector("#otppw");
+        console.log(inputOtppw);
+
+        if(inputOtppw){
+          requireOtppw(form);
+        }
+
+      }
+    };
+    
+    xhr.open("POST", OAUTH_URL + action, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.responseType = "document";
+    xhr.send("sqexid=" + sqexid + "&password=" + password + "&login.x=231&login.y=20");
+  });
+}
+
+function prepareProceed() {
+
+  var proceedButton = document.getElementById("proceedButton");
+  proceedButton.addEventListener("click", function(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState == 4) {
+        console.log("status: " + xhr.status);
+        console.log(xhr.response);
+        
+        var xml = xhr.response;
+        var form = xml.querySelector("form");
+        console.log(form);
+        var inputSqexid = form.querySelector("#sqexid");
+        console.log(inputSqexid);
+        console.log(inputSqexid === null);
+        var inputPassword = form.querySelector("#password");
+        console.log(inputPassword);
+        console.log(inputPassword === null);
+        
+        if(inputSqexid && inputPassword){
+          requireLogin(form);
+        } else {
+          var inputOtppw = form.querySelector("#otppw");
+          console.log(inputOtppw);
+  
+          if(inputOtppw){
+            requireOtppw(form);
+          }
+        }
+      }
+    };
+    
+    xhr.open("GET", OAUTH_URL + "oauthauth?client_id=happy&redirect_uri=https%3A%2F%2Fhappy.dqx.jp%2Fcapi%2Flogin%2Fsecurelogin%2F&response_type=code&yl=1", true);
+    xhr.responseType = "document";
+    xhr.send();
+  });
+}
+
+function checkLoginSession() {
+  chrome.storage.sync.get(["login.cis_sessid", "login._c"], function(items){
+    console.log("items[0]: " + items["login.cis_sessid"] + ", items[1]: " + items["login._c"]);
+    if(items["login.cis_sessid"] && items["login._c"]){
+      console.log("loginCompleted");
+      loginCompleted(items["login.cis_sessid"], items["login._c"]);
+    } else {
+      console.log("prepareProceed");
+      prepareProceed();
+    }
+  });
+}
+
 window.onload = function() {
-  document.querySelector('#greeting').innerText =
-    'Hello, World! It is ' + new Date();
+  var sendIdButton = document.getElementById("sendIdButton");
+  sendIdButton.disabled = true;
+
+  var sendOtpButton = document.getElementById("sendOtpButton");
+  sendOtpButton.disabled = true;
+  
+  checkLoginSession();
 };

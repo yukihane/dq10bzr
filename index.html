@@ -1,13 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hello2</title>
+  <title>Bazaar Search Condition</title></title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+  <button id="proceedButton">Proceed</button>
+  <form id="inputId">
+    <table>
+      <tr><td>ID</td><td><input type="text" name="sqexid" id="sqexid"/></td></tr>
+      <tr><td>Password</td><td><input type="password" name="password" id="password"/></td></tr>
+    </table>
+    <button id="sendIdButton">Send ID</button>
+  </form>
+  <form id="inputOtp">
+    <table>
+      <tr><td>OTP</td><td><input type="password"  pattern="[0-9]" id="otppw"/></td></tr>
+    </table>
+    <button id="sendOtpButton">Send OTP</button>
+  </form>
+<!--
+  <form>
+    <table>
+      <tr><td>種類</td><td><select name="aaa"></select></td></tr>
+      <tr><td>種類2</td><td><select name="b"></select></td></tr>
+    </table>
+  </form>
   <h1 id="greeting"></h1>
-
+-->
+  <div id="charaList"></div>
+  <div id="main"></div>
   <script src="main.js"></script>
 </body>
 </html>

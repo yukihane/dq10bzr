@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Hello2",
-  "short_name": "Hello2",
+  "name": "DQX Bazaar Search",
+  "short_name": "dq10bz",
   "description": "",
   "version": "0.0.1",
   "minimum_chrome_version": "38",
@@ -15,5 +15,11 @@
     "background": {
       "scripts": ["background.js"]
     }
-  }
+  },
+  
+  "permissions" : [
+    "storage",
+    "*://*.dqx.jp/",
+    "*://*.square-enix.com/"
+  ]
 }
