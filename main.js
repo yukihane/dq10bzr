@@ -345,6 +345,78 @@ window.onload = function() {
     });
   });
 
+  var searchButton = document.getElementById("searchButton");
+  searchButton.addEventListener("click", function(){
+
+    var largeCategoryValueList = document.getElementById("largeCategoryValueList");
+    var lCategoryId = largeCategoryValueList.options[largeCategoryValueList.selectedIndex].value;
+    if(!lCategoryId) {
+      console.log("empty value selected, return");
+      return;
+    }
+
+    var smallCategoryValueList = document.getElementById("smallCategoryValueList");
+    var sCategoryId = smallCategoryValueList.options[smallCategoryValueList.selectedIndex].value;
+    if(!sCategoryId) {
+      console.log("empty value selected, return");
+      return;
+    }
+
+    var itemCountValueList = document.getElementById("itemCountValueList");
+    var itemCountId = itemCountValueList.options[itemCountValueList.selectedIndex].value;
+    if(!itemCountId) {
+      console.log("empty value selected, return");
+      return;
+    }
+
+    chrome.storage.sync.get("login.sessionId", function(items){
+      var sessionId = items["login.sessionId"];
+      if(!sessionId){
+        console.log("sessionId is null!");
+        return;
+      }
+
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function(){
+        console.log(xhr.readyState);
+        if(xhr.readyState == 4) {
+          console.log("status: " + xhr.status);
+//          console.log(xhr.response);
+
+          var json = xhr.response;
+          var items = json.itemListValueList;
+          var html = "<table>";
+          for(var i=0;i<items.length;i++){
+            var item = items[i];
+            var price = item.itemPrice;
+            var quality = item.itemQuality;
+            var renkins = item.renkinList;
+            
+            var r = "<tr><td>" + price + "</td><td>" + quality + "</td><td>"
+              + renkins.length + "</td>";
+            for(var j = 0;j<renkins.length;j++){
+              r = r + "<td>" + renkins[j].renkinWord + "</td>";
+            }
+            
+            html = html + r;
+          }
+          html = html + "</table>";
+
+          
+          var searchResult = document.getElementById("searchResult");
+          searchResult.innerHTML = html;
+
+        }
+      };
+
+      xhr.open("POST", "https://happy.dqx.jp/capi/bazaar/search/", true);
+      xhr.setRequestHeader("X-Smile-3DS-SESSIONID", sessionId);
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhr.responseType = "json";
+      xhr.send("bazaarno=99&largecategoryid=" + lCategoryId + "&smallcategoryid=" + sCategoryId
+        + "&webitemid=" + itemCountId);
+    });
+  });
 
   checkLoginSession();
 };
