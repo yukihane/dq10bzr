@@ -6,25 +6,34 @@ function createCharaList(characters){
     var chara = characters[i];
     var name = chara.characterName + " (" + chara.smileUniqueNo +")";
     var webPcNo = chara.webPcNo;
-    
-    var r = "<tr><td>" + name + "</td><td>" + webPcNo + "</td></tr>";
+
+    var r = "<tr><td>" + name + "</td><td>"
+      + "<button name='Select' value='" + webPcNo + "'>Select</button></td></tr>";
+
     res = res + r;
   }
   res = res + "</table>";
   return res;
 }
 
+function characterSelected(sessionId, webPcNo){
+  console.log("characterSelected: " + webPcNo);
+
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState == 4) {
+      console.log("status: " + xhr.status);
+      console.log(xhr.response);
+    }
+  };
+  
+  xhr.open("GET", "https://happy.dqx.jp/capi/login/characterselect/"+webPcNo+"/", true);
+  xhr.setRequestHeader("X-Smile-3DS-SESSIONID", sessionId);
+  xhr.send();
+}
+
 function loginCompleted(cisSessid, c) {
   var action = "https://happy.dqx.jp/capi/login/securelogin/";
-/*
-  var action = form.getAttribute("action");
-  console.log(action);
-
-  var inputCisSessid = form.querySelector("input[name='cis_sessid']");
-  var cisSessid = inputCisSessid.value;
-  var inputC = form.querySelector("input[name='_c']");
-  var c = inputC.value;
-*/
 
   console.log("cis_sessid: " + cisSessid + ", _c: " + c);
 
@@ -32,24 +41,25 @@ function loginCompleted(cisSessid, c) {
   xhr.onreadystatechange = function(){
     if(xhr.readyState == 4) {
       console.log("status: " + xhr.status);
-//      console.log(xhr.response);
-      
+
       var json = xhr.response;
+      var sessionId = json["sessionId"];
+      chrome.storage.sync.set({"login.sessionId": sessionId}, function(){
+        console.log("data stored");
+      });
       var characters = json["characterList"];
       var charaList = createCharaList(characters);
       document.querySelector("#charaList").innerHTML = charaList;
-/*
-      var xml = xhr.response;
-      var form = xml.querySelector("form");
-      console.log(form);
-      var inputCisSessid = form.querySelector("input[name='cis_sessid']");
-      var inputC = form.querySelector("input[name='_c']");
-      console.log("inputCisSessid: " + inputCisSessid + ", inputC: " + inputC);
-
-      if(inputCisSessid && inputC){
-        loginCompleted(form);
+      
+      var handler = function(){
+        var webPcNo = this.getAttribute("value");
+        characterSelected(sessionId, webPcNo);
+      };
+      buttons = document.querySelectorAll("button[name='Select']");
+      for(var i = 0; i < buttons.length; i++){
+        var b = buttons[i];
+        b.addEventListener("click", handler);
       }
-*/
     }
   };
   
