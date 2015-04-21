@@ -231,7 +231,7 @@ window.onload = function() {
           console.log(xhr.response);
           var json = xhr.response;
           var largeCategories = json.largeCategoryValueList;
-          var optionText = "";
+          var optionText = "<option value=''></option>";
           for(var i = 0; i < largeCategories.length; i++) {
             var op = largeCategories[i];
             var opText = "<option value='" + op.largeCategoryId + "'>" + op.largeCategoryName + "</option>";
@@ -245,6 +245,49 @@ window.onload = function() {
       };
     
       xhr.open("GET", "https://happy.dqx.jp/capi/bazaar/largecategory/99/", true);
+      xhr.setRequestHeader("X-Smile-3DS-SESSIONID", sessionId);
+      xhr.responseType = "json";
+      xhr.send();
+    });
+  });
+  
+  var largeCategoryValueList = document.getElementById("largeCategoryValueList");
+  largeCategoryValueList.addEventListener("change", function(){
+    var lCategoryId = this.options[this.selectedIndex].value;
+    if(!lCategoryId) {
+      console.log("empty value selected, return");
+      return;
+    }
+
+    chrome.storage.sync.get("login.sessionId", function(items){
+      var sessionId = items["login.sessionId"];
+      if(!sessionId){
+        console.log("sessionId is null!");
+        return;
+      }
+
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function(){
+        if(xhr.readyState == 4) {
+          console.log("status: " + xhr.status);
+          console.log(xhr.response);
+
+          var json = xhr.response;
+          var smallCategories = json.smallCategoryValueList;
+          var optionText = "<option value=''></option>";
+          for(var i = 0; i < smallCategories.length; i++) {
+            var op = smallCategories[i];
+            var opText = "<option value='" + op.smallCategoryId + "'>" + op.smallCategoryName + "</option>";
+            optionText = optionText + opText;
+          }
+          
+          var smallCategoryValueList = document.getElementById("smallCategoryValueList");
+          smallCategoryValueList.innerHTML = optionText;
+
+        }
+      };
+
+      xhr.open("GET", "https://happy.dqx.jp/capi/bazaar/smallcategory/99/" + lCategoryId + "/", true);
       xhr.setRequestHeader("X-Smile-3DS-SESSIONID", sessionId);
       xhr.responseType = "json";
       xhr.send();
