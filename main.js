@@ -215,5 +215,41 @@ window.onload = function() {
   var sendOtpButton = document.getElementById("sendOtpButton");
   sendOtpButton.disabled = true;
   
+  var masterButton = document.getElementById("masterButton");
+  masterButton.addEventListener("click", function(){
+    chrome.storage.sync.get("login.sessionId", function(items){
+      var sessionId = items["login.sessionId"];
+      if(!sessionId){
+        console.log("sessionId is null!");
+        return;
+      }
+
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function(){
+        if(xhr.readyState == 4) {
+          console.log("status: " + xhr.status);
+          console.log(xhr.response);
+          var json = xhr.response;
+          var largeCategories = json.largeCategoryValueList;
+          var optionText = "";
+          for(var i = 0; i < largeCategories.length; i++) {
+            var op = largeCategories[i];
+            var opText = "<option value='" + op.largeCategoryId + "'>" + op.largeCategoryName + "</option>";
+            optionText = optionText + opText;
+          }
+          
+          var largeCategoryValueList = document.getElementById("largeCategoryValueList");
+          largeCategoryValueList.innerHTML = optionText;
+          
+        }
+      };
+    
+      xhr.open("GET", "https://happy.dqx.jp/capi/bazaar/largecategory/99/", true);
+      xhr.setRequestHeader("X-Smile-3DS-SESSIONID", sessionId);
+      xhr.responseType = "json";
+      xhr.send();
+    });
+  });
+
   checkLoginSession();
 };
