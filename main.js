@@ -294,5 +294,57 @@ window.onload = function() {
     });
   });
 
+
+  var smallCategoryValueList = document.getElementById("smallCategoryValueList");
+  smallCategoryValueList.addEventListener("change", function(){
+    var sCategoryId = this.options[this.selectedIndex].value;
+    if(!sCategoryId) {
+      console.log("empty value selected, return");
+      return;
+    }
+
+    var largeCategoryValueList = document.getElementById("largeCategoryValueList");
+    var lCategoryId = largeCategoryValueList.options[largeCategoryValueList.selectedIndex].value;
+    if(!lCategoryId) {
+      console.log("empty value selected, return");
+      return;
+    }
+
+    chrome.storage.sync.get("login.sessionId", function(items){
+      var sessionId = items["login.sessionId"];
+      if(!sessionId){
+        console.log("sessionId is null!");
+        return;
+      }
+
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function(){
+        console.log(xhr.readyState);
+        if(xhr.readyState == 4) {
+          console.log("status: " + xhr.status);
+//          console.log(xhr.response);
+
+          var json = xhr.response;
+          var itemCounts = json.itemCountValueList;
+          var optionText = "<option value=''></option>";
+          for(var i = 0; i < itemCounts.length; i++) {
+            var op = itemCounts[i];
+            var opText = "<option value='" + op.webItemId + "'>" + op.itemName + "</option>";
+            optionText = optionText + opText;
+          }
+          
+          var itemCountValueList = document.getElementById("itemCountValueList");
+          itemCountValueList.innerHTML = optionText;
+        }
+      };
+
+      xhr.open("GET", "https://happy.dqx.jp/capi/bazaar/itemcount/99/" + lCategoryId + "/" + sCategoryId + "/", true);
+      xhr.setRequestHeader("X-Smile-3DS-SESSIONID", sessionId);
+      xhr.responseType = "json";
+      xhr.send();
+    });
+  });
+
+
   checkLoginSession();
 };
