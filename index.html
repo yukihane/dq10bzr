@@ -7,35 +7,51 @@
 
 <body>
   <button id="proceedButton">Proceed</button>
-  <form id="inputId">
-    <table>
-      <tr><td>ID</td><td><input type="text" name="sqexid" id="sqexid"/></td></tr>
-      <tr><td>Password</td><td><input type="password" name="password" id="password"/></td></tr>
-    </table>
-    <button id="sendIdButton">Send ID</button>
-  </form>
-  <form id="inputOtp">
-    <table>
-      <tr><td>OTP</td><td><input type="password"  pattern="[0-9]" id="otppw"/></td></tr>
-    </table>
-    <button id="sendOtpButton">Send OTP</button>
-  </form>
-  <div id="charaList"></div>
+
+  <!-- IDとPasswordを入力,送信するためのPane -->
+  <div id="loginPane" class="modalDialog">
+    <form id="inputId">
+      <table>
+        <tr><td>ID</td><td><input type="text" name="sqexid" id="sqexid"/></td></tr>
+        <tr><td>Password</td><td><input type="password" name="password" id="password"/></td></tr>
+      </table>
+      <button id="sendIdButton">Send ID</button>
+    </form>
+  </div>
+
+  <!-- OTPを入力,送信するためのPane -->
+  <div id="otpPane" class="modalDialog">
+    <form id="inputOtp">
+      <table>
+        <tr><td>OTP</td><td><input type="password"  pattern="[0-9]" id="otppw"/></td></tr>
+      </table>
+      <button id="sendOtpButton">Send OTP</button>
+    </form>
+  </div>
+
+
+  <!-- キャラクター選択Pane -->
+  <div id="charaList" class="modalDialog"></div>
+  
   <button id="masterButton">Master</button>
+
+
+  <div id="mainWindow">
+    <!-- バザー検索条件指定Pane -->
+    <div id="bazaarSearchConditionPane">
+      <table>
+        <tr><td>種類</td><td><select name="largeCategoryValueList" id="largeCategoryValueList"></select></td></tr>
+        <tr><td>種類2</td><td><select name="smallCategoryValueList" id="smallCategoryValueList"></select></td></tr>
+        <tr><td>アイテム名</td><td><select name="itemCountValueList" id="itemCountValueList"></select></td></tr>
+      </table>
   
-    <table>
-      <tr><td>種類</td><td><select name="largeCategoryValueList" id="largeCategoryValueList"></select></td></tr>
-      <tr><td>種類2</td><td><select name="smallCategoryValueList" id="smallCategoryValueList"></select></td></tr>
-      <tr><td>アイテム名</td><td><select name="itemCountValueList" id="itemCountValueList"></select></td></tr>
-    </table>
+      <button id="searchButton">Search</button>
+    </div>
+    
+    <!-- バザー検索結果表示Pane -->
+    <div id="searchResult"></div>
+  </div>
 
-  <button id="searchButton">Search</button>
-  
-  <div id="searchResult"></div>
-
-  <h1 id="greeting"></h1>
-
-  <div id="main"></div>
   <script src="main.js"></script>
 </body>
 </html>
