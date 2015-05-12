@@ -53,24 +53,34 @@
 
 
   <!-- IDとPasswordを入力,送信するためのPane -->
-  <div id="loginPane" class="modalDialog">
-    <form id="inputId">
-      <table>
-        <tr><td>ID</td><td><input type="text" name="sqexid" id="sqexid" class="form-control"/></td></tr>
-        <tr><td>Password</td><td><input type="password" name="password" id="password" class="form-control"/></td></tr>
-      </table>
+  <div id="loginPane">
+    <script type="text/ng-template" id="loginPane.html">
+      <div class="modal-header">
+        <h3 class="modal-title">ログイン</h3>
+      </div>
+      <div class="modal-body">
+        <table>
+          <tr><td>ID</td><td><input type="text" name="sqexid" id="sqexid" class="form-control"/></td></tr>
+          <tr><td>Password</td><td><input type="password" name="password" id="password" class="form-control"/></td></tr>
+        </table>
       <button id="sendIdButton">Send ID</button>
-    </form>
+      </div>
+    </script>
   </div>
 
   <!-- OTPを入力,送信するためのPane -->
-  <div id="otpPane" class="modalDialog">
-    <form id="inputOtp">
-      <table>
-        <tr><td>OTP</td><td><input type="password"  pattern="[0-9]" id="otppw"/></td></tr>
-      </table>
-      <button id="sendOtpButton">Send OTP</button>
-    </form>
+  <div id="otpPane">
+    <script type="text/ng-template" id="otpPane.html">
+      <div class="modal-header">
+        <h3 class="modal-title">ワンタイムパスワード</h3>
+      </div>
+      <div class="modal-body">
+        <table>
+          <tr><td>OTP</td><td><input type="password"  pattern="[0-9]" id="otppw"/></td></tr>
+        </table>
+        <button id="sendOtpButton">Send OTP</button>
+      </div>
+    </script>
   </div>
 
 
