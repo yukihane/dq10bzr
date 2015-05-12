@@ -1,1 +1,13 @@
 /* CSS file placeholder. */
+
+.clear {
+  clear: both;
+}
+
+#statusPane {
+  float: left;
+}
+
+#loginButtonPane {
+  float: right;
+}

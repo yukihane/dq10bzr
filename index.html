@@ -9,14 +9,24 @@
 </head>
 
 <body>
-  <button id="proceedButton">Proceed</button>
+  <button id="proceedButton" class="form-control">Proceed</button>
+  
+  <div id="headerPane">
+    <div id="statusPane">
+      キャラクタステータス表示部
+    </div>
+    <div id="loginButtonPane">
+      ログインボタン表示部
+    </div>
+  </div>
+  <div class="clear"><hr /></div>
 
   <!-- IDとPasswordを入力,送信するためのPane -->
   <div id="loginPane" class="modalDialog">
     <form id="inputId">
       <table>
-        <tr><td>ID</td><td><input type="text" name="sqexid" id="sqexid"/></td></tr>
-        <tr><td>Password</td><td><input type="password" name="password" id="password"/></td></tr>
+        <tr><td>ID</td><td><input type="text" name="sqexid" id="sqexid" class="form-control"/></td></tr>
+        <tr><td>Password</td><td><input type="password" name="password" id="password" class="form-control"/></td></tr>
       </table>
       <button id="sendIdButton">Send ID</button>
     </form>
