@@ -49,26 +49,32 @@
   <button id="masterButton">Master</button>
 
 
+  <div class="clear"></div>
   <div id="mainWindow">
-    <!-- バザー検索条件指定Pane -->
-    <div id="bazaarSearchConditionPane">
-      <table>
-        <tr><td>種類</td><td><select name="largeCategoryValueList" id="largeCategoryValueList"></select></td></tr>
-        <tr><td>種類2</td><td><select name="smallCategoryValueList" id="smallCategoryValueList"></select></td></tr>
-        <tr><td>アイテム名</td><td><select name="itemCountValueList" id="itemCountValueList"></select></td></tr>
-        <tr><td>できのよさ</td><td><select></select></td></tr>
-        <tr><td>錬金効果数</td><td><select></select></td></tr>
-        <tr><td>錬金効果1</td><td><select></select></td></tr>
-        <tr><td>効果の合計値1</td><td><select></select></td></tr>
-        <tr><td>錬金効果2</td><td><select></select></td></tr>
-        <tr><td>効果の合計値2</td><td><select></select></td></tr>
-      </table>
-  
-      <button id="searchButton">Search</button>
-    </div>
-    
-    <!-- バザー検索結果表示Pane -->
-    <div id="searchResult"></div>
+    <tabset>
+      <tab heading="バザー検索">
+        <!-- バザー検索条件指定Pane -->
+        <div id="bazaarSearchConditionPane">
+          <table>
+            <tr><td>種類</td><td><select name="largeCategoryValueList" id="largeCategoryValueList"></select></td></tr>
+            <tr><td>種類2</td><td><select name="smallCategoryValueList" id="smallCategoryValueList"></select></td></tr>
+            <tr><td>アイテム名</td><td><select name="itemCountValueList" id="itemCountValueList"></select></td></tr>
+            <tr><td>できのよさ</td><td><select></select></td></tr>
+            <tr><td>錬金効果数</td><td><select></select></td></tr>
+            <tr><td>錬金効果1</td><td><select></select></td></tr>
+            <tr><td>効果の合計値1</td><td><select></select></td></tr>
+            <tr><td>錬金効果2</td><td><select></select></td></tr>
+            <tr><td>効果の合計値2</td><td><select></select></td></tr>
+          </table>
+      
+          <button id="searchButton">Search</button>
+        </div>
+
+        <!-- バザー検索結果表示Pane -->
+        <div id="searchResult"></div>
+
+      </tab>
+    </tabset>
   </div>
 
   <script src="main.js"></script>
