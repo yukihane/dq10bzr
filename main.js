@@ -1,5 +1,7 @@
 var OAUTH_URL = "https://secure.square-enix.com/oauth/oa/";
 
+var mainModule = angular.module("dq10bzr.Main", ["ui.bootstrap"]);
+
 function createCharaList(characters){
   var res = "<table>";
   for(var i = 0; i < characters.length; i++) {
