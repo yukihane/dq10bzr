@@ -66,14 +66,38 @@ function($scope, $modal, $http, $log){
 
 }]);
 
-mainModule.controller('loginCtrl', ["$scope", "$modalInstance", "$log", "action",
-function ($scope, $modalInstance, $log, action) {
+mainModule.controller('loginCtrl', ["$scope", "$modalInstance", "$http", "$log", "action",
+function ($scope, $modalInstance, $http, $log, action) {
 
   $scope.sqexid = "";
   $scope.password = "";
 
   $scope.ok = function () {
-    $modalInstance.close({sqexid: $scope.sqexid, password: $scope.password});
+
+    var req = {
+      method: "POST",
+      url: OAUTH_URL + action,
+      responseType: "document",
+      headears: {
+        "Content-type": "application/x-www-form-urlencoded",
+      },
+      params: {
+        sqexid: $scope.sqexid,
+        password: $scope.password,
+      },
+    };
+    
+    $http(req)
+    .success(function(data, status, headers, config) {
+      $log.info(data);
+      var inputOtppw = data.querySelector("#otppw");
+      $log.info(inputOtppw);
+      $modalInstance.close({sqexid: $scope.sqexid, password: $scope.password});
+    })
+    .error(function(data, status, headers, config) {
+    });
+
+
   };
 
   $scope.cancel = function () {
