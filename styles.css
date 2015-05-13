@@ -4,10 +4,6 @@
   clear: both;
 }
 
-#statusPane {
+div#headerPane > div {
   float: left;
-}
-
-#loginButtonPane {
-  float: right;
 }
