@@ -2,6 +2,48 @@ var OAUTH_URL = "https://secure.square-enix.com/oauth/oa/";
 
 var mainModule = angular.module("dq10bzr.Main", ["ui.bootstrap"]);
 
+mainModule.controller("userInfoCtrl", ["$scope", "$modal", "$log", function($scope, $modal, $log){
+  $scope.id = "(未ログイン)";
+  $scope.character = "(キャラクター未選択)";
+
+  $scope.login = function(){
+    $log.info("login clicked");
+
+    var modalInstance = $modal.open({
+      templateUrl: 'loginPane.html',
+      controller: 'loginCtrl',
+      resolve: {
+        items: function () {
+          return $scope.items;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (input) {
+      $log.info("id: " + input.sqexid);
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+
+
+}]);
+
+mainModule.controller('loginCtrl', ["$scope", "$modalInstance", "items", function ($scope, $modalInstance, items) {
+
+  $scope.sqexid = "";
+  $scope.password = "";
+
+  $scope.ok = function () {
+    $modalInstance.close({sqexid: $scope.sqexid, password: $scope.password});
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+}]);
+
+/*
 function createCharaList(characters){
   var res = "<table>";
   for(var i = 0; i < characters.length; i++) {
@@ -422,3 +464,4 @@ window.onload = function() {
 
   checkLoginSession();
 };
+*/

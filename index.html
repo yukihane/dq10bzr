@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app="dq10bzr.Main" data-ng-csp>
+<html data-ng-app="dq10bzr.Main" data-ng-csp data-ng-strict-di>
 <head>
   <title>Bazaar Search Condition</title></title>
   <link rel="stylesheet" type="text/css" href="venderjs/bootstrap-3.3.4-dist/css/bootstrap.css">
@@ -11,16 +11,16 @@
 <body>
   <button id="proceedButton" class="btn btn-default">Proceed</button>
   
-  <div id="headerPane">
+  <div id="headerPane" data-ng-controller="userInfoCtrl">
     <div id="statusPane">
-      <div>ID表示部</div>
-      <div>キャラクタ名表示部</div>
+      <div>{{id}}</div>
+      <div>{{character}}</div>
     </div>
     <div id="characterButtonPane">
-      <button class="btn btn-default">キャラ変更</button>
+      <button class="btn btn-default" data-ng-click="selectCharacter()">キャラ変更</button>
     </div>
     <div id="loginButtonPane">
-      <button class="btn btn-default">ログイン/アカウント変更</button>
+      <button class="btn btn-default" data-ng-click="login()">ログイン/アカウント変更</button>
     </div>
   </div>
   <div class="clear"><hr /></div>
@@ -64,10 +64,13 @@
       </div>
       <div class="modal-body">
         <table>
-          <tr><td>ID</td><td><input type="text" name="sqexid" id="sqexid" class="form-control"/></td></tr>
-          <tr><td>Password</td><td><input type="password" name="password" id="password" class="form-control"/></td></tr>
+          <tr><td>ID</td><td><input type="text" class="form-control" data-ng-model="sqexid"/></td></tr>
+          <tr><td>Password</td><td><input type="password" class="form-control" data-ng-model="password"/></td></tr>
         </table>
-      <button id="sendIdButton">Send ID</button>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="ok()">OK</button>
+        <button class="btn">キャンセル</button>
       </div>
     </script>
   </div>
@@ -82,7 +85,9 @@
         <table>
           <tr><td>OTP</td><td><input type="password"  pattern="[0-9]" id="otppw"/></td></tr>
         </table>
-        <button id="sendOtpButton">Send OTP</button>
+      </div>
+      <div class="modal-footer">
+        <button id="sendOtpButton" class="btn">Send OTP</button>
       </div>
     </script>
   </div>
