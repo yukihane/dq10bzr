@@ -82,11 +82,12 @@
       </div>
       <div class="modal-body">
         <table>
-          <tr><td>OTP</td><td><input type="password"  pattern="[0-9]" id="otppw"/></td></tr>
+          <tr><td>OTP</td><td><input type="password"  pattern="[0-9]{6}" class="form-control" data-ng-model="otppw"/></td></tr>
         </table>
       </div>
       <div class="modal-footer">
-        <button id="sendOtpButton" class="btn">Send OTP</button>
+        <button class="btn btn-primary" data-ng-click="ok()">OK</button>
+        <button class="btn">キャンセル</button>
       </div>
     </script>
   </div>

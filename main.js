@@ -32,6 +32,8 @@ function($scope, $modal, $http, $log){
         openLoginDialog(action);
       } else if(inputOtppw) {
         $log.info("requireOtppw(form);");
+        var otpAction = data.querySelector("form").getAttribute("action");
+        openOtpDialog(otpAction);
       } else {
         // エラー
         // 想定しているフォームと異なる
@@ -44,7 +46,7 @@ function($scope, $modal, $http, $log){
       // 非同期で呼び出されます。
     });
   };
-  
+
   var openLoginDialog = function(action) {
     var modalInstance = $modal.open({
       templateUrl: 'loginPane.html',
@@ -58,6 +60,25 @@ function($scope, $modal, $http, $log){
 
     modalInstance.result.then(function (input) {
       $log.info("id: " + input.sqexid);
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+
+
+  var openOtpDialog = function(action) {
+    var modalInstance = $modal.open({
+      templateUrl: 'otpPane.html',
+      controller: 'otpCtrl',
+      resolve: {
+        action: function(){
+          return action;
+        },
+      }
+    });
+    
+    modalInstance.result.then(function (input) {
+      $log.info("id: " + input.sqexid + ", action: " + input.action);
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
@@ -90,8 +111,54 @@ function ($scope, $modalInstance, $http, $log, action) {
     $http(req)
     .success(function(data, status, headers, config) {
       $log.info(data);
-      var inputOtppw = data.querySelector("#otppw");
-      $log.info(inputOtppw);
+
+      var otpAction = data.querySelector("form").getAttribute("action");
+
+      $modalInstance.close({sqexid: $scope.sqexid, action: otpAction});
+    })
+    .error(function(data, status, headers, config) {
+    });
+
+
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+}]);
+
+
+
+mainModule.controller('otpCtrl', ["$scope", "$modalInstance", "$http", "$log", "action",
+function ($scope, $modalInstance, $http, $log, action) {
+
+  $scope.otppw = "";
+
+  $scope.ok = function () {
+
+    var req = {
+      method: "POST",
+      url: OAUTH_URL + action,
+      responseType: "document",
+      headears: {
+        "Content-type": "application/x-www-form-urlencoded",
+      },
+      params: {
+        otppw: $scope.otppw
+      },
+    };
+    
+    $http(req)
+    .success(function(data, status, headers, config) {
+      
+      $log.info(data);
+
+      var inputCisSessid = data.querySelector("form input[name='cis_sessid']").value;
+      var inputC = data.querySelector("form input[name='_c']").value;
+      console.log("inputCisSessid: " + inputCisSessid + ", inputC: " + inputC);
+      console.log(inputCisSessid);
+      console.log(inputC);
+
       $modalInstance.close({sqexid: $scope.sqexid, password: $scope.password});
     })
     .error(function(data, status, headers, config) {
