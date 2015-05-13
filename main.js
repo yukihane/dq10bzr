@@ -2,20 +2,57 @@ var OAUTH_URL = "https://secure.square-enix.com/oauth/oa/";
 
 var mainModule = angular.module("dq10bzr.Main", ["ui.bootstrap"]);
 
-mainModule.controller("userInfoCtrl", ["$scope", "$modal", "$log", function($scope, $modal, $log){
+mainModule.controller("userInfoCtrl", ["$scope", "$modal", "$http", "$log",
+function($scope, $modal, $http, $log){
+
   $scope.id = "(未ログイン)";
   $scope.character = "(キャラクター未選択)";
 
   $scope.login = function(){
     $log.info("login clicked");
+    
+    
+    var req = {
+      method: "GET",
+      url: OAUTH_URL + "oauthauth?client_id=happy&redirect_uri=https%3A%2F%2Fhappy.dqx.jp%2Fcapi%2Flogin%2Fsecurelogin%2F&response_type=code&yl=1",
+      responseType: "document",
+    };
+    
+    $http(req)
+    .success(function(data, status, headers, config) {
 
+      var inputSqexid = data.querySelector("form #sqexid");
+      var inputPassword = data.querySelector("form #password");
+      var inputOtppw = data.querySelector("form #otppw");
+
+
+      if(inputSqexid && inputPassword){
+        $log.info("requireLogin(form);");
+        var action = data.querySelector("form").getAttribute("action");
+        openLoginDialog(action);
+      } else if(inputOtppw) {
+        $log.info("requireOtppw(form);");
+      } else {
+        // エラー
+        // 想定しているフォームと異なる
+      }
+
+    })
+    .error(function(data, status, headers, config) {
+      $log.warn("error occured");
+      // エラーが発生、またはサーバからエラーステータスが返された場合に、
+      // 非同期で呼び出されます。
+    });
+  };
+  
+  var openLoginDialog = function(action) {
     var modalInstance = $modal.open({
       templateUrl: 'loginPane.html',
       controller: 'loginCtrl',
       resolve: {
-        items: function () {
-          return $scope.items;
-        }
+        action: function(){
+          return action;
+        },
       }
     });
 
@@ -29,7 +66,8 @@ mainModule.controller("userInfoCtrl", ["$scope", "$modal", "$log", function($sco
 
 }]);
 
-mainModule.controller('loginCtrl', ["$scope", "$modalInstance", "items", function ($scope, $modalInstance, items) {
+mainModule.controller('loginCtrl', ["$scope", "$modalInstance", "$log", "action",
+function ($scope, $modalInstance, $log, action) {
 
   $scope.sqexid = "";
   $scope.password = "";
