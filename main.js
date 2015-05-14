@@ -85,11 +85,66 @@ function($scope, $modal, $http, $log){
     
     modalInstance.result.then(function (input) {
       console.log("inputCisSessid: " + input.cis_sessid + ", inputC: " + input._c);
+      loginCompleted(input.cis_sessid, input._c);
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
   };
 
+  var loginCompleted = function(cisSessid, c) {
+    var action = "https://happy.dqx.jp/capi/login/securelogin/";
+
+    console.log("cis_sessid: " + cisSessid + ", _c: " + c);
+    
+    var req = {
+      method: "POST",
+      url: action,
+      responseType: "json",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded",
+      },
+      params: {
+        cis_sessid: cisSessid,
+        _c: c,
+      },
+    };
+
+    $http(req)
+    .success(function(data, status, headers, config) {
+      var sessionId = data["sessionId"];
+      chrome.storage.sync.set({"login.sessionId": sessionId}, function(){
+        console.log("data stored");
+      });
+      var characters = data["characterList"];
+      console.log(characters);
+      
+      openCharaSelectDialog(characters, sessionId);
+
+    })
+    .error(function(data, status, headers, config) {
+    });
+  };
+
+  var openCharaSelectDialog = function(characters, sessionId) {
+    var modalInstance = $modal.open({
+      templateUrl: 'characterSelectionPane.html',
+      controller: 'characterCtrl',
+      resolve: {
+        characters: function() {
+          return characters;
+        },
+        sessionId: function() {
+          return sessionId;
+        },
+      }
+    });
+    
+    modalInstance.result.then(function (input) {
+      console.log("inputCisSessid: " + input.cis_sessid + ", inputC: " + input._c);
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
 
 }]);
 
@@ -162,7 +217,7 @@ function ($scope, $modalInstance, $http, $log, action) {
         otppw: $scope.otppw
       },
     };
-    
+
     $http(req)
     .success(function(data, status, headers, config) {
       
@@ -170,15 +225,47 @@ function ($scope, $modalInstance, $http, $log, action) {
 
       var inputCisSessid = data.querySelector("form input[name='cis_sessid']").value;
       var inputC = data.querySelector("form input[name='_c']").value;
-      console.log("inputCisSessid: " + inputCisSessid + ", inputC: " + inputC);
-      console.log(inputCisSessid);
-      console.log(inputC);
 
-      $modalInstance.close({sqexid: $scope.sqexid, password: $scope.password});
+      $modalInstance.close({cis_sessid: inputCisSessid, _c: inputC});
     })
     .error(function(data, status, headers, config) {
     });
 
+
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+}]);
+
+mainModule.controller('characterCtrl', ["$scope", "$modalInstance", "$http", "$log", "characters", "sessionId",
+function ($scope, $modalInstance, $http, $log, characters, sessionId) {
+
+  $scope.characters = characters;
+
+  $scope.select = function (index) {
+    $log.info("index: " + index);
+    
+    var character = characters[index];
+    var webPcNo = character.webPcNo;
+    
+    var req = {
+      method: "GET",
+      url: "https://happy.dqx.jp/capi/login/characterselect/"+webPcNo+"/",
+      headers: {
+        "X-Smile-3DS-SESSIONID": sessionId,
+      },
+    };
+
+
+    $http(req)
+    .success(function(data, status, headers, config) {
+      $log.info(data);
+      $modalInstance.close(character);
+    })
+    .error(function(data, status, headers, config) {
+    });
 
   };
 

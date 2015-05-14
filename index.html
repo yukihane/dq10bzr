@@ -93,6 +93,27 @@
   </div>
 
 
+  <!-- キャラクター選択のためのPane -->
+  <div id="characterSelectionPane">
+    <script type="text/ng-template" id="characterSelectionPane.html">
+      <div class="modal-header">
+        <h3 class="modal-title">キャラクター選択</h3>
+      </div>
+      <div class="modal-body">
+        <table>
+          <tr data-ng-repeat="c in characters">
+            <td>{{c.characterName}}({{c.smileUniqueNo}})</td>
+            <td><button data-ng-click="select($index)">選択</button>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button class="btn">キャンセル</button>
+      </div>
+    </script>
+  </div>
+
+
   <!-- キャラクター選択Pane -->
   <div id="charaList" class="modalDialog"></div>
   
