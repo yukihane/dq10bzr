@@ -28,6 +28,32 @@
   <div class="clear"></div>
   <div id="mainWindow">
     <tabset>
+      <tab heading="討伐" data-ng-controller="tobatsuCtrl">
+        <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
+
+        <div>受注済み</div>
+        <div data-ng-repeat="al in list.acceptedTobatsuDataList">
+          <div>{{al.continentName}}</div>
+          <table>
+            <tr data-ng-repeat="e in al.tobatsuList">
+              <td>{{e.area}} {{e.monsterName}} {{e.count}}匹</td>
+              <td>{{e.point}} P</td>
+            </tr>
+          </table>
+        </div>
+
+        <div>リスト</div>
+        <div data-ng-repeat="cl in list.countryTobatsuDataList">
+          <div>{{cl.continentName}}</div>
+          <table>
+            <tr data-ng-repeat="c in cl.tobatsuList">
+              <td>{{c.area}} {{c.monsterName}} {{c.count}}匹</td>
+              <td>{{c.point}} P</td>
+            </tr>
+          </table>
+        </div>
+
+      </tab>
       <tab heading="バザー検索">
         <!-- バザー検索条件指定Pane -->
         <div id="bazaarSearchConditionPane">

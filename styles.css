@@ -4,6 +4,11 @@
   clear: both;
 }
 
+/* デバッグ用 */
+pre {
+  -webkit-user-select: text;
+}
+
 div#headerPane > div {
   float: left;
 }

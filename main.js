@@ -1,5 +1,8 @@
 var OAUTH_URL = "https://secure.square-enix.com/oauth/oa/";
 
+//FIXME 仮の置き場所としてグローバル変数を宣言しているが, 最終的には使用しない
+var SESSION_ID = "";
+
 var mainModule = angular.module("dq10bzr.Main", ["ui.bootstrap"]);
 
 mainModule.controller("userInfoCtrl", ["$scope", "$modal", "$http", "$log",
@@ -140,7 +143,8 @@ function($scope, $modal, $http, $log){
     });
     
     modalInstance.result.then(function (input) {
-      console.log("inputCisSessid: " + input.cis_sessid + ", inputC: " + input._c);
+      $log.info("character: " + input.webPcNo + ", sessionid: " + sessionId);
+      SESSION_ID = sessionId;
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
@@ -273,6 +277,34 @@ function ($scope, $modalInstance, $http, $log, characters, sessionId) {
     $modalInstance.dismiss('cancel');
   };
 }]);
+
+
+
+mainModule.controller("tobatsuCtrl", ["$scope", "$http", "$log",
+function($scope, $http, $log){
+
+  $scope.list = [];
+
+  $scope.reload = function() {
+    var req = {
+      method: "GET",
+      url: "https://happy.dqx.jp/capi/tobatsu/tobatsulist/",
+      headers: {
+        "X-Smile-3DS-SESSIONID": SESSION_ID,
+      },
+    };
+    
+
+    $http(req)
+    .success(function(data, status, headers, config) {
+      $scope.list = data;
+    })
+    .error(function(data, status, headers, config) {
+    });
+
+  };
+}]);
+
 
 /*
 function createCharaList(characters){
