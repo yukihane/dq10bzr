@@ -1,1 +1,9 @@
 /* CSS file placeholder. */
+
+.clear {
+  clear: both;
+}
+
+div#headerPane > div {
+  float: left;
+}

@@ -2,6 +2,279 @@ var OAUTH_URL = "https://secure.square-enix.com/oauth/oa/";
 
 var mainModule = angular.module("dq10bzr.Main", ["ui.bootstrap"]);
 
+mainModule.controller("userInfoCtrl", ["$scope", "$modal", "$http", "$log",
+function($scope, $modal, $http, $log){
+
+  $scope.id = "(未ログイン)";
+  $scope.character = "(キャラクター未選択)";
+
+  $scope.login = function(){
+    $log.info("login clicked");
+    
+    
+    var req = {
+      method: "GET",
+      url: OAUTH_URL + "oauthauth?client_id=happy&redirect_uri=https%3A%2F%2Fhappy.dqx.jp%2Fcapi%2Flogin%2Fsecurelogin%2F&response_type=code&yl=1",
+      responseType: "document",
+    };
+    
+    $http(req)
+    .success(function(data, status, headers, config) {
+
+      var inputSqexid = data.querySelector("form #sqexid");
+      var inputPassword = data.querySelector("form #password");
+      var inputOtppw = data.querySelector("form #otppw");
+
+
+      if(inputSqexid && inputPassword){
+        $log.info("ログイン処理が必要");
+        var action = data.querySelector("form").getAttribute("action");
+        openLoginDialog(action);
+      } else if(inputOtppw) {
+        $log.info("OTP認証が必要");
+        var otpAction = data.querySelector("form").getAttribute("action");
+        openOtpDialog(otpAction);
+      } else {
+        // エラー
+        // 想定しているフォームと異なる
+      }
+
+    })
+    .error(function(data, status, headers, config) {
+      $log.warn("error occured");
+      // エラーが発生、またはサーバからエラーステータスが返された場合に、
+      // 非同期で呼び出されます。
+    });
+  };
+
+  var openLoginDialog = function(action) {
+    var modalInstance = $modal.open({
+      templateUrl: 'loginPane.html',
+      controller: 'loginCtrl',
+      resolve: {
+        action: function(){
+          return action;
+        },
+      }
+    });
+
+    modalInstance.result.then(function (input) {
+      $log.info("id: " + input.sqexid + ", action: " + input.action);
+      if(input.action) {
+        $log.info("OTP認証が必要");
+        openOtpDialog(input.action);
+      } else {
+        $log.info("OTP認証不要");
+      }
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+
+
+  var openOtpDialog = function(action) {
+    var modalInstance = $modal.open({
+      templateUrl: 'otpPane.html',
+      controller: 'otpCtrl',
+      resolve: {
+        action: function(){
+          return action;
+        },
+      }
+    });
+    
+    modalInstance.result.then(function (input) {
+      console.log("inputCisSessid: " + input.cis_sessid + ", inputC: " + input._c);
+      loginCompleted(input.cis_sessid, input._c);
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+
+  var loginCompleted = function(cisSessid, c) {
+    var action = "https://happy.dqx.jp/capi/login/securelogin/";
+
+    console.log("cis_sessid: " + cisSessid + ", _c: " + c);
+    
+    var req = {
+      method: "POST",
+      url: action,
+      responseType: "json",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded",
+      },
+      params: {
+        cis_sessid: cisSessid,
+        _c: c,
+      },
+    };
+
+    $http(req)
+    .success(function(data, status, headers, config) {
+      var sessionId = data["sessionId"];
+      chrome.storage.sync.set({"login.sessionId": sessionId}, function(){
+        console.log("data stored");
+      });
+      var characters = data["characterList"];
+      console.log(characters);
+      
+      openCharaSelectDialog(characters, sessionId);
+
+    })
+    .error(function(data, status, headers, config) {
+    });
+  };
+
+  var openCharaSelectDialog = function(characters, sessionId) {
+    var modalInstance = $modal.open({
+      templateUrl: 'characterSelectionPane.html',
+      controller: 'characterCtrl',
+      resolve: {
+        characters: function() {
+          return characters;
+        },
+        sessionId: function() {
+          return sessionId;
+        },
+      }
+    });
+    
+    modalInstance.result.then(function (input) {
+      console.log("inputCisSessid: " + input.cis_sessid + ", inputC: " + input._c);
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+
+}]);
+
+mainModule.controller('loginCtrl', ["$scope", "$modalInstance", "$http", "$log", "action",
+function ($scope, $modalInstance, $http, $log, action) {
+
+  $scope.sqexid = "";
+  $scope.password = "";
+
+  $scope.ok = function () {
+
+    var req = {
+      method: "POST",
+      url: OAUTH_URL + action,
+      responseType: "document",
+      headears: {
+        "Content-type": "application/x-www-form-urlencoded",
+      },
+      params: {
+        sqexid: $scope.sqexid,
+        password: $scope.password,
+      },
+    };
+
+    $http(req)
+    .success(function(data, status, headers, config) {
+      $log.info(data);
+
+
+      var inputSqexid = data.querySelector("form #sqexid");
+      var inputPassword = data.querySelector("form #password");
+      var inputOtppw = data.querySelector("form #otppw");
+      
+      if(inputSqexid && inputPassword) {
+        $log.info("ID or password 誤り");
+        return;
+      }
+
+      var otpAction = data.querySelector("form").getAttribute("action");
+
+      $modalInstance.close({sqexid: $scope.sqexid, action: otpAction});
+    })
+    .error(function(data, status, headers, config) {
+    });
+
+
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+}]);
+
+
+mainModule.controller('otpCtrl', ["$scope", "$modalInstance", "$http", "$log", "action",
+function ($scope, $modalInstance, $http, $log, action) {
+
+  $scope.otppw = "";
+
+  $scope.ok = function () {
+
+    var req = {
+      method: "POST",
+      url: OAUTH_URL + action,
+      responseType: "document",
+      headears: {
+        "Content-type": "application/x-www-form-urlencoded",
+      },
+      params: {
+        otppw: $scope.otppw
+      },
+    };
+
+    $http(req)
+    .success(function(data, status, headers, config) {
+      
+      $log.info(data);
+
+      var inputCisSessid = data.querySelector("form input[name='cis_sessid']").value;
+      var inputC = data.querySelector("form input[name='_c']").value;
+
+      $modalInstance.close({cis_sessid: inputCisSessid, _c: inputC});
+    })
+    .error(function(data, status, headers, config) {
+    });
+
+
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+}]);
+
+mainModule.controller('characterCtrl', ["$scope", "$modalInstance", "$http", "$log", "characters", "sessionId",
+function ($scope, $modalInstance, $http, $log, characters, sessionId) {
+
+  $scope.characters = characters;
+
+  $scope.select = function (index) {
+    $log.info("index: " + index);
+    
+    var character = characters[index];
+    var webPcNo = character.webPcNo;
+    
+    var req = {
+      method: "GET",
+      url: "https://happy.dqx.jp/capi/login/characterselect/"+webPcNo+"/",
+      headers: {
+        "X-Smile-3DS-SESSIONID": sessionId,
+      },
+    };
+
+
+    $http(req)
+    .success(function(data, status, headers, config) {
+      $log.info(data);
+      $modalInstance.close(character);
+    })
+    .error(function(data, status, headers, config) {
+    });
+
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+}]);
+
+/*
 function createCharaList(characters){
   var res = "<table>";
   for(var i = 0; i < characters.length; i++) {
@@ -422,3 +695,4 @@ window.onload = function() {
 
   checkLoginSession();
 };
+*/
