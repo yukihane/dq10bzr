@@ -59,7 +59,13 @@ function($scope, $modal, $http, $log){
     });
 
     modalInstance.result.then(function (input) {
-      $log.info("id: " + input.sqexid);
+      $log.info("id: " + input.sqexid + ", action: " + input.action);
+      if(input.action) {
+        $log.info("OTP認証が必要");
+        openOtpDialog(input.action);
+      } else {
+        $log.info("OTP認証不要");
+      }
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
@@ -78,7 +84,7 @@ function($scope, $modal, $http, $log){
     });
     
     modalInstance.result.then(function (input) {
-      $log.info("id: " + input.sqexid + ", action: " + input.action);
+      console.log("inputCisSessid: " + input.cis_sessid + ", inputC: " + input._c);
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
@@ -107,10 +113,20 @@ function ($scope, $modalInstance, $http, $log, action) {
         password: $scope.password,
       },
     };
-    
+
     $http(req)
     .success(function(data, status, headers, config) {
       $log.info(data);
+
+
+      var inputSqexid = data.querySelector("form #sqexid");
+      var inputPassword = data.querySelector("form #password");
+      var inputOtppw = data.querySelector("form #otppw");
+      
+      if(inputSqexid && inputPassword) {
+        $log.info("ID or password 誤り");
+        return;
+      }
 
       var otpAction = data.querySelector("form").getAttribute("action");
 
@@ -126,7 +142,6 @@ function ($scope, $modalInstance, $http, $log, action) {
     $modalInstance.dismiss('cancel');
   };
 }]);
-
 
 
 mainModule.controller('otpCtrl', ["$scope", "$modalInstance", "$http", "$log", "action",
