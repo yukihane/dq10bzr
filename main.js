@@ -27,11 +27,11 @@ function($scope, $modal, $http, $log){
 
 
       if(inputSqexid && inputPassword){
-        $log.info("requireLogin(form);");
+        $log.info("ログイン処理が必要");
         var action = data.querySelector("form").getAttribute("action");
         openLoginDialog(action);
       } else if(inputOtppw) {
-        $log.info("requireOtppw(form);");
+        $log.info("OTP認証が必要");
         var otpAction = data.querySelector("form").getAttribute("action");
         openOtpDialog(otpAction);
       } else {
