@@ -1,0 +1,10 @@
+
+characterName: (キャラクタ名)
+iconUrl: "http://faceicon.dqx.jp/icon1/xxxxxxx.png"
+job: "武闘家"
+jobId: 5
+lv: 85
+slotNo: 1
+smileUniqueNo: "XX000-000"
+webPcNo: 000000000000
+
