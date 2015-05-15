@@ -13,3 +13,62 @@ slotNo: 1
 smileUniqueNo: "XX000-000"
 webPcNo: 000000000000
 
+フレンド取得
+https://happy.dqx.jp/capi/profile/friends/1/0/
+一度に取得できる数に限りがあるので、最後の"0"の部分をインクリメントしていって皇族のフレンドを取得する
+
+{
+"friendsCount":0, // 自分のキャラクターを除いたフレンド数
+"friendsValueList":[
+	{
+		"characterName":"フレンド名",
+		"gender":null,
+		"iconUrl":"http://faceicon.dqx.jp/icon1/xxxxx.png",
+		"isFarm":true,
+		"isFriends":false,
+		"isLoggedin":1,
+		"isMemoNew":false,
+		"isMercenaryRegisterd":false,
+		"isOwnFirm":true,
+		"isSubLeader":false,
+		"job":"踊り子",
+		"jobId":16,
+		"listedDate":0,
+		"lv":85,
+		"memo":null,
+		"race":null,
+		"smileUniqueNo":"XX000-000",
+		"stage":null,
+		"webPcNo":9999999999,
+		"world":null
+	},
+	{
+		"characterName":"フレンド名1",
+		"gender":null,
+		"iconUrl":"http://faceicon.dqx.jp/icon2/xxxxxx.png",
+		"isFarm":true,
+		"isFriends":false,
+		"isLoggedin":0,
+		"isMemoNew":false,
+		"isMercenaryRegisterd":true,
+		"isOwnFirm":true,
+		"isSubLeader":false,
+		"job":"--",
+		"jobId":0,
+		"listedDate":0,
+		"lv":0,
+		"memo":null,
+		"race":null,
+		"smileUniqueNo":"ZZ999-999",
+		"stage":null,
+		"webPcNo":000000000000,
+		"world":null}
+],
+"hasFriends":true,
+"isOffsetEnd":true,
+"lastUpdate":"2015/05/10 21:05",
+"leaderWebPcNo":null,
+"length":0,
+"listLength":2, // 今回読み込まれていない数も含む, フレンドリスト全体の長さ
+"resultCode":0
+}
