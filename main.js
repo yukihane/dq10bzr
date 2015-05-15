@@ -2,11 +2,30 @@ var OAUTH_URL = "https://secure.square-enix.com/oauth/oa/";
 
 var mainModule = angular.module("dq10bzr.Main", ["ui.bootstrap"]);
 
+
+// アカウント(現在は1アカウントのみを想定)情報を管理するサービス
 mainModule.factory("loginService", function(){
   return {
-    "login.sessionId": null,
-    "login.characterName": null,
-    "login.smileUniqueNo": null,
+    // 認証情報
+    // この情報を持っていればキャラクタ選択可能
+    auth: {
+      cis_sessid: null,
+      _c: null,
+    },
+
+    character: {
+      // キャラクタ選択をすればこの情報が取得できる
+      // X-Smile-3DS-SESSIONID ヘッダ情報として付与する
+      sessionId: null,
+
+      // キャラクタ情報
+      // キャラクタ名
+      characterName: null,
+      // ZZ999-999 といったキャラクタID
+      smileUniqueNo: null,
+      // 数字列で表されるユニーク番号
+      webPcNo: null,
+    }
   };
 });
 
@@ -16,11 +35,10 @@ function($scope, $modal, $http, $log, loginService) {
 
   $scope.loginInfo = loginService;
 
-  chrome.storage.sync.get(["login.sessionId", "login.characterName", "login.smileUniqueNo"], function(items){
-    console.log("logined: " + items["login.characterName"]);
-    loginService["login.sessionId"] = items["login.sessionId"];
-    loginService["login.characterName"] = items["login.characterName"];
-    loginService["login.smileUniqueNo"] = items["login.smileUniqueNo"];
+  chrome.storage.sync.get(["character", "auth"], function(items){
+    console.log("logined: " + items["character"].characterName);
+    loginService.character = items["character"];
+    loginService.auth = items["auth"];
     $scope.$apply();
   });
 
@@ -62,6 +80,10 @@ function($scope, $modal, $http, $log, loginService) {
       // 非同期で呼び出されます。
     });
   };
+  
+  $scope.selectCharacter = function() {
+    loginCompleted(loginService.auth);
+  };
 
   var openLoginDialog = function(action) {
     var modalInstance = $modal.open({
@@ -100,17 +122,29 @@ function($scope, $modal, $http, $log, loginService) {
     });
     
     modalInstance.result.then(function (input) {
-      console.log("inputCisSessid: " + input.cis_sessid + ", inputC: " + input._c);
-      loginCompleted(input.cis_sessid, input._c);
+
+      var auth = {
+        auth: {
+          cis_sessid: input.cis_sessid,
+          _c: input._c,
+        },
+      };
+      
+      chrome.storage.sync.set(auth, function(){
+        console.log("auth saved: " + auth);
+      });
+
+      loginCompleted(auth.auth);
+
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
   };
 
-  var loginCompleted = function(cisSessid, c) {
+  var loginCompleted = function(auth) {
     var action = "https://happy.dqx.jp/capi/login/securelogin/";
 
-    console.log("cis_sessid: " + cisSessid + ", _c: " + c);
+    console.log("cis_sessid: " + auth.cis_sessid + ", _c: " + auth._c);
     
     var req = {
       method: "POST",
@@ -120,8 +154,8 @@ function($scope, $modal, $http, $log, loginService) {
         "Content-type": "application/x-www-form-urlencoded",
       },
       params: {
-        cis_sessid: cisSessid,
-        _c: c,
+        cis_sessid: auth.cis_sessid,
+        _c: auth._c,
       },
     };
 
@@ -155,19 +189,18 @@ function($scope, $modal, $http, $log, loginService) {
       $log.info("character: " + input.webPcNo + ", sessionid: " + sessionId);
 
       var currentLogin = {
-        "login.sessionId": sessionId,
-        "login.characterName": input.characterName,
-        "login.smileUniqueNo": input.smileUniqueNo,
+        character: {
+          sessionId: sessionId,
+          characterName: input.characterName,
+          smileUniqueNo: input.smileUniqueNo,
+        }
       };
 
       chrome.storage.sync.set(currentLogin, function(){
         console.log("data stored");
+        loginService.character = currentLogin.character;
 
-        loginService["login.sessionId"] = sessionId;
-        loginService["login.characterName"] = input.characterName;
-        loginService["login.smileUniqueNo"] = input.smileUniqueNo;
-
-        console.log(loginService["login.smileUniqueNo"]);
+        console.log(loginService.character.smileUniqueNo);
 
       });
 
@@ -313,17 +346,18 @@ function($scope, $http, $log, loginService) {
 
   $scope.reload = function() {
   
-    console.log(loginService["login.sessionId"]);
+    console.log(loginService.sessionId);
 
     var req = {
       method: "GET",
       url: "https://happy.dqx.jp/capi/tobatsu/tobatsulist/",
       headers: {
-        "X-Smile-3DS-SESSIONID": loginService["login.sessionId"],
+        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
       },
     };
     
 
+    console.log("討伐リクエスト");
     $http(req)
     .success(function(data, status, headers, config) {
       console.log(data);
