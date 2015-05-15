@@ -80,6 +80,10 @@ function($scope, $modal, $http, $log, loginService) {
       // 非同期で呼び出されます。
     });
   };
+  
+  $scope.selectCharacter = function() {
+    loginCompleted(loginService.auth);
+  };
 
   var openLoginDialog = function(action) {
     var modalInstance = $modal.open({
@@ -353,6 +357,7 @@ function($scope, $http, $log, loginService) {
     };
     
 
+    console.log("討伐リクエスト");
     $http(req)
     .success(function(data, status, headers, config) {
       console.log(data);
