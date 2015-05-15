@@ -1,15 +1,28 @@
 var OAUTH_URL = "https://secure.square-enix.com/oauth/oa/";
 
-//FIXME 仮の置き場所としてグローバル変数を宣言しているが, 最終的には使用しない
-var SESSION_ID = "";
-
 var mainModule = angular.module("dq10bzr.Main", ["ui.bootstrap"]);
 
-mainModule.controller("userInfoCtrl", ["$scope", "$modal", "$http", "$log",
-function($scope, $modal, $http, $log){
+mainModule.factory("loginService", function(){
+  return {
+    "login.sessionId": null,
+    "login.characterName": null,
+    "login.smileUniqueNo": null,
+  };
+});
 
-  $scope.id = "(未ログイン)";
-  $scope.character = "(キャラクター未選択)";
+mainModule.controller("userInfoCtrl", ["$scope", "$modal", "$http", "$log", "loginService",
+function($scope, $modal, $http, $log, loginService) {
+  console.log("userInfo");
+
+  $scope.loginInfo = loginService;
+
+  chrome.storage.sync.get(["login.sessionId", "login.characterName", "login.smileUniqueNo"], function(items){
+    console.log("logined: " + items["login.characterName"]);
+    loginService["login.sessionId"] = items["login.sessionId"];
+    loginService["login.characterName"] = items["login.characterName"];
+    loginService["login.smileUniqueNo"] = items["login.smileUniqueNo"];
+    $scope.$apply();
+  });
 
   $scope.login = function(){
     $log.info("login clicked");
@@ -115,12 +128,8 @@ function($scope, $modal, $http, $log){
     $http(req)
     .success(function(data, status, headers, config) {
       var sessionId = data["sessionId"];
-      chrome.storage.sync.set({"login.sessionId": sessionId}, function(){
-        console.log("data stored");
-      });
       var characters = data["characterList"];
-      console.log(characters);
-      
+
       openCharaSelectDialog(characters, sessionId);
 
     })
@@ -144,7 +153,24 @@ function($scope, $modal, $http, $log){
     
     modalInstance.result.then(function (input) {
       $log.info("character: " + input.webPcNo + ", sessionid: " + sessionId);
-      SESSION_ID = sessionId;
+
+      var currentLogin = {
+        "login.sessionId": sessionId,
+        "login.characterName": input.characterName,
+        "login.smileUniqueNo": input.smileUniqueNo,
+      };
+
+      chrome.storage.sync.set(currentLogin, function(){
+        console.log("data stored");
+
+        loginService["login.sessionId"] = sessionId;
+        loginService["login.characterName"] = input.characterName;
+        loginService["login.smileUniqueNo"] = input.smileUniqueNo;
+
+        console.log(loginService["login.smileUniqueNo"]);
+
+      });
+
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
@@ -280,23 +306,27 @@ function ($scope, $modalInstance, $http, $log, characters, sessionId) {
 
 
 
-mainModule.controller("tobatsuCtrl", ["$scope", "$http", "$log",
-function($scope, $http, $log){
+mainModule.controller("tobatsuCtrl", ["$scope", "$http", "$log", "loginService", 
+function($scope, $http, $log, loginService) {
 
   $scope.list = [];
 
   $scope.reload = function() {
+  
+    console.log(loginService["login.sessionId"]);
+
     var req = {
       method: "GET",
       url: "https://happy.dqx.jp/capi/tobatsu/tobatsulist/",
       headers: {
-        "X-Smile-3DS-SESSIONID": SESSION_ID,
+        "X-Smile-3DS-SESSIONID": loginService["login.sessionId"],
       },
     };
     
 
     $http(req)
     .success(function(data, status, headers, config) {
+      console.log(data);
       $scope.list = data;
     })
     .error(function(data, status, headers, config) {

@@ -12,8 +12,8 @@
 
   <div id="headerPane" data-ng-controller="userInfoCtrl">
     <div id="statusPane">
-      <div>{{id}}</div>
-      <div>{{character}}</div>
+      <div>{{loginInfo["login.smileUniqueNo"]}}</div>
+      <div>{{loginInfo["login.characterName"]}}</div>
     </div>
     <div id="characterButtonPane">
       <button class="btn btn-default" data-ng-click="selectCharacter()">キャラ変更</button>
