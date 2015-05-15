@@ -1,4 +1,9 @@
 
+
+
+キャラクター選択
+"https://happy.dqx.jp/capi/login/characterselect/"+webPcNo+"/"
+
 characterName: (キャラクタ名)
 iconUrl: "http://faceicon.dqx.jp/icon1/xxxxxxx.png"
 job: "武闘家"
