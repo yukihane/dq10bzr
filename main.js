@@ -2,11 +2,30 @@ var OAUTH_URL = "https://secure.square-enix.com/oauth/oa/";
 
 var mainModule = angular.module("dq10bzr.Main", ["ui.bootstrap"]);
 
+
+// アカウント(現在は1アカウントのみを想定)情報を管理するサービス
 mainModule.factory("loginService", function(){
   return {
-    sessionId: null,
-    characterName: null,
-    smileUniqueNo: null,
+    // 認証情報
+    // この情報を持っていればキャラクタ選択可能
+    auth: {
+      cis_sessid: null,
+      _c: null,
+    },
+
+    character: {
+      // キャラクタ選択をすればこの情報が取得できる
+      // X-Smile-3DS-SESSIONID ヘッダ情報として付与する
+      sessionId: null,
+
+      // キャラクタ情報
+      // キャラクタ名
+      characterName: null,
+      // ZZ999-999 といったキャラクタID
+      smileUniqueNo: null,
+      // 数字列で表されるユニーク番号
+      webPcNo: null,
+    }
   };
 });
 
