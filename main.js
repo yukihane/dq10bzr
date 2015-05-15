@@ -4,9 +4,9 @@ var mainModule = angular.module("dq10bzr.Main", ["ui.bootstrap"]);
 
 mainModule.factory("loginService", function(){
   return {
-    "login.sessionId": null,
-    "login.characterName": null,
-    "login.smileUniqueNo": null,
+    sessionId: null,
+    characterName: null,
+    smileUniqueNo: null,
   };
 });
 
@@ -18,9 +18,9 @@ function($scope, $modal, $http, $log, loginService) {
 
   chrome.storage.sync.get(["login.sessionId", "login.characterName", "login.smileUniqueNo"], function(items){
     console.log("logined: " + items["login.characterName"]);
-    loginService["login.sessionId"] = items["login.sessionId"];
-    loginService["login.characterName"] = items["login.characterName"];
-    loginService["login.smileUniqueNo"] = items["login.smileUniqueNo"];
+    loginService.sessionId = items["login.sessionId"];
+    loginService.characterName = items["login.characterName"];
+    loginService.smileUniqueNo = items["login.smileUniqueNo"];
     $scope.$apply();
   });
 
@@ -163,11 +163,11 @@ function($scope, $modal, $http, $log, loginService) {
       chrome.storage.sync.set(currentLogin, function(){
         console.log("data stored");
 
-        loginService["login.sessionId"] = sessionId;
-        loginService["login.characterName"] = input.characterName;
-        loginService["login.smileUniqueNo"] = input.smileUniqueNo;
+        loginService.sessionId = sessionId;
+        loginService.characterName = input.characterName;
+        loginService.smileUniqueNo = input.smileUniqueNo;
 
-        console.log(loginService["login.smileUniqueNo"]);
+        console.log(loginService.smileUniqueNo);
 
       });
 
@@ -313,13 +313,13 @@ function($scope, $http, $log, loginService) {
 
   $scope.reload = function() {
   
-    console.log(loginService["login.sessionId"]);
+    console.log(loginService.sessionId);
 
     var req = {
       method: "GET",
       url: "https://happy.dqx.jp/capi/tobatsu/tobatsulist/",
       headers: {
-        "X-Smile-3DS-SESSIONID": loginService["login.sessionId"],
+        "X-Smile-3DS-SESSIONID": loginService.sessionId,
       },
     };
     
