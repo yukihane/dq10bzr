@@ -12,3 +12,8 @@ pre {
 div#headerPane > div {
   float: left;
 }
+
+.tab-pane {
+  height: 400px;
+  overflow: auto;
+}
