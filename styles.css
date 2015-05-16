@@ -17,3 +17,8 @@ div#headerPane > div {
   height: 400px;
   overflow: auto;
 }
+
+/* フレンドリストでオンラインプレイヤーの背景色を変更 */
+table#friendsTable tr.online {
+  background-color: yellow;
+}
