@@ -32,8 +32,10 @@
         <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
         <table id="friendsTable">
           <tr data-ng-repeat="f in friends" data-ng-class="{online: f.isLoggedin}">
-            <td>{{f.characterName}}</td>
-            <td>{{f.isLoggedin}}</td>
+            <td class="characterName" data-ng-click="open(f.webPcNo)">{{f.characterName}}</td>
+            <td>{{f.smileUniqueNo}}</td>
+            <td>{{f.job}}</td>
+            <td>{{f.lv}}</td>
           </tr>
         </table>
         <div data-ng-if="!isOffsetEnd">

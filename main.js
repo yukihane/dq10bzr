@@ -377,6 +377,11 @@ function($scope, $http, $log, loginService) {
     });
   };
 
+  $scope.open = function(webPcNo) {
+    console.log("open clicked");
+    window.open("http://hiroba.dqx.jp/sc/character/" + webPcNo + "/");
+  };
+
 }]);
 
 

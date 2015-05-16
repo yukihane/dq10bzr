@@ -18,6 +18,21 @@ div#headerPane > div {
   overflow: auto;
 }
 
+
+/*
+フレンドリスト関連設定
+*/
+
+table#friendsTable {
+  -webkit-user-select: text;
+  cursor: text;
+}
+
+
+table#friendsTable td.characterName {
+  cursor: pointer;
+}
+
 /* フレンドリストでオンラインプレイヤーの背景色を変更 */
 table#friendsTable tr.online {
   background-color: yellow;
