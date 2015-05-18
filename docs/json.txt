@@ -121,3 +121,49 @@ https://happy.dqx.jp/capi/syokunin/joblist/
 		}
 	]
 }
+
+
+職人ギルド依頼詳細
+"https://happy.dqx.jp/capi/syokunin/jobdetail/" + jobNo + "/" + recipeNo + "/"
+        + (createWebItemNoHash ? createWebItemNoHash + "/" : ""),
+
+{
+	"isEquipmentForRenkin":false,
+	"jobDetail":"自分で作った　新品の\nサフランローブ下を１個",
+	"recipeDetail":{
+		"recipeName":"サフランローブ下",
+		"daikoumokuName":"さいほう",
+		"renkinDetail":null,
+		"iconUrl":"http://hiroba.dqx.jp/dq_resource/itemicon/22d85780c702033cdd4fa548968b7a662a10a725.png",
+		"syokuninLv":8,
+		"renkinTargetParts":null,
+		"recipeNo":90,
+		"createWebItemNoHash":"22d85780c702033cdd4fa548968b7a662a10a725",
+		"necessaryMaterialList":[
+			{
+				"storageList":null,
+				"itemName":"コットン草",
+				"webItemNoHash":"e0fedd74286bae88e703e43f9a037bdd03a8a710",
+				"iconUrl":"http://hiroba.dqx.jp/dq_resource/itemicon/e0fedd74286bae88e703e43f9a037bdd03a8a710.png",
+				"length":2
+			},
+			{
+				"storageList":[
+					{
+						"isCan":true,
+						"name":"素材",
+						"storageIndex":1,
+						"storageId":4,
+						"size":34
+					}
+				],
+				"itemName":"サバンナの水",
+				"webItemNoHash":"73142e49fa690d34db98b3876cf6925bb657e038",
+				"iconUrl":"http://hiroba.dqx.jp/dq_resource/itemicon/73142e49fa690d34db98b3876cf6925bb657e038.png",
+				"length":1
+			}
+		],
+		"daikoumokuNo":7
+	},
+	"resultCode":0
+}
