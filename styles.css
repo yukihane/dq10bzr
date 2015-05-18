@@ -37,3 +37,8 @@ table#friendsTable td.characterName {
 table#friendsTable tr.online {
   background-color: yellow;
 }
+
+/* 職人ギルド依頼の依頼リストと詳細を横並びに */
+div#syokuninContent > div {
+  float: left;
+}

@@ -73,15 +73,28 @@
 
       <tab heading="職人" data-ng-controller="syokuninCtrl">
         <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
-        <table>
-          <tr data-ng-repeat="e in list">
-            <td>{{e.isComplete | convertToProgress}}</td>
-            <td>{{e.rank}}</td>
-            <td>{{e.jobName}}</td>
-            <td>{{e.reward.exp | number}}P</td>
-            <td>{{e.reward.gold | number}}G</td>
-          </tr>
-        </table>
+        <div id="syokuninContent">
+          <div>
+            <table>
+              <tr data-ng-repeat="e in list">
+                <td>{{e.isComplete | convertToProgress}}</td>
+                <td>{{e.rank}}</td>
+                <td>{{e.jobName}}</td>
+                <td>{{e.reward.exp | number}}P</td>
+                <td>{{e.reward.gold | number}}G</td>
+                <td><button data-ng-click="detail(e.jobNo, e.recipeNo, e.createWebItemNoHash)">>></button></td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <table>
+              <tr data-ng-repeat=" m in necessaryMaterials">
+                <td>{{m.itemName}}</td>
+                <td>{{m.length}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </tab>
 
 
