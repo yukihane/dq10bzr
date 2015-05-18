@@ -167,3 +167,94 @@ https://happy.dqx.jp/capi/syokunin/joblist/
 	},
 	"resultCode":0
 }
+
+チルド依頼の素材をバザー検索する際のリクエストパラメータ
+https://happy.dqx.jp//capi/bazaar/search/
+
+bazaarno=99&
+largecategoryid=0&
+smallcategoryid=0&
+webitemid=e0fedd74286bae88e703e43f9a037bdd03a8a710&
+job=0&
+levelmin=1&
+levelmax=85&
+stackmin=0&
+stackmax=99&
+pricemin=0&
+pricemax=9999999999&
+qualitymin=0&
+qualitymax=3&
+renkinmin=0&
+renkinmax=3&
+renkinsearchcategory=0&
+renkinsearchcategory2=0&
+renkinsearchmin=0&
+renkinsearchmin2=0&
+creatorname=null&
+smileuniqueno=null&
+offset=0
+
+
+{
+	"itemListValueList":[
+		{
+			"bazaarItemNo":1796945608,
+			"bazaarName":"アストルティア旅人バザー",
+			"bazaarNo":99,
+			"detailMode":1,
+			"endDate":0,
+			"equipmentLv":0,
+			"iconUrl":"http://hiroba.dqx.jp/dq_resource/itemicon/e0fedd74286bae88e703e43f9a037bdd03a8a710.png",
+			"isEquipment":false,
+			"itemDetail":"ふわふわの綿が\nとれる草\n職人のための素材",
+			"itemName":"コットン草",
+			"itemPrice":90,
+			"itemQuality":0,
+			"itemQualityMax":0,
+			"itemUniqueNo":"11298211226485523555",
+			"itemUniqueNoStr":"11298211226485523555",
+			"kessyouNum":null,
+			"remainingDate":259195,
+			"renkinCount":0,
+			"renkinList":[],
+			"reward":null,
+			"sellerPcName":"ぎんほね",
+			"shopPrice":null,
+			"stackCount":1,
+			"startDate":0,
+			"targetMonster":null,
+			"tradein":null,
+			"webItemId":"e0fedd74286bae88e703e43f9a037bdd03a8a710"
+		},{
+			"bazaarItemNo":1796945544,
+			"bazaarName":"アストルティア旅人バザー",
+			"bazaarNo":99,
+			"detailMode":1,
+			"endDate":0,
+			"equipmentLv":0,
+			"iconUrl":"http://hiroba.dqx.jp/dq_resource/itemicon/e0fedd74286bae88e703e43f9a037bdd03a8a710.png",
+			"isEquipment":false,
+			"itemDetail":"ふわふわの綿が\nとれる草\n職人のための素材",
+			"itemName":"コットン草",
+			"itemPrice":100,
+			"itemQuality":0,
+			"itemQualityMax":0,
+			"itemUniqueNo":"11256096525232650896",
+			"itemUniqueNoStr":"11256096525232650896",
+			"kessyouNum":null,
+			"remainingDate":259191,
+			"renkinCount":0,
+			"renkinList":[],
+			"reward":null,
+			"sellerPcName":"ピン",
+			"shopPrice":null,
+			"stackCount":1,
+			"startDate":0,
+			"targetMonster":null,
+			"tradein":null,
+			"webItemId":"e0fedd74286bae88e703e43f9a037bdd03a8a710"
+		}
+	],
+	"length":100,
+	"resultCode":0
+}
