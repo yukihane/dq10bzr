@@ -27,6 +27,22 @@
   <div class="clear"></div>
   <div id="mainWindow">
     <tabset>
+
+      <tab heading="フレンド" data-ng-controller="friendCtrl">
+        <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
+        <table id="friendsTable">
+          <tr data-ng-repeat="f in friends" data-ng-class="{online: f.isLoggedin}">
+            <td class="characterName" data-ng-click="open(f.webPcNo)">{{f.characterName}}</td>
+            <td>{{f.smileUniqueNo}}</td>
+            <td>{{f.job}}</td>
+            <td>{{f.lv}}</td>
+          </tr>
+        </table>
+        <div data-ng-if="!isOffsetEnd">
+          <button class="btn" data-ng-click="query(nextIndex)">次</button>
+        </div>
+      </tab>
+
       <tab heading="討伐" data-ng-controller="tobatsuCtrl">
         <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
 
