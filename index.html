@@ -43,6 +43,7 @@
         </div>
       </tab>
 
+
       <tab heading="討伐" data-ng-controller="tobatsuCtrl">
         <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
 
@@ -67,8 +68,23 @@
             </tr>
           </table>
         </div>
-
       </tab>
+
+
+      <tab heading="職人" data-ng-controller="syokuninCtrl">
+        <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
+        <table>
+          <tr data-ng-repeat="e in list">
+            <td>{{e.isComplete | convertToProgress}}</td>
+            <td>{{e.rank}}</td>
+            <td>{{e.jobName}}</td>
+            <td>{{e.reward.exp | number}}P</td>
+            <td>{{e.reward.gold | number}}G</td>
+          </tr>
+        </table>
+      </tab>
+
+
       <tab heading="バザー検索">
         <!-- バザー検索条件指定Pane -->
         <div id="bazaarSearchConditionPane">

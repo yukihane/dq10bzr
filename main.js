@@ -29,6 +29,15 @@ mainModule.factory("loginService", function(){
   };
 });
 
+mainModule.filter("convertToProgress", function() {
+  return function(isComplete) {
+    if(isComplete) {
+      return "済";
+    }
+    return "未";
+  };
+});
+
 mainModule.controller("userInfoCtrl", ["$scope", "$modal", "$http", "$log", "loginService",
 function($scope, $modal, $http, $log, loginService) {
   console.log("userInfo");
@@ -415,6 +424,36 @@ function($scope, $http, $log, loginService) {
   };
 }]);
 
+
+mainModule.controller("syokuninCtrl", ["$scope", "$http", "$log", "loginService",
+function($scope, $http, $log, loginService) {
+
+  $scope.list = [];
+
+  $scope.reload = function() {
+
+    console.log(loginService.sessionId);
+
+    var req = {
+      method: "GET",
+      url: "https://happy.dqx.jp/capi/syokunin/joblist/",
+      headers: {
+        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
+      },
+    };
+
+    console.log("職人ギルド依頼");
+    $http(req)
+    .success(function(data, status, headers, config) {
+      console.log(data);
+      $scope.list = data.syokuninGuildList;
+    })
+    .error(function(data, status, headers, config) {
+    });
+
+  };
+
+}]);
 
 /*
 function createCharaList(characters){
