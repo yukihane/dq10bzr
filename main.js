@@ -431,6 +431,8 @@ function($scope, $http, $log, loginService) {
   $scope.list = [];
   
   $scope.necessaryMaterials = [];
+  
+  $scope.bzrResults = [];
 
   $scope.reload = function() {
 
@@ -475,6 +477,31 @@ function($scope, $http, $log, loginService) {
     .error(function(data, status, headers, config) {
     });
 
+  };
+
+  $scope.searchBzr = function(webItemNoHash) {
+
+    var req = {
+      method: "GET",
+      url: "https://happy.dqx.jp/capi/bazaar/search/",
+      params: {
+        bazaarno: 99,
+        webitemid: webItemNoHash,
+      },
+      headers: {
+        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
+      },
+    };
+
+    $http(req)
+    .success(function(data, status, headers, config) {
+      console.log(data);
+      $scope.bzrResults = data;
+    })
+    .error(function(data, status, headers, config) {
+    });
+
+    
   };
 
 }]);

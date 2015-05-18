@@ -91,10 +91,12 @@
               <tr data-ng-repeat=" m in necessaryMaterials">
                 <td>{{m.itemName}}</td>
                 <td>{{m.length}}</td>
+                <td><button data-ng-click="searchBzr(m.webItemNoHash)">>></button></td>
               </tr>
             </table>
           </div>
         </div>
+        <pre>{{bzrResults}}</pre>
       </tab>
 
 
