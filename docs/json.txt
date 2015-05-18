@@ -72,3 +72,52 @@ https://happy.dqx.jp/capi/profile/friends/1/0/
 "listLength":2, // 今回読み込まれていない数も含む, フレンドリスト全体の長さ
 "resultCode":0
 }
+
+
+職人ギルド依頼
+https://happy.dqx.jp/capi/syokunin/joblist/
+
+取得できなかった場合
+{"resultCode":21012,"syokuninGuildList":null}
+
+{
+	"resultCode":0,
+	"syokuninGuildList":[
+		{
+			"createWebItemNoHash":"0",
+			"iconUrl":"http://cache.hiroba.dqx.jp/luk_resource/syokunin/job12.png",
+			"isComplete":false,
+			"isKotsu":true,
+			"isLv":true,
+			"isPreviousComplete":true,
+			"isRecipe":true,
+			"jobName":"かいふく魔力アップ",
+			"jobNo":2,
+			"lv":2,
+			"rank":1,
+			"recipeNo":11,
+			"reward":{
+				"exp":48,
+				"gold":900
+			}
+		},
+		{
+			"createWebItemNoHash":"0",
+			"iconUrl":"http://cache.hiroba.dqx.jp/luk_resource/syokunin/job12.png",
+			"isComplete":false,
+			"isKotsu":true,
+			"isLv":true,
+			"isPreviousComplete":true,
+			"isRecipe":true,
+			"jobName":"さいだいＭＰアップ",
+			"jobNo":3,
+			"lv":4,
+			"rank":1,
+			"recipeNo":16,
+			"reward":{
+				"exp":52,"
+				gold":930
+			}
+		}
+	]
+}
