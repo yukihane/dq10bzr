@@ -38,6 +38,18 @@ mainModule.filter("convertToProgress", function() {
   };
 });
 
+
+/*
+エポックミリ秒文字列を受け取り、「日本時間帯における」月日文字列を返します.
+*/
+mainModule.filter("epochStrToJpDateStr", function(){
+  return function(epoch) {
+    var offsetEpoch = parseInt(epoch, 10) + 9*60*60*1000;
+    var date = new Date(offsetEpoch);
+    return "" + (date.getUTCMonth() + 1) + "/" + date.getUTCDate();
+  };
+});
+
 mainModule.controller("userInfoCtrl", ["$scope", "$modal", "$http", "$log", "loginService",
 function($scope, $modal, $http, $log, loginService) {
   console.log("userInfo");

@@ -49,7 +49,7 @@
 
         <div>受注済み</div>
         <div data-ng-repeat="al in list.acceptedTobatsuDataList">
-          <div>{{al.continentName}}</div>
+          <div>{{al.continentName}} {{al.issuedDate | epochStrToJpDateStr}}</div>
           <table>
             <tr data-ng-repeat="e in al.tobatsuList">
               <td>{{e.area}} {{e.monsterName}} {{e.count}}匹</td>
@@ -60,7 +60,7 @@
 
         <div>リスト</div>
         <div data-ng-repeat="cl in list.countryTobatsuDataList">
-          <div>{{cl.continentName}}</div>
+          <div>{{cl.continentName}} {{cl.issuedDate | epochStrToJpDateStr}}</div>
           <table>
             <tr data-ng-repeat="c in cl.tobatsuList">
               <td>{{c.area}} {{c.monsterName}} {{c.count}}匹</td>
