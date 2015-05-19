@@ -13,7 +13,8 @@ slotNo: 1
 smileUniqueNo: "XX000-000"
 webPcNo: 000000000000
 
-フレンド取得
+
+●フレンド取得
 https://happy.dqx.jp/capi/profile/friends/1/0/
 一度に取得できる数に限りがあるので、最後の"0"の部分をインクリメントしていって皇族のフレンドを取得する
 
@@ -73,6 +74,168 @@ https://happy.dqx.jp/capi/profile/friends/1/0/
 "resultCode":0
 }
 
+
+●討伐依頼
+
+取得できなかった場合
+{
+	"acceptedTobatsuDataList":[],
+	"countryTobatsuDataList":[],
+	"dailyClearCount":546,
+	"isRealRendasia":true,
+	"isTermDailyFlag":false,
+	"isTermWeeklyFlag":false,
+	"isTermWeeklyRealFlag":false,
+	"rendasiaName":"偽りのレンダーシア",
+	"resultCode":22001,
+	"weeklyClearCount":36,
+	"weeklyRealClearCount":3
+}
+
+正常に取得できた場合
+{
+	"acceptedTobatsuDataList":[
+		{
+			"continentName":"大国",
+			"countySize":2,
+			"issuedDate":"1431892800000",
+			"tobatsuList":[
+				{
+					"area":"[オ]ギルザッド地方",
+					"count":25,
+					"isSpecial":true,
+					"monsterName":"フォレスドン",
+					"point":40980,
+					"questNo":17012,
+					"questStatus":1,
+					"tobatsuCrownUrl":null,
+					"totalCount":13426
+				}
+			],
+			"type":1
+		},
+		{
+			"continentName":"真のレンダーシア",
+			"countySize":4,
+			"issuedDate":"1431802800000",
+			"tobatsuList":[
+				{
+					"area":"[レ]真のデフェル荒野",
+					"count":10,
+					"isSpecial":true,
+					"monsterName":"ホロゴースト",
+					"point":141830,
+					"questNo":23202,
+					"questStatus":2,
+					"tobatsuCrownUrl":"http://cache.hiroba.dqx.jp/luk_resource/tobatsu/coin_icon_400.png",
+					"totalCount":430
+				}
+			],
+			"type":2
+		}
+	],
+	"countryTobatsuDataList":[
+		{
+			"continentName":"小国",
+			"countySize":1,
+			"issuedDate":"1431982800000",
+			"tobatsuList":[
+				{
+					"area":"[ド]モガリム街道",
+					"count":15,
+					"isSpecial":false,
+					"monsterName":"キャタピラー",
+					"point":1080,
+					"questNo":16008,
+					"questStatus":0,
+					"tobatsuCrownUrl":null,
+					"totalCount":32
+				},
+				{
+					"area":"[エ]キリカ草原",
+					"count":20,
+					"isSpecial":true,
+					"monsterName":"アロエおに",
+					"point":10700,
+					"questNo":15919,
+					"questStatus":0,
+					"tobatsuCrownUrl":null,
+					"totalCount":28
+				}
+			],
+			"type":1
+		},
+		{
+			"continentName":"大国",
+			"countySize":2,
+			"issuedDate":"1431982800000",
+			"tobatsuList":[
+				{
+					"area":"[ウ]ヴァース大山林",
+					"count":20,
+					"isSpecial":false,
+					"monsterName":"マザーウッド",
+					"point":7680,
+					"questNo":16339,
+					"questStatus":0,
+					"tobatsuCrownUrl":"http://cache.hiroba.dqx.jp/luk_resource/tobatsu/coin_icon_400.png",
+					"totalCount":402
+				},
+				{
+					"area":"[ウ]ヴェリナード領西",
+					"count":25,
+					"isSpecial":false,
+					"monsterName":"スカラベキング",
+					"point":20030,
+					"questNo":16760,
+					"questStatus":0,
+					"tobatsuCrownUrl":null,
+					"totalCount":2262
+				}
+			],
+			"type":1
+		},
+		{
+			"continentName":"真のレンダーシア",
+			"countySize":4,
+			"issuedDate":"1431810000000",
+			"tobatsuList":[
+				{
+					"area":"[レ]真のグランゼドーラ領",
+					"count":20,
+					"isSpecial":false,
+					"monsterName":"プークプック",
+					"point":130680,
+					"questNo":23008,
+					"questStatus":0,
+					"tobatsuCrownUrl":null,
+					"totalCount":46
+				},
+				{
+					"area":"[レ]真のデフェル荒野",
+					"count":10,
+					"isSpecial":true,
+					"monsterName":"ホロゴースト",
+					"point":141830,
+					"questNo":23202,
+					"questStatus":2,
+					"tobatsuCrownUrl":"http://cache.hiroba.dqx.jp/luk_resource/tobatsu/coin_icon_400.png",
+					"totalCount":430
+				}
+			],
+			"type":2
+		}
+	],
+	"dailyClearCount":546,
+	"isRealRendasia":true,
+	"isTermDailyFlag":false,
+	"isTermWeeklyFlag":true,
+	"isTermWeeklyRealFlag":false,
+	"rendasiaName":"偽りのレンダーシア",
+	"resultCode":0,
+	"weeklyClearCount":36,
+	"weeklyRealClearCount":3
+}
 
 職人ギルド依頼
 https://happy.dqx.jp/capi/syokunin/joblist/
