@@ -13,7 +13,8 @@ slotNo: 1
 smileUniqueNo: "XX000-000"
 webPcNo: 000000000000
 
-フレンド取得
+
+●フレンド取得
 https://happy.dqx.jp/capi/profile/friends/1/0/
 一度に取得できる数に限りがあるので、最後の"0"の部分をインクリメントしていって皇族のフレンドを取得する
 
@@ -71,4 +72,352 @@ https://happy.dqx.jp/capi/profile/friends/1/0/
 "length":0,
 "listLength":2, // 今回読み込まれていない数も含む, フレンドリスト全体の長さ
 "resultCode":0
+}
+
+
+●討伐依頼
+
+取得できなかった場合
+{
+	"acceptedTobatsuDataList":[],
+	"countryTobatsuDataList":[],
+	"dailyClearCount":546,
+	"isRealRendasia":true,
+	"isTermDailyFlag":false,
+	"isTermWeeklyFlag":false,
+	"isTermWeeklyRealFlag":false,
+	"rendasiaName":"偽りのレンダーシア",
+	"resultCode":22001,
+	"weeklyClearCount":36,
+	"weeklyRealClearCount":3
+}
+
+正常に取得できた場合
+{
+	"acceptedTobatsuDataList":[
+		{
+			"continentName":"大国",
+			"countySize":2,
+			"issuedDate":"1431892800000",
+			"tobatsuList":[
+				{
+					"area":"[オ]ギルザッド地方",
+					"count":25,
+					"isSpecial":true,
+					"monsterName":"フォレスドン",
+					"point":40980,
+					"questNo":17012,
+					"questStatus":1,
+					"tobatsuCrownUrl":null,
+					"totalCount":13426
+				}
+			],
+			"type":1
+		},
+		{
+			"continentName":"真のレンダーシア",
+			"countySize":4,
+			"issuedDate":"1431802800000",
+			"tobatsuList":[
+				{
+					"area":"[レ]真のデフェル荒野",
+					"count":10,
+					"isSpecial":true,
+					"monsterName":"ホロゴースト",
+					"point":141830,
+					"questNo":23202,
+					"questStatus":2,
+					"tobatsuCrownUrl":"http://cache.hiroba.dqx.jp/luk_resource/tobatsu/coin_icon_400.png",
+					"totalCount":430
+				}
+			],
+			"type":2
+		}
+	],
+	"countryTobatsuDataList":[
+		{
+			"continentName":"小国",
+			"countySize":1,
+			"issuedDate":"1431982800000",
+			"tobatsuList":[
+				{
+					"area":"[ド]モガリム街道",
+					"count":15,
+					"isSpecial":false,
+					"monsterName":"キャタピラー",
+					"point":1080,
+					"questNo":16008,
+					"questStatus":0,
+					"tobatsuCrownUrl":null,
+					"totalCount":32
+				},
+				{
+					"area":"[エ]キリカ草原",
+					"count":20,
+					"isSpecial":true,
+					"monsterName":"アロエおに",
+					"point":10700,
+					"questNo":15919,
+					"questStatus":0,
+					"tobatsuCrownUrl":null,
+					"totalCount":28
+				}
+			],
+			"type":1
+		},
+		{
+			"continentName":"大国",
+			"countySize":2,
+			"issuedDate":"1431982800000",
+			"tobatsuList":[
+				{
+					"area":"[ウ]ヴァース大山林",
+					"count":20,
+					"isSpecial":false,
+					"monsterName":"マザーウッド",
+					"point":7680,
+					"questNo":16339,
+					"questStatus":0,
+					"tobatsuCrownUrl":"http://cache.hiroba.dqx.jp/luk_resource/tobatsu/coin_icon_400.png",
+					"totalCount":402
+				},
+				{
+					"area":"[ウ]ヴェリナード領西",
+					"count":25,
+					"isSpecial":false,
+					"monsterName":"スカラベキング",
+					"point":20030,
+					"questNo":16760,
+					"questStatus":0,
+					"tobatsuCrownUrl":null,
+					"totalCount":2262
+				}
+			],
+			"type":1
+		},
+		{
+			"continentName":"真のレンダーシア",
+			"countySize":4,
+			"issuedDate":"1431810000000",
+			"tobatsuList":[
+				{
+					"area":"[レ]真のグランゼドーラ領",
+					"count":20,
+					"isSpecial":false,
+					"monsterName":"プークプック",
+					"point":130680,
+					"questNo":23008,
+					"questStatus":0,
+					"tobatsuCrownUrl":null,
+					"totalCount":46
+				},
+				{
+					"area":"[レ]真のデフェル荒野",
+					"count":10,
+					"isSpecial":true,
+					"monsterName":"ホロゴースト",
+					"point":141830,
+					"questNo":23202,
+					"questStatus":2,
+					"tobatsuCrownUrl":"http://cache.hiroba.dqx.jp/luk_resource/tobatsu/coin_icon_400.png",
+					"totalCount":430
+				}
+			],
+			"type":2
+		}
+	],
+	"dailyClearCount":546,
+	"isRealRendasia":true,
+	"isTermDailyFlag":false,
+	"isTermWeeklyFlag":true,
+	"isTermWeeklyRealFlag":false,
+	"rendasiaName":"偽りのレンダーシア",
+	"resultCode":0,
+	"weeklyClearCount":36,
+	"weeklyRealClearCount":3
+}
+
+職人ギルド依頼
+https://happy.dqx.jp/capi/syokunin/joblist/
+
+取得できなかった場合
+{"resultCode":21012,"syokuninGuildList":null}
+
+{
+	"resultCode":0,
+	"syokuninGuildList":[
+		{
+			"createWebItemNoHash":"0",
+			"iconUrl":"http://cache.hiroba.dqx.jp/luk_resource/syokunin/job12.png",
+			"isComplete":false,
+			"isKotsu":true,
+			"isLv":true,
+			"isPreviousComplete":true,
+			"isRecipe":true,
+			"jobName":"かいふく魔力アップ",
+			"jobNo":2,
+			"lv":2,
+			"rank":1,
+			"recipeNo":11,
+			"reward":{
+				"exp":48,
+				"gold":900
+			}
+		},
+		{
+			"createWebItemNoHash":"0",
+			"iconUrl":"http://cache.hiroba.dqx.jp/luk_resource/syokunin/job12.png",
+			"isComplete":false,
+			"isKotsu":true,
+			"isLv":true,
+			"isPreviousComplete":true,
+			"isRecipe":true,
+			"jobName":"さいだいＭＰアップ",
+			"jobNo":3,
+			"lv":4,
+			"rank":1,
+			"recipeNo":16,
+			"reward":{
+				"exp":52,"
+				gold":930
+			}
+		}
+	]
+}
+
+
+職人ギルド依頼詳細
+"https://happy.dqx.jp/capi/syokunin/jobdetail/" + jobNo + "/" + recipeNo + "/"
+        + (createWebItemNoHash ? createWebItemNoHash + "/" : ""),
+
+{
+	"isEquipmentForRenkin":false,
+	"jobDetail":"自分で作った　新品の\nサフランローブ下を１個",
+	"recipeDetail":{
+		"recipeName":"サフランローブ下",
+		"daikoumokuName":"さいほう",
+		"renkinDetail":null,
+		"iconUrl":"http://hiroba.dqx.jp/dq_resource/itemicon/22d85780c702033cdd4fa548968b7a662a10a725.png",
+		"syokuninLv":8,
+		"renkinTargetParts":null,
+		"recipeNo":90,
+		"createWebItemNoHash":"22d85780c702033cdd4fa548968b7a662a10a725",
+		"necessaryMaterialList":[
+			{
+				"storageList":null,
+				"itemName":"コットン草",
+				"webItemNoHash":"e0fedd74286bae88e703e43f9a037bdd03a8a710",
+				"iconUrl":"http://hiroba.dqx.jp/dq_resource/itemicon/e0fedd74286bae88e703e43f9a037bdd03a8a710.png",
+				"length":2
+			},
+			{
+				"storageList":[
+					{
+						"isCan":true,
+						"name":"素材",
+						"storageIndex":1,
+						"storageId":4,
+						"size":34
+					}
+				],
+				"itemName":"サバンナの水",
+				"webItemNoHash":"73142e49fa690d34db98b3876cf6925bb657e038",
+				"iconUrl":"http://hiroba.dqx.jp/dq_resource/itemicon/73142e49fa690d34db98b3876cf6925bb657e038.png",
+				"length":1
+			}
+		],
+		"daikoumokuNo":7
+	},
+	"resultCode":0
+}
+
+チルド依頼の素材をバザー検索する際のリクエストパラメータ
+https://happy.dqx.jp//capi/bazaar/search/
+
+bazaarno=99&
+largecategoryid=0&
+smallcategoryid=0&
+webitemid=e0fedd74286bae88e703e43f9a037bdd03a8a710&
+job=0&
+levelmin=1&
+levelmax=85&
+stackmin=0&
+stackmax=99&
+pricemin=0&
+pricemax=9999999999&
+qualitymin=0&
+qualitymax=3&
+renkinmin=0&
+renkinmax=3&
+renkinsearchcategory=0&
+renkinsearchcategory2=0&
+renkinsearchmin=0&
+renkinsearchmin2=0&
+creatorname=null&
+smileuniqueno=null&
+offset=0
+
+
+{
+	"itemListValueList":[
+		{
+			"bazaarItemNo":1796945608,
+			"bazaarName":"アストルティア旅人バザー",
+			"bazaarNo":99,
+			"detailMode":1,
+			"endDate":0,
+			"equipmentLv":0,
+			"iconUrl":"http://hiroba.dqx.jp/dq_resource/itemicon/e0fedd74286bae88e703e43f9a037bdd03a8a710.png",
+			"isEquipment":false,
+			"itemDetail":"ふわふわの綿が\nとれる草\n職人のための素材",
+			"itemName":"コットン草",
+			"itemPrice":90,
+			"itemQuality":0,
+			"itemQualityMax":0,
+			"itemUniqueNo":"11298211226485523555",
+			"itemUniqueNoStr":"11298211226485523555",
+			"kessyouNum":null,
+			"remainingDate":259195,
+			"renkinCount":0,
+			"renkinList":[],
+			"reward":null,
+			"sellerPcName":"ぎんほね",
+			"shopPrice":null,
+			"stackCount":1,
+			"startDate":0,
+			"targetMonster":null,
+			"tradein":null,
+			"webItemId":"e0fedd74286bae88e703e43f9a037bdd03a8a710"
+		},{
+			"bazaarItemNo":1796945544,
+			"bazaarName":"アストルティア旅人バザー",
+			"bazaarNo":99,
+			"detailMode":1,
+			"endDate":0,
+			"equipmentLv":0,
+			"iconUrl":"http://hiroba.dqx.jp/dq_resource/itemicon/e0fedd74286bae88e703e43f9a037bdd03a8a710.png",
+			"isEquipment":false,
+			"itemDetail":"ふわふわの綿が\nとれる草\n職人のための素材",
+			"itemName":"コットン草",
+			"itemPrice":100,
+			"itemQuality":0,
+			"itemQualityMax":0,
+			"itemUniqueNo":"11256096525232650896",
+			"itemUniqueNoStr":"11256096525232650896",
+			"kessyouNum":null,
+			"remainingDate":259191,
+			"renkinCount":0,
+			"renkinList":[],
+			"reward":null,
+			"sellerPcName":"ピン",
+			"shopPrice":null,
+			"stackCount":1,
+			"startDate":0,
+			"targetMonster":null,
+			"tradein":null,
+			"webItemId":"e0fedd74286bae88e703e43f9a037bdd03a8a710"
+		}
+	],
+	"length":100,
+	"resultCode":0
 }

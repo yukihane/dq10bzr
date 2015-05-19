@@ -43,12 +43,13 @@
         </div>
       </tab>
 
+
       <tab heading="討伐" data-ng-controller="tobatsuCtrl">
         <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
 
         <div>受注済み</div>
         <div data-ng-repeat="al in list.acceptedTobatsuDataList">
-          <div>{{al.continentName}}</div>
+          <div>{{al.continentName}} {{al.issuedDate | epochStrToJpDateStr}}</div>
           <table>
             <tr data-ng-repeat="e in al.tobatsuList">
               <td>{{e.area}} {{e.monsterName}} {{e.count}}匹</td>
@@ -59,7 +60,7 @@
 
         <div>リスト</div>
         <div data-ng-repeat="cl in list.countryTobatsuDataList">
-          <div>{{cl.continentName}}</div>
+          <div>{{cl.continentName}} {{cl.issuedDate | epochStrToJpDateStr}}</div>
           <table>
             <tr data-ng-repeat="c in cl.tobatsuList">
               <td>{{c.area}} {{c.monsterName}} {{c.count}}匹</td>
@@ -67,8 +68,39 @@
             </tr>
           </table>
         </div>
-
+        <pre>{{list}}</pre>
       </tab>
+
+
+      <tab heading="職人" data-ng-controller="syokuninCtrl">
+        <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
+        <div id="syokuninContent">
+          <div>
+            <table>
+              <tr data-ng-repeat="e in list">
+                <td>{{e.isComplete | convertToProgress}}</td>
+                <td>{{e.rank}}</td>
+                <td>{{e.jobName}}</td>
+                <td>{{e.reward.exp | number}}P</td>
+                <td>{{e.reward.gold | number}}G</td>
+                <td><button data-ng-click="detail(e.jobNo, e.recipeNo, e.createWebItemNoHash)">>></button></td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <table>
+              <tr data-ng-repeat=" m in necessaryMaterials">
+                <td>{{m.itemName}}</td>
+                <td>{{m.length}}</td>
+                <td><button data-ng-click="searchBzr(m.webItemNoHash)">>></button></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <pre>{{bzrResults}}</pre>
+      </tab>
+
+
       <tab heading="バザー検索">
         <!-- バザー検索条件指定Pane -->
         <div id="bazaarSearchConditionPane">

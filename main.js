@@ -29,6 +29,27 @@ mainModule.factory("loginService", function(){
   };
 });
 
+mainModule.filter("convertToProgress", function() {
+  return function(isComplete) {
+    if(isComplete) {
+      return "済";
+    }
+    return "未";
+  };
+});
+
+
+/*
+エポックミリ秒文字列を受け取り、「日本時間帯における」月日文字列を返します.
+*/
+mainModule.filter("epochStrToJpDateStr", function(){
+  return function(epoch) {
+    var offsetEpoch = parseInt(epoch, 10) + 9*60*60*1000;
+    var date = new Date(offsetEpoch);
+    return "" + (date.getUTCMonth() + 1) + "/" + date.getUTCDate();
+  };
+});
+
 mainModule.controller("userInfoCtrl", ["$scope", "$modal", "$http", "$log", "loginService",
 function($scope, $modal, $http, $log, loginService) {
   console.log("userInfo");
@@ -415,6 +436,87 @@ function($scope, $http, $log, loginService) {
   };
 }]);
 
+
+mainModule.controller("syokuninCtrl", ["$scope", "$http", "$log", "loginService",
+function($scope, $http, $log, loginService) {
+
+  $scope.list = [];
+  
+  $scope.necessaryMaterials = [];
+  
+  $scope.bzrResults = [];
+
+  $scope.reload = function() {
+
+    console.log(loginService.sessionId);
+
+    var req = {
+      method: "GET",
+      url: "https://happy.dqx.jp/capi/syokunin/joblist/",
+      headers: {
+        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
+      },
+    };
+
+    console.log("職人ギルド依頼");
+    $http(req)
+    .success(function(data, status, headers, config) {
+      console.log(data);
+      $scope.list = data.syokuninGuildList;
+    })
+    .error(function(data, status, headers, config) {
+    });
+
+  };
+
+  $scope.detail = function(jobNo, recipeNo, createWebItemNoHash) {
+
+    var req = {
+      method: "GET",
+      url: "https://happy.dqx.jp/capi/syokunin/jobdetail/" + jobNo + "/" + recipeNo + "/"
+        + (createWebItemNoHash ? createWebItemNoHash + "/" : ""),
+      headers: {
+        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
+      },
+    };
+
+    console.log("職人ギルド依頼");
+    $http(req)
+    .success(function(data, status, headers, config) {
+      console.log(data);
+      $scope.necessaryMaterials = data.recipeDetail.necessaryMaterialList;
+    })
+    .error(function(data, status, headers, config) {
+    });
+
+  };
+
+  $scope.searchBzr = function(webItemNoHash) {
+
+    var req = {
+      method: "GET",
+      url: "https://happy.dqx.jp/capi/bazaar/search/",
+      params: {
+        bazaarno: 99,
+        webitemid: webItemNoHash,
+      },
+      headers: {
+        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
+      },
+    };
+
+    $http(req)
+    .success(function(data, status, headers, config) {
+      console.log(data);
+      $scope.bzrResults = data;
+    })
+    .error(function(data, status, headers, config) {
+    });
+
+    
+  };
+
+}]);
 
 /*
 function createCharaList(characters){
