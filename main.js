@@ -531,7 +531,11 @@ function($scope, $http, $log, loginService) {
   $scope.itemCounts = [];
   $scope.itemCountSelected = null;
 
-  $scope.reload = function() {
+  $scope.clickTab = function() {
+    if($scope.largeCategories.length) {
+      // 既に読み込み済みの場合は改めてリクエストしない
+      return;
+    }
 
     console.log(loginService.sessionId);
 

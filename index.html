@@ -73,7 +73,6 @@
 
 
       <tab heading="職人" data-ng-controller="syokuninCtrl">
-        <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
         <div id="syokuninContent">
           <div>
             <table>
@@ -101,7 +100,7 @@
       </tab>
 
 
-      <tab heading="バザー検索" data-ng-controller="bazaarCtrl">
+      <tab heading="バザー検索" data-ng-controller="bazaarCtrl" data-ng-click="clickTab()">
         <!-- バザー検索条件指定Pane -->
         <div id="bazaarSearchConditionPane">
           <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
