@@ -588,7 +588,9 @@ function($scope, $http, $log, loginService) {
   };
   
   $scope.smallCategoryChanged = function(selected) {
-    loadItemCount($scope.largeCategorySelected.largeCategoryId, selected.smallCategoryId);
+    if($scope.largeCategorySelected && selected) {
+      loadItemCount($scope.largeCategorySelected.largeCategoryId, selected.smallCategoryId);
+    }
   };
   
   var loadItemCount = function(lc, sc) {
