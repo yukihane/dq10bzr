@@ -518,6 +518,75 @@ function($scope, $http, $log, loginService) {
 
 }]);
 
+mainModule.controller("bazaarCtrl", ["$scope", "$http", "$log", "loginService",
+function($scope, $http, $log, loginService) {
+  
+  $scope.largeCategories = [];
+  $scope.largeCategorySelected = null;
+
+  $scope.smallCategoryDisabled = true;
+  $scope.smallCategories = [];
+  $scope.smallCategorySelected = null;
+
+  $scope.reload = function() {
+
+    console.log(loginService.sessionId);
+
+    var req = {
+      method: "GET",
+      url: "https://happy.dqx.jp/capi/bazaar/largecategory/99/",
+      headers: {
+        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
+      },
+    };
+
+    $http(req)
+    .success(function(data, status, headers, config) {
+      console.log(data);
+      $scope.largeCategories = data.largeCategoryValueList;
+    })
+    .error(function(data, status, headers, config) {
+    });
+
+  };
+
+  $scope.largeCategoryChanged = function(selected) {
+    console.log("largeCategoryChanged");
+    console.log(selected);
+    console.log(selected.smallCategoryId);
+    $scope.smallCategoryDisabled = true;
+    if(selected.smallCategoryId) {
+      $scope.smallCategories = [];
+      return;
+    }
+
+
+    var req = {
+      method: "GET",
+      url: "https://happy.dqx.jp/capi/bazaar/smallcategory/99/" + selected.largeCategoryId + "/",
+      headers: {
+        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
+      },
+    };
+
+    $http(req)
+    .success(function(data, status, headers, config) {
+      console.log(data);
+      $scope.smallCategories = data.smallCategoryValueList;
+      $scope.smallCategoryDisabled = false;
+    })
+    .error(function(data, status, headers, config) {
+    });
+
+  };
+  
+  $scope.smallCategoryChanged = function(selected) {
+      console.log("clicked");
+  };
+  
+}]);
+
+
 /*
 function createCharaList(characters){
   var res = "<table>";

@@ -101,12 +101,28 @@
       </tab>
 
 
-      <tab heading="バザー検索">
+      <tab heading="バザー検索" data-ng-controller="bazaarCtrl">
         <!-- バザー検索条件指定Pane -->
         <div id="bazaarSearchConditionPane">
+          <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
           <table>
-            <tr><td>種類</td><td><select name="largeCategoryValueList" id="largeCategoryValueList"></select></td></tr>
-            <tr><td>種類2</td><td><select name="smallCategoryValueList" id="smallCategoryValueList"></select></td></tr>
+            <tr>
+              <td>種類</td>
+              <td>
+                <select data-ng-model="largeCategorySelected"
+                data-ng-options="lc as lc.largeCategoryName for lc in largeCategories"
+                data-ng-change="largeCategoryChanged(largeCategorySelected)"></select>
+              </td>
+            </tr>
+            <tr>
+              <td>種類2</td>
+              <td>
+                <select data-ng-model="smallCategorySelected"
+                data-ng-options="sc as sc.smallCategoryName for sc in smallCategories"
+                data-ng-change="smallCategoryChanged(smallCategorySelected)"
+                data-ng-disabled="smallCategoryDisabled"></select>
+              </td>
+            </tr>
             <tr><td>アイテム名</td><td><select name="itemCountValueList" id="itemCountValueList"></select></td></tr>
             <tr><td>できのよさ</td><td><select></select></td></tr>
             <tr><td>錬金効果数</td><td><select></select></td></tr>
@@ -121,7 +137,7 @@
 
         <!-- バザー検索結果表示Pane -->
         <div id="searchResult"></div>
-
+        <pre>{{largeCategories}}</pre>
       </tab>
     </tabset>
   </div>
