@@ -421,3 +421,187 @@ offset=0
 	"length":100,
 	"resultCode":0
 }
+
+
+●バザー検索
+
+https://happy.dqx.jp/capi/bazaar/largecategory/99/
+
+{
+	"largeCategoryValueList":[
+		{
+			"detailMode":3,
+			"entryCount":33293,
+			"isDetailSearchMenu":true,
+			"isSmallCategory":true,
+			"largeCategoryId":1,
+			"largeCategoryName":"武器",
+			"maxStackCount":1,
+			"smallCategoryId":0
+		},
+		{
+			"detailMode":3,
+			"entryCount":7949,
+			"isDetailSearchMenu":true,
+			"isSmallCategory":false,
+			"largeCategoryId":2,
+			"largeCategoryName":"盾",
+			"maxStackCount":1,
+			"smallCategoryId":201
+		},
+		{
+			"detailMode":3,
+			"entryCount":74953,
+			"isDetailSearchMenu":true,
+			"isSmallCategory":true,
+			"largeCategoryId":3,
+			"largeCategoryName":"防具",
+			"maxStackCount":1,
+			"smallCategoryId":0
+		},
+		{
+			"detailMode":2,
+			"entryCount":5811,
+			"isDetailSearchMenu":false,
+			"isSmallCategory":true,
+			"largeCategoryId":5,
+			"largeCategoryName":"職人どうぐ",
+			"maxStackCount":1,
+			"smallCategoryId":0
+		},
+		{
+			"detailMode":1,
+			"entryCount":32216,
+			"isDetailSearchMenu":false,
+			"isSmallCategory":true,
+			"largeCategoryId":6,
+			"largeCategoryName":"消費アイテム",
+			"maxStackCount":99,
+			"smallCategoryId":0
+		},
+		{
+			"detailMode":1,
+			"entryCount":57932,
+			"isDetailSearchMenu":false,
+			"isSmallCategory":true,
+			"largeCategoryId":7,
+			"largeCategoryName":"素材",
+			"maxStackCount":99,
+			"smallCategoryId":0
+		},
+		{
+			"detailMode":1,
+			"entryCount":8387,
+			"isDetailSearchMenu":false,
+			"isSmallCategory":true,
+			"largeCategoryId":8,
+			"largeCategoryName":"家具",
+			"maxStackCount":99,
+			"smallCategoryId":0
+		},
+		{
+			"detailMode":1,
+			"entryCount":1950,
+			"isDetailSearchMenu":false,
+			"isSmallCategory":true,
+			"largeCategoryId":12,
+			"largeCategoryName":"庭具",
+			"maxStackCount":99,
+			"smallCategoryId":0
+		},
+		{
+			"detailMode":1,
+			"entryCount":4808,
+			"isDetailSearchMenu":false,
+			"isSmallCategory":true,
+			"largeCategoryId":9,
+			"largeCategoryName":"レシピ帳",
+			"maxStackCount":1,
+			"smallCategoryId":0
+		},
+		{
+			"detailMode":1,
+			"entryCount":554,
+			"isDetailSearchMenu":false,
+			"isSmallCategory":true,
+			"largeCategoryId":10,
+			"largeCategoryName":"スカウトの書",
+			"maxStackCount":1,
+			"smallCategoryId":0
+		},
+		{
+			"detailMode":2,
+			"entryCount":1565,
+			"isDetailSearchMenu":false,
+			"isSmallCategory":true,
+			"largeCategoryId":11,
+			"largeCategoryName":"釣りどうぐ",
+			"maxStackCount":1,
+			"smallCategoryId":0
+		}
+	],
+	"resultCode":0
+}
+
+武器検索
+上の結果でsmallCategoryIdが0のものの場合。0でない場合は直接itemcountのリクエストへ行く
+https://happy.dqx.jp/capi/bazaar/smallcategory/99/(largeCategoryId)/
+
+{
+	"categoryId":1,
+	"categoryName":"武器",
+	"isDetailSearchMenu":true,
+	"resultCode":0,
+	"smallCategoryValueList":[
+		{
+			"detailMode":3,
+			"entryCount":3375,
+			"isSmallCategory":false,
+			"maxStackCount":1,
+			"smallCategoryId":101,
+			"smallCategoryName":"片手剣"
+		},
+		{
+			"detailMode":3,
+			"entryCount":1156,
+			"isSmallCategory":false,
+			"maxStackCount":1,
+			"smallCategoryId":114,
+			"smallCategoryName":"弓"
+		}
+	]
+}
+
+盾検索
+https://happy.dqx.jp/capi/bazaar/itemcount/99/(largeCategoryId)/(smallCategoryId)/
+
+{
+	"itemCountValueList":[
+		{
+			"entryCount":397,
+			"equipmentLv":1,
+			"iconUrl":"http://hiroba.dqx.jp/dq_resource/itemicon/1fb8323bac195afff01b5fa5bc1244388ae3b15b.png",
+			"isEquipment":true,
+			"isSearchMenu":true,
+			"itemDetail":"木の板に\n皮をはった\n簡素な作りの盾",
+			"itemName":"皮の盾",
+			"webItemId":"1fb8323bac195afff01b5fa5bc1244388ae3b15b"
+		},
+		{
+			"entryCount":180,
+			"equipmentLv":80,
+			"iconUrl":"http://hiroba.dqx.jp/dq_resource/itemicon/1122546aad6a22ee43f7671ef4ef75c15661a0e9.png",
+			"isEquipment":false,
+			"isSearchMenu":true,
+			"itemDetail":"攻撃呪文を防ぎ\nＭＰを底上げする\n青い結晶石の大盾",
+			"itemName":"ゼレスタイトの大盾",
+			"webItemId":"1122546aad6a22ee43f7671ef4ef75c15661a0e9"
+		}
+	],
+	"largeCategoryId":2,
+	"largeCategoryName":"盾",
+	"length":33,
+	"resultCode":0,
+	"smallCategoryId":201,
+	"smallCategoryName":null
+}
