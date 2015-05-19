@@ -558,11 +558,10 @@ function($scope, $http, $log, loginService) {
   };
 
   $scope.largeCategoryChanged = function(selected) {
-    console.log("largeCategoryChanged");
-    console.log(selected);
-    console.log(selected.smallCategoryId);
+
     $scope.smallCategoryDisabled = true;
-    if(selected.smallCategoryId) {
+    if(!selected.isSmallCategory) {
+      // isSmallCategory は、おそらく、smallCategoryを持っているかどうかの区分
       $scope.smallCategories = [];
       loadItemCount(selected.largeCategoryId, selected.smallCategoryId);
       return;
