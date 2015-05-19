@@ -527,6 +527,9 @@ function($scope, $http, $log, loginService) {
   $scope.smallCategoryDisabled = true;
   $scope.smallCategories = [];
   $scope.smallCategorySelected = null;
+  
+  $scope.itemCounts = [];
+  $scope.itemCountSelected = null;
 
   $scope.reload = function() {
 
@@ -557,6 +560,7 @@ function($scope, $http, $log, loginService) {
     $scope.smallCategoryDisabled = true;
     if(selected.smallCategoryId) {
       $scope.smallCategories = [];
+      loadItemCount(selected.largeCategoryId, selected.smallCategoryId);
       return;
     }
 
@@ -581,8 +585,33 @@ function($scope, $http, $log, loginService) {
   };
   
   $scope.smallCategoryChanged = function(selected) {
-      console.log("clicked");
+    loadItemCount($scope.largeCategorySelected.largeCategoryId, selected.smallCategoryId);
   };
+  
+  var loadItemCount = function(lc, sc) {
+
+    var req = {
+      method: "GET",
+      url: "https://happy.dqx.jp/capi/bazaar/itemcount/99/" + lc + "/" + sc + "/",
+      headers: {
+        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
+      },
+    };
+
+    $http(req)
+    .success(function(data, status, headers, config) {
+      console.log(data);
+      $scope.itemCounts = data.itemCountValueList;
+    })
+    .error(function(data, status, headers, config) {
+    });
+    
+  };
+
+  $scope.itemCountChanged = function(selected) {
+    console.log("clicked");
+  };
+  
   
 }]);
 

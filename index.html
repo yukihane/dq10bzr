@@ -123,7 +123,14 @@
                 data-ng-disabled="smallCategoryDisabled"></select>
               </td>
             </tr>
-            <tr><td>アイテム名</td><td><select name="itemCountValueList" id="itemCountValueList"></select></td></tr>
+            <tr>
+              <td>アイテム名</td>
+              <td>
+                <select data-ng-model="itemCountSelected"
+                data-ng-options="ic as ic.itemName for ic in itemCounts"
+                data-ng-change="itemCountChanged(itemCountSelected)"></select>
+              </td>
+            </tr>
             <tr><td>できのよさ</td><td><select></select></td></tr>
             <tr><td>錬金効果数</td><td><select></select></td></tr>
             <tr><td>錬金効果1</td><td><select></select></td></tr>
