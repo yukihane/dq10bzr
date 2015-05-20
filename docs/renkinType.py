@@ -6,29 +6,46 @@
 
 import sys
 import csv
+import json
 
 filename = sys.argv[1]
 f = open(filename, "r")
 reader = csv.reader(f, delimiter = "\t")
 next(reader)
-next(reader)
+smallCategoryIds = next(reader)[6:]
+
+# 錬金の種類
+renkinTypes = {}
+
+# それぞれの装備に付与できる錬金
+renkinSet = {}
+
+
 isFirst = True
 
-print('{')
 for elm in reader:
   if elm[1]:
-    if isFirst:
-      isFirst = False
-    else:
-      print('  ,')
-    print('  "' + elm[1] + '": {')
-    print('    "id": ' + elm[1] + ',')
-    print('    "name": "' + elm[0] + '",')
-    print('    "scale": ' + elm[2] + ',')
-    print('    "min": ' + elm[3] + ',')
-    print('    "max": ' + elm[4] + ',')
-    print('    "tickInv": ' + str(int(1/float(elm[5]))) )
-    print('  }')
-print('}')
+    data = {"id": int(elm[1]), "name": elm[0], "scale": int(elm[2]),
+      "min": float(elm[3]), "max": float(elm[4]), "decimalPlace": int(elm[5])}
+    renkinTypes[elm[1]] = data
+
+    renkinable = elm[6:]
+    for i, e in enumerate(renkinable):
+      if e:
+        key = smallCategoryIds[i]
+        if key in renkinSet:
+          renkinSet[key].append(elm[1])
+        else:
+          renkinSet[key] = [elm[1]]
+        
 
 f.close()
+
+f = open("renkinTypes.json", "w")
+f.write(json.dumps(renkinTypes, sort_keys=True, indent=2, ensure_ascii=False))
+f.close()
+
+f = open("enableRenkinSet.json", "w")
+f.write(json.dumps(renkinSet, sort_keys=True, indent=2))
+f.close()
+
