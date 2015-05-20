@@ -1,6 +1,6 @@
 var OAUTH_URL = "https://secure.square-enix.com/oauth/oa/";
 
-var mainModule = angular.module("dq10bzr.Main", ["ui.bootstrap"]);
+var mainModule = angular.module("dq10bzr.Main", ["ui.bootstrap", "ngResource"]);
 
 
 // アカウント(現在は1アカウントのみを想定)情報を管理するサービス
@@ -518,9 +518,12 @@ function($scope, $http, $log, loginService) {
 
 }]);
 
-mainModule.controller("bazaarCtrl", ["$scope", "$http", "$log", "loginService",
-function($scope, $http, $log, loginService) {
-  
+mainModule.controller("bazaarCtrl", ["$scope", "$http", "$resource", "$log", "loginService",
+function($scope, $http, $resource, $log, loginService) {
+
+  var enableRenkinSet = $resource("./assets/enableRenkinSet.json").get();
+  var renkinTypes = $resource("./assets/renkinTypes.json").get();
+
   $scope.largeCategories = [];
   $scope.largeCategorySelected = null;
 
@@ -531,7 +534,13 @@ function($scope, $http, $log, loginService) {
   $scope.itemCounts = [];
   $scope.itemCountSelected = null;
 
+  $scope.renkinCategories = [];
+  $scope.renkinCategory1Selected = null;
+  $scope.renkinCategory2Selected = null;
+
   $scope.clickTab = function() {
+      console.log(renkinTypes);
+
     if($scope.largeCategories.length) {
       // 既に読み込み済みの場合は改めてリクエストしない
       return;
@@ -594,6 +603,15 @@ function($scope, $http, $log, loginService) {
   };
   
   var loadItemCount = function(lc, sc) {
+    
+    var scKey = "" + sc;
+    var enableRenkinIds = enableRenkinSet[scKey];
+    var enableRenkins = [];
+    for(var rid in enableRenkinIds) {
+      var r = renkinTypes[rid];
+      enableRenkins.push(r);
+    }
+    $scope.renkinCategories = enableRenkins;
 
     var req = {
       method: "GET",
