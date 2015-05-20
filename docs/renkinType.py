@@ -11,6 +11,7 @@ filename = sys.argv[1]
 f = open(filename, "r")
 reader = csv.reader(f, delimiter = "\t")
 next(reader)
+next(reader)
 isFirst = True
 
 print('{')
