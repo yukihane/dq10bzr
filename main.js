@@ -663,8 +663,38 @@ function($scope, $http, $resource, $log, loginService) {
   $scope.itemCountChanged = function(selected) {
     console.log("clicked");
   };
-  
-  
+
+
+  var defRenkinMinValueSpec = {
+    min:0,
+    max:0,
+    setp:"1",
+  };
+
+  $scope.renkin1MinValueSpec = defRenkinMinValueSpec;
+  $scope.renkin2MinValueSpec = defRenkinMinValueSpec;
+
+  $scope.renkinCategoryChanged = function(number, selected) {
+    console.log(selected);
+
+    var v;
+    if(!selected) {
+      v = defRenkinMinValueSpec;
+    } else {
+      v = {
+        min: selected.min,
+        max: selected.max,
+        step: selected.step,
+      };
+    }
+    
+    if(number === 1){
+      $scope.renkin1MinValueSpec = v;
+    } else {
+      $scope.renkin2MinValueSpec = v;
+    }
+  };
+
 }]);
 
 

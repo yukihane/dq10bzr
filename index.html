@@ -172,18 +172,32 @@
               <td>錬金効果1</td>
               <td>
                 <select data-ng-model="renkinCategory1Selected"
-                data-ng-options="c as c.name for c in renkinCategories"></select>
+                data-ng-options="c as c.name for c in renkinCategories"
+                data-ng-change="renkinCategoryChanged(1, renkinCategory1Selected)"></select>
               </td>
             </tr>
-            <tr><td>効果の合計値1</td><td><select></select></td></tr>
+            <tr>
+              <td>効果の合計値1</td>
+              <td>
+                <input type="number" data-ng-model="renkin1MinValue"
+                min="{{renkin1MinValueSpec.min}}" max="{{renkin1MinValueSpec.max}}" step="{{renkin1MinValueSpec.step}}">
+              </td>
+            </tr>
             <tr>
               <td>錬金効果2</td>
               <td>
                 <select data-ng-model="renkinCategory2Selected"
-                data-ng-options="c as c.name for c in renkinCategories"></select>
+                data-ng-options="c as c.name for c in renkinCategories"
+                data-ng-change="renkinCategoryChanged(2, renkinCategory2Selected)"></select>
               </td>
             </tr>
-            <tr><td>効果の合計値2</td><td><select></select></td></tr>
+            <tr>
+              <td>効果の合計値2</td>
+              <td>
+                <input type="number" data-ng-model="renkin2MinValue"
+                min="{{renkin2MinValueSpec.min}}" max="{{renkin2MinValueSpec.max}}" step="{{renkin2MinValueSpec.step}}">
+              </td>
+            </tr>
             <tr>
               <td>難易度下限</td>
               <td>
