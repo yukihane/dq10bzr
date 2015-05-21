@@ -120,7 +120,7 @@
                 <select data-ng-model="selected.smallCategory"
                 data-ng-options="sc as sc.smallCategoryName for sc in smallCategories"
                 data-ng-change="smallCategoryChanged(selected.smallCategory)"
-                data-ng-disabled="smallCategoryDisabled"></select>
+                data-ng-disabled="disabled.smallCategory"></select>
               </td>
             </tr>
             <tr>
@@ -128,7 +128,8 @@
               <td>
                 <select data-ng-model="selected.itemCount"
                 data-ng-options="ic as ic.itemName for ic in itemCounts"
-                data-ng-change="itemCountChanged(selected.itemCount)">
+                data-ng-change="itemCountChanged(selected.itemCount)"
+                data-ng-disabled="disabled.itemCount">
                   <option value=""></option>
                 </select>
               </td>
@@ -137,35 +138,40 @@
               <td>装備可能職業</td>
               <td>
                 <select data-ng-model="selected.job"
-                data-ng-options="j as j.name for j in jobSet"></select>
+                data-ng-options="j as j.name for j in jobSet"
+                data-ng-disabled="disabled.eqCond"></select>
               </td>
             </tr>
             <tr>
               <td>装備レベル下限</td>
               <td>
                 <select data-ng-model="selected.eqLvMin"
-                data-ng-options="llv  for llv in eqLvMinSet"></select>
+                data-ng-options="llv  for llv in eqLvMinSet"
+                data-ng-disabled="disabled.eqCond"></select>
               </td>
             </tr>
             <tr>
               <td>装備レベル上限</td>
               <td>
                 <select data-ng-model="selected.eqLvMax"
-                data-ng-options="hlv  for hlv in eqLvMaxSet"></select>
+                data-ng-options="hlv  for hlv in eqLvMaxSet"
+                data-ng-disabled="disabled.eqCond"></select>
               </td>
             </tr>
             <tr>
               <td>できのよさ</td>
               <td>
                 <select data-ng-model="selected.quality"
-                data-ng-options="q as q.text for q in qualitySet"></select>
+                data-ng-options="q as q.text for q in qualitySet"
+                data-ng-disabled="disabled.quality"></select>
               </td>
             </tr>
             <tr>
               <td>錬金効果数</td>
               <td>
                 <select data-ng-model="selected.numOfRenkin"
-                data-ng-options="n as n.text for n in numOfRenkinSet"></select>
+                data-ng-options="n as n.text for n in numOfRenkinSet"
+                data-ng-disabled="disabled.renkin"></select>
               </td>
             </tr>
             <tr>
@@ -173,6 +179,7 @@
               <td>
                 <select data-ng-model="selected.renkin[0].effect"
                 data-ng-options="c as c.name for c in renkinCategories"
+                data-ng-disabled="disabled.renkin"
                 data-ng-change="renkinCategoryChanged(0, selected.renkin[0].effect)"></select>
               </td>
             </tr>
@@ -180,6 +187,7 @@
               <td>効果の合計値1</td>
               <td>
                 <input data-ng-model="selected.renkin[0].minValue" type="number"
+                data-ng-disabled="disabled.renkin"
                 min="{{renkin1MinValueSpec.min}}" max="{{renkin1MinValueSpec.max}}" step="{{renkin1MinValueSpec.step}}">
               </td>
             </tr>
@@ -188,6 +196,7 @@
               <td>
                 <select data-ng-model="selected.renkin[1].effect"
                 data-ng-options="c as c.name for c in renkinCategories"
+                data-ng-disabled="disabled.renkin"
                 data-ng-change="renkinCategoryChanged(1, selected.renkin[1].effect)"></select>
               </td>
             </tr>
@@ -195,6 +204,7 @@
               <td>効果の合計値2</td>
               <td>
                 <input type="number" data-ng-model="selected.renkin[1].minValue"
+                data-ng-disabled="disabled.renkin"
                 min="{{renkin2MinValueSpec.min}}" max="{{renkin2MinValueSpec.max}}" step="{{renkin2MinValueSpec.step}}">
               </td>
             </tr>
@@ -202,14 +212,16 @@
               <td>難易度下限</td>
               <td>
                 <select data-ng-model="selected.difficultyMin"
-                data-ng-options="dl as dl.text for dl in difficultySet"></select>
+                data-ng-options="dl as dl.text for dl in difficultySet"
+                data-ng-disabled="disabled.dificulty"></select>
               </td>
             </tr>
             <tr>
               <td>難易度上限</td>
               <td>
                 <select data-ng-model="selected.difficultyMax"
-                data-ng-options="dh as dh.text for dh in difficultySet"></select>
+                data-ng-options="dh as dh.text for dh in difficultySet"
+                data-ng-disabled="disabled.dificulty"></select>
               </td>
             </tr>
           </table>

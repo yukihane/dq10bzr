@@ -529,14 +529,6 @@ function($scope, $http, $resource, $log, loginService) {
   // 「種類」のoptions
   $scope.largeCategories = [];
 
-  // 「種類2」を選択可能か
-  $scope.smallCategoryDisabled = true;
-  // 「種類2」のoptions
-  $scope.smallCategories = [];
-
-  // 「アイテム名」のoptions
-  $scope.itemCounts = [];
-
   // 「装備可能職業」のoptions
   $scope.jobSet = $resource("./assets/jobSet.json").query();
 
@@ -547,13 +539,13 @@ function($scope, $http, $resource, $log, loginService) {
     $scope.eqLvMaxSet = eqLvSet.max;
   });
 
-
+  // できのよさのoptions
   $scope.qualitySet = $resource("./assets/qualitySet.json").query();
 
+  // 錬金効果数のoptions
   $scope.numOfRenkinSet = $resource("./assets/numOfRenkinSet.json").query();
 
-  $scope.renkinCategories = [];
-
+  // 難易度のoptions
   $scope.difficultySet = $resource("./assets/difficultySet.json").query();
 
   var defaultSelected = {
@@ -580,8 +572,22 @@ function($scope, $http, $resource, $log, loginService) {
   };
 
   $scope.selected = Object.create(defaultSelected);
+  
+  var defaultDisabled = {
+    smallCategory: true,
+    itemCount: true,
+    eqCond: true,
+    quality: true,
+    renkin: true,
+    difficulty: true,
+  };
+  
+  $scope.disabled = Object.create(defaultDisabled);
 
   var clear = function(){
+
+    $scope.selected = Object.create(defaultSelected);
+    $scope.disabled = Object.create(defaultDisabled);
 
     if(!$scope.largeCategories.length) {
       // 既に読み込み済みの場合は改めてリクエストしない
@@ -601,6 +607,20 @@ function($scope, $http, $resource, $log, loginService) {
       .error(function(data, status, headers, config) {
       });
     }
+
+    // 「種類2」のoptions
+    $scope.smallCategories = [];
+
+    // 「アイテム名」のoptions
+    $scope.itemCounts = [];
+
+    // 錬金効果のoptions
+    $scope.renkinCategories = [];
+
+  };
+  
+  $scope.reload = function() {
+    clear();
   };
 
   $scope.clickTab = function() {
