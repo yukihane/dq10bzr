@@ -608,7 +608,7 @@ function($scope, $http, $resource, $log, loginService) {
     });
 
   };
-  
+
   $scope.smallCategoryChanged = function(selected) {
     if($scope.largeCategorySelected && selected) {
       loadItemCount($scope.largeCategorySelected.largeCategoryId, selected.smallCategoryId);
@@ -617,9 +617,9 @@ function($scope, $http, $resource, $log, loginService) {
   
   var loadItemCount = function(lc, sc) {
     
-    var scKey = "" + sc;
+    var scStr = "" + sc;
     var enableRenkins = [];
-    var enableRenkinIds = enableRenkinSet[scKey];
+    var enableRenkinIds = enableRenkinSet[scStr];
 
     if(enableRenkinIds){
       enableRenkinIds.forEach(function(rid) {
