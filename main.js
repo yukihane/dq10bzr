@@ -527,6 +527,12 @@ function($scope, $http, $resource, $log, loginService) {
   var renkinTypes = $resource("./assets/renkinTypes.json").get();
 
   $scope.jobSet = $resource("./assets/jobSet.json").query();
+
+  $scope.eqLvLowSet = [1,7,14,21,28,30,35,42,50,60,65,70,75,80];
+  $scope.eqLvLowSelected = null;
+  $scope.eqLvHighSet = [6,13,20,27,29,34,41,49,59,64,69,74,79,85];
+  $scope.eqLvHighSelected = null;
+
   $scope.qualitySet = $resource("./assets/qualitySet.json").query();
 
   $scope.largeCategories = [];
