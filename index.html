@@ -159,7 +159,13 @@
                 data-ng-options="q as q.text for q in qualitySet"></select>
               </td>
             </tr>
-            <tr><td>錬金効果数</td><td><select></select></td></tr>
+            <tr>
+              <td>錬金効果数</td>
+              <td>
+                <select data-ng-model="numOfRenkinSelected"
+                data-ng-options="n as n.text for n in numOfRenkinSet"></select>
+              </td>
+            </tr>
             <tr>
               <td>錬金効果1</td>
               <td>

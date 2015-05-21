@@ -551,6 +551,9 @@ function($scope, $http, $resource, $log, loginService) {
 
   $scope.qualitySet = $resource("./assets/qualitySet.json").query();
   $scope.qualitySelected = null;
+  
+  $scope.numOfRenkinSet = $resource("./assets/numOfRenkinSet.json").query();
+  $scope.numOfRenkinSelected = null;
 
   $scope.renkinCategories = [];
   $scope.renkinCategory1Selected = null;
