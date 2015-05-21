@@ -528,8 +528,6 @@ function($scope, $http, $resource, $log, loginService) {
 
   $scope.jobSet = $resource("./assets/jobSet.json").query();
 
-  $scope.qualitySet = $resource("./assets/qualitySet.json").query();
-
   $scope.largeCategories = [];
   $scope.largeCategorySelected = null;
 
@@ -550,6 +548,9 @@ function($scope, $http, $resource, $log, loginService) {
   $scope.eqLvLowSelected = null;
   $scope.eqLvHighSelected = null;
 
+
+  $scope.qualitySet = $resource("./assets/qualitySet.json").query();
+  $scope.qualitySelected = null;
 
   $scope.renkinCategories = [];
   $scope.renkinCategory1Selected = null;
