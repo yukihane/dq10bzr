@@ -109,26 +109,26 @@
             <tr>
               <td>種類</td>
               <td>
-                <select data-ng-model="largeCategorySelected"
+                <select data-ng-model="selected.largeCategory"
                 data-ng-options="lc as lc.largeCategoryName for lc in largeCategories"
-                data-ng-change="largeCategoryChanged(largeCategorySelected)"></select>
+                data-ng-change="largeCategoryChanged(selected.largeCategory)"></select>
               </td>
             </tr>
             <tr>
               <td>種類2</td>
               <td>
-                <select data-ng-model="smallCategorySelected"
+                <select data-ng-model="selected.smallCategory"
                 data-ng-options="sc as sc.smallCategoryName for sc in smallCategories"
-                data-ng-change="smallCategoryChanged(smallCategorySelected)"
+                data-ng-change="smallCategoryChanged(selected.smallCategory)"
                 data-ng-disabled="smallCategoryDisabled"></select>
               </td>
             </tr>
             <tr>
               <td>アイテム名</td>
               <td>
-                <select data-ng-model="itemCountSelected"
+                <select data-ng-model="selected.itemCount"
                 data-ng-options="ic as ic.itemName for ic in itemCounts"
-                data-ng-change="itemCountChanged(itemCountSelected)">
+                data-ng-change="itemCountChanged(selected.itemCount)">
                   <option value=""></option>
                 </select>
               </td>
@@ -136,79 +136,79 @@
             <tr>
               <td>装備可能職業</td>
               <td>
-                <select data-ng-model="jobSelected"
+                <select data-ng-model="selected.job"
                 data-ng-options="j as j.name for j in jobSet"></select>
               </td>
             </tr>
             <tr>
               <td>装備レベル下限</td>
               <td>
-                <select data-ng-model="eqLvLowSelected"
-                data-ng-options="llv  for llv in eqLvLowSet"></select>
+                <select data-ng-model="selected.eqLvMin"
+                data-ng-options="llv  for llv in eqLvMinSet"></select>
               </td>
             </tr>
             <tr>
               <td>装備レベル上限</td>
               <td>
-                <select data-ng-model="eqLvHighSelected"
-                data-ng-options="hlv  for hlv in eqLvHighSet"></select>
+                <select data-ng-model="selected.eqLvMax"
+                data-ng-options="hlv  for hlv in eqLvMaxSet"></select>
               </td>
             </tr>
             <tr>
               <td>できのよさ</td>
               <td>
-                <select data-ng-model="qualitySelected"
+                <select data-ng-model="selected.quality"
                 data-ng-options="q as q.text for q in qualitySet"></select>
               </td>
             </tr>
             <tr>
               <td>錬金効果数</td>
               <td>
-                <select data-ng-model="numOfRenkinSelected"
+                <select data-ng-model="selected.numOfRenkin"
                 data-ng-options="n as n.text for n in numOfRenkinSet"></select>
               </td>
             </tr>
             <tr>
               <td>錬金効果1</td>
               <td>
-                <select data-ng-model="renkinCategory1Selected"
+                <select data-ng-model="selected.renkin[0].effect"
                 data-ng-options="c as c.name for c in renkinCategories"
-                data-ng-change="renkinCategoryChanged(1, renkinCategory1Selected)"></select>
+                data-ng-change="renkinCategoryChanged(0, selected.renkin[0].effect)"></select>
               </td>
             </tr>
             <tr>
               <td>効果の合計値1</td>
               <td>
-                <input type="number" data-ng-model="renkin1MinValue"
+                <input data-ng-model="selected.renkin[0].minValue" type="number"
                 min="{{renkin1MinValueSpec.min}}" max="{{renkin1MinValueSpec.max}}" step="{{renkin1MinValueSpec.step}}">
               </td>
             </tr>
             <tr>
               <td>錬金効果2</td>
               <td>
-                <select data-ng-model="renkinCategory2Selected"
+                <select data-ng-model="selected.renkin[1].effect"
                 data-ng-options="c as c.name for c in renkinCategories"
-                data-ng-change="renkinCategoryChanged(2, renkinCategory2Selected)"></select>
+                data-ng-change="renkinCategoryChanged(1, selected.renkin[1].effect)"></select>
               </td>
             </tr>
             <tr>
               <td>効果の合計値2</td>
               <td>
-                <input type="number" data-ng-model="renkin2MinValue"
+                <input type="number" data-ng-model="selected.renkin[1].minValue"
                 min="{{renkin2MinValueSpec.min}}" max="{{renkin2MinValueSpec.max}}" step="{{renkin2MinValueSpec.step}}">
               </td>
             </tr>
             <tr>
               <td>難易度下限</td>
               <td>
-                <select data-ng-model="difficultyLowSelected"
+                <select data-ng-model="selected.difficultyMin"
                 data-ng-options="dl as dl.text for dl in difficultySet"></select>
               </td>
             </tr>
             <tr>
               <td>難易度上限</td>
               <td>
-                <select data-ng-model="difficultyHighSelected"
+                <select data-ng-model="selected.difficultyMax"
                 data-ng-options="dh as dh.text for dh in difficultySet"></select>
               </td>
             </tr>

@@ -526,69 +526,85 @@ function($scope, $http, $resource, $log, loginService) {
   var enableRenkinSet = $resource("./assets/enableRenkinSet.json").get();
   var renkinTypeSet = $resource("./assets/renkinTypeSet.json").get();
 
+  // 「種類」のoptions
+  $scope.largeCategories = [];
+
+  // 「種類2」を選択可能か
+  $scope.smallCategoryDisabled = true;
+  // 「種類2」のoptions
+  $scope.smallCategories = [];
+
+  // 「アイテム名」のoptions
+  $scope.itemCounts = [];
+
+  // 「装備可能職業」のoptions
   $scope.jobSet = $resource("./assets/jobSet.json").query();
 
-  $scope.largeCategories = [];
-  $scope.largeCategorySelected = null;
-
-  $scope.smallCategoryDisabled = true;
-  $scope.smallCategories = [];
-  $scope.smallCategorySelected = null;
-  
-  $scope.itemCounts = [];
-  $scope.itemCountSelected = null;
-
-  $scope.jobSelected = null;
-
   $resource("./assets/eqLvSet.json").get(function(eqLvSet) {
-    $scope.eqLvLowSet = eqLvSet.low;
-    $scope.eqLvHighSet = eqLvSet.high;
+    // 装備レベル下限のoptions
+    $scope.eqLvMinSet = eqLvSet.min;
+    // 装備レベル上限のoptions
+    $scope.eqLvMaxSet = eqLvSet.max;
   });
-
-  $scope.eqLvLowSelected = null;
-  $scope.eqLvHighSelected = null;
 
 
   $scope.qualitySet = $resource("./assets/qualitySet.json").query();
-  $scope.qualitySelected = null;
-  
+
   $scope.numOfRenkinSet = $resource("./assets/numOfRenkinSet.json").query();
-  $scope.numOfRenkinSelected = null;
 
   $scope.renkinCategories = [];
-  $scope.renkinCategory1Selected = null;
-  $scope.renkinCategory2Selected = null;
 
   $scope.difficultySet = $resource("./assets/difficultySet.json").query();
-  $scope.difficultyLowSelected = null;
-  $scope.difficultyHighSelected = null;
+
+  var defaultSelected = {
+    largeCategory: null,
+    smallCategory: null,
+    itemCount: null,
+    job: null,
+    eqLvMin: null,
+    eqLvMax: null,
+    quality: null,
+    numOfRenkin: null,
+    renkin: [
+      {
+        effect: null,
+        minValue: null,
+      },
+      {
+        effect: null,
+        minValue: null,
+      }
+    ],
+    difficultyMin: null,
+    difficultyMax: null,
+  };
+
+  $scope.selected = Object.create(defaultSelected);
+
+  var clear = function(){
+
+    if(!$scope.largeCategories.length) {
+      // 既に読み込み済みの場合は改めてリクエストしない
+
+      var req = {
+        method: "GET",
+        url: "https://happy.dqx.jp/capi/bazaar/largecategory/99/",
+        headers: {
+          "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
+        },
+      };
+  
+      $http(req)
+      .success(function(data, status, headers, config) {
+        $scope.largeCategories = data.largeCategoryValueList;
+      })
+      .error(function(data, status, headers, config) {
+      });
+    }
+  };
 
   $scope.clickTab = function() {
-      console.log(renkinTypeSet);
-
-    if($scope.largeCategories.length) {
-      // 既に読み込み済みの場合は改めてリクエストしない
-      return;
-    }
-
-    console.log(loginService.sessionId);
-
-    var req = {
-      method: "GET",
-      url: "https://happy.dqx.jp/capi/bazaar/largecategory/99/",
-      headers: {
-        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
-      },
-    };
-
-    $http(req)
-    .success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.largeCategories = data.largeCategoryValueList;
-    })
-    .error(function(data, status, headers, config) {
-    });
-
+    clear();
   };
 
   $scope.largeCategoryChanged = function(selected) {
@@ -622,8 +638,8 @@ function($scope, $http, $resource, $log, loginService) {
   };
 
   $scope.smallCategoryChanged = function(selected) {
-    if($scope.largeCategorySelected && selected) {
-      loadItemCount($scope.largeCategorySelected.largeCategoryId, selected.smallCategoryId);
+    if($scope.selected.largeCategory && selected) {
+      loadItemCount($scope.selected.largeCategory.largeCategoryId, selected.smallCategoryId);
     }
   };
   
@@ -671,15 +687,15 @@ function($scope, $http, $resource, $log, loginService) {
     setp:"1",
   };
 
-  $scope.renkin1MinValueSpec = defRenkinMinValueSpec;
-  $scope.renkin2MinValueSpec = defRenkinMinValueSpec;
+  $scope.renkin1MinValueSpec = Object.create(defRenkinMinValueSpec);
+  $scope.renkin2MinValueSpec = Object.create(defRenkinMinValueSpec);
 
   $scope.renkinCategoryChanged = function(number, selected) {
     console.log(selected);
 
     var v;
     if(!selected) {
-      v = defRenkinMinValueSpec;
+      v = Object.create(defRenkinMinValueSpec);
     } else {
       v = {
         min: selected.min,
@@ -688,7 +704,7 @@ function($scope, $http, $resource, $log, loginService) {
       };
     }
     
-    if(number === 1){
+    if(number === 0){
       $scope.renkin1MinValueSpec = v;
     } else {
       $scope.renkin2MinValueSpec = v;
