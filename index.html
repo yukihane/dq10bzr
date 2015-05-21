@@ -128,7 +128,9 @@
               <td>
                 <select data-ng-model="itemCountSelected"
                 data-ng-options="ic as ic.itemName for ic in itemCounts"
-                data-ng-change="itemCountChanged(itemCountSelected)"></select>
+                data-ng-change="itemCountChanged(itemCountSelected)">
+                  <option value=""></option>
+                </select>
               </td>
             </tr>
             <tr>
