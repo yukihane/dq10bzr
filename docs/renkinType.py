@@ -26,7 +26,7 @@ isFirst = True
 for elm in reader:
   if elm[1]:
     data = {"id": int(elm[1]), "name": elm[0], "scale": int(elm[2]),
-      "min": float(elm[3]), "max": float(elm[4]), "decimalPlace": int(elm[5])}
+      "min": float(elm[3]), "max": float(elm[4]), "step": float(elm[5])}
     renkinTypes[elm[1]] = data
 
     renkinable = elm[6:]
