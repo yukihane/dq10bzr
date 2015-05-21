@@ -132,6 +132,13 @@
               </td>
             </tr>
             <tr>
+              <td>装備可能職業</td>
+              <td>
+                <select data-ng-model="jobSelected"
+                data-ng-options="j as j.name for j in jobSet"></select>
+              </td>
+            </tr>
+            <tr>
               <td>できのよさ</td>
               <td>
                 <select data-ng-model="quality"

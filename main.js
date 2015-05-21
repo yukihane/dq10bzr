@@ -526,6 +526,7 @@ function($scope, $http, $resource, $log, loginService) {
   var enableRenkinSet = $resource("./assets/enableRenkinSet.json").get();
   var renkinTypes = $resource("./assets/renkinTypes.json").get();
 
+  $scope.jobSet = $resource("./assets/jobSet.json").query();
   $scope.qualitySet = $resource("./assets/qualitySet.json").query();
 
   $scope.largeCategories = [];
@@ -537,6 +538,8 @@ function($scope, $http, $resource, $log, loginService) {
   
   $scope.itemCounts = [];
   $scope.itemCountSelected = null;
+
+  $scope.jobSelected = null;
 
   $scope.renkinCategories = [];
   $scope.renkinCategory1Selected = null;
