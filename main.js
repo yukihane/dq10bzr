@@ -520,9 +520,13 @@ function($scope, $http, $log, loginService) {
 
 mainModule.controller("bazaarCtrl", ["$scope", "$http", "$resource", "$log", "loginService",
 function($scope, $http, $resource, $log, loginService) {
+  
+  $scope.debug = "";
 
   var enableRenkinSet = $resource("./assets/enableRenkinSet.json").get();
   var renkinTypes = $resource("./assets/renkinTypes.json").get();
+
+  $scope.qualitySet = $resource("./assets/qualitySet.json").query();
 
   $scope.largeCategories = [];
   $scope.largeCategorySelected = null;
@@ -607,10 +611,11 @@ function($scope, $http, $resource, $log, loginService) {
     var scKey = "" + sc;
     var enableRenkinIds = enableRenkinSet[scKey];
     var enableRenkins = [];
-    for(var rid in enableRenkinIds) {
+    enableRenkinIds.forEach(function(rid) {
       var r = renkinTypes[rid];
       enableRenkins.push(r);
-    }
+    });
+
     $scope.renkinCategories = enableRenkins;
 
     var req = {

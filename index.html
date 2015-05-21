@@ -131,7 +131,13 @@
                 data-ng-change="itemCountChanged(itemCountSelected)"></select>
               </td>
             </tr>
-            <tr><td>できのよさ</td><td><select></select></td></tr>
+            <tr>
+              <td>できのよさ</td>
+              <td>
+                <select data-ng-model="quality"
+                data-ng-options="q as q.text for q in qualitySet"></select>
+              </td>
+            </tr>
             <tr><td>錬金効果数</td><td><select></select></td></tr>
             <tr>
               <td>錬金効果1</td>
@@ -141,7 +147,13 @@
               </td>
             </tr>
             <tr><td>効果の合計値1</td><td><select></select></td></tr>
-            <tr><td>錬金効果2</td><td><select></select></td></tr>
+            <tr>
+              <td>錬金効果2</td>
+              <td>
+                <select data-ng-model="renkinCategory2Selected"
+                data-ng-options="c as c.name for c in renkinCategories"></select>
+              </td>
+            </tr>
             <tr><td>効果の合計値2</td><td><select></select></td></tr>
           </table>
       
@@ -150,7 +162,7 @@
 
         <!-- バザー検索結果表示Pane -->
         <div id="searchResult"></div>
-        <pre>{{largeCategories}}</pre>
+        <pre>{{debug}}</pre>
       </tab>
     </tabset>
   </div>
