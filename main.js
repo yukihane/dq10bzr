@@ -524,7 +524,7 @@ function($scope, $http, $resource, $log, loginService) {
   $scope.debug = "";
 
   var enableRenkinSet = $resource("./assets/enableRenkinSet.json").get();
-  var renkinTypes = $resource("./assets/renkinTypes.json").get();
+  var renkinTypeSet = $resource("./assets/renkinTypeSet.json").get();
 
   $scope.jobSet = $resource("./assets/jobSet.json").query();
 
@@ -552,7 +552,7 @@ function($scope, $http, $resource, $log, loginService) {
   $scope.renkinCategory2Selected = null;
 
   $scope.clickTab = function() {
-      console.log(renkinTypes);
+      console.log(renkinTypeSet);
 
     if($scope.largeCategories.length) {
       // 既に読み込み済みの場合は改めてリクエストしない
@@ -623,7 +623,7 @@ function($scope, $http, $resource, $log, loginService) {
 
     if(enableRenkinIds){
       enableRenkinIds.forEach(function(rid) {
-        var r = renkinTypes[rid];
+        var r = renkinTypeSet[rid];
         enableRenkins.push(r);
       });
     }

@@ -41,7 +41,7 @@ for elm in reader:
 
 f.close()
 
-f = open("renkinTypes.json", "w")
+f = open("renkinTypeSet.json", "w")
 f.write(json.dumps(renkinTypes, sort_keys=True, indent=2, ensure_ascii=False))
 f.close()
 
