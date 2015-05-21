@@ -609,12 +609,15 @@ function($scope, $http, $resource, $log, loginService) {
   var loadItemCount = function(lc, sc) {
     
     var scKey = "" + sc;
-    var enableRenkinIds = enableRenkinSet[scKey];
     var enableRenkins = [];
-    enableRenkinIds.forEach(function(rid) {
-      var r = renkinTypes[rid];
-      enableRenkins.push(r);
-    });
+    var enableRenkinIds = enableRenkinSet[scKey];
+
+    if(enableRenkinIds){
+      enableRenkinIds.forEach(function(rid) {
+        var r = renkinTypes[rid];
+        enableRenkins.push(r);
+      });
+    }
 
     $scope.renkinCategories = enableRenkins;
 
