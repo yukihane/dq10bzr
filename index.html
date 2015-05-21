@@ -176,6 +176,20 @@
               </td>
             </tr>
             <tr><td>効果の合計値2</td><td><select></select></td></tr>
+            <tr>
+              <td>難易度下限</td>
+              <td>
+                <select data-ng-model="difficultyLowSelected"
+                data-ng-options="dl as dl.text for dl in difficultySet"></select>
+              </td>
+            </tr>
+            <tr>
+              <td>難易度上限</td>
+              <td>
+                <select data-ng-model="difficultyHighSelected"
+                data-ng-options="dh as dh.text for dh in difficultySet"></select>
+              </td>
+            </tr>
           </table>
       
           <button id="searchButton">Search</button>

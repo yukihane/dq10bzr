@@ -528,9 +528,12 @@ function($scope, $http, $resource, $log, loginService) {
 
   $scope.jobSet = $resource("./assets/jobSet.json").query();
 
-  $scope.eqLvLowSet = [1,7,14,21,28,30,35,42,50,60,65,70,75,80];
+  $resource("./assets/eqLvSet.json").get(function(eqLvSet) {
+    $scope.eqLvLowSet = eqLvSet.low;
+    $scope.eqLvHighSet = eqLvSet.high;
+  });
+
   $scope.eqLvLowSelected = null;
-  $scope.eqLvHighSet = [6,13,20,27,29,34,41,49,59,64,69,74,79,85];
   $scope.eqLvHighSelected = null;
 
   $scope.qualitySet = $resource("./assets/qualitySet.json").query();
@@ -550,6 +553,10 @@ function($scope, $http, $resource, $log, loginService) {
   $scope.renkinCategories = [];
   $scope.renkinCategory1Selected = null;
   $scope.renkinCategory2Selected = null;
+
+  $scope.difficultySet = $resource("./assets/difficultySet.json").query();
+  $scope.difficultyLowSelected = null;
+  $scope.difficultyHighSelected = null;
 
   $scope.clickTab = function() {
       console.log(renkinTypeSet);
