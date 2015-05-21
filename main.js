@@ -528,14 +528,6 @@ function($scope, $http, $resource, $log, loginService) {
 
   $scope.jobSet = $resource("./assets/jobSet.json").query();
 
-  $resource("./assets/eqLvSet.json").get(function(eqLvSet) {
-    $scope.eqLvLowSet = eqLvSet.low;
-    $scope.eqLvHighSet = eqLvSet.high;
-  });
-
-  $scope.eqLvLowSelected = null;
-  $scope.eqLvHighSelected = null;
-
   $scope.qualitySet = $resource("./assets/qualitySet.json").query();
 
   $scope.largeCategories = [];
@@ -549,6 +541,15 @@ function($scope, $http, $resource, $log, loginService) {
   $scope.itemCountSelected = null;
 
   $scope.jobSelected = null;
+
+  $resource("./assets/eqLvSet.json").get(function(eqLvSet) {
+    $scope.eqLvLowSet = eqLvSet.low;
+    $scope.eqLvHighSet = eqLvSet.high;
+  });
+
+  $scope.eqLvLowSelected = null;
+  $scope.eqLvHighSelected = null;
+
 
   $scope.renkinCategories = [];
   $scope.renkinCategory1Selected = null;
