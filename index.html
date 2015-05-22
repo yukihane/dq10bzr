@@ -110,7 +110,7 @@
               <td>種類</td>
               <td>
                 <select data-ng-model="selected.largeCategory"
-                data-ng-options="lc as lc.largeCategoryName for lc in largeCategories"
+                data-ng-options="lc as lc.largeCategoryName for lc in largeCategorySet"
                 data-ng-change="largeCategoryChanged(selected.largeCategory)"></select>
               </td>
             </tr>
@@ -118,7 +118,7 @@
               <td>種類2</td>
               <td>
                 <select data-ng-model="selected.smallCategory"
-                data-ng-options="sc as sc.smallCategoryName for sc in smallCategories"
+                data-ng-options="sc as sc.smallCategoryName for sc in smallCategorySet"
                 data-ng-change="smallCategoryChanged(selected.smallCategory)"
                 data-ng-disabled="disabled.smallCategory"></select>
               </td>
@@ -127,7 +127,7 @@
               <td>アイテム名</td>
               <td>
                 <select data-ng-model="selected.itemCount"
-                data-ng-options="ic as ic.itemName for ic in itemCounts"
+                data-ng-options="ic as ic.itemName for ic in itemCountSet"
                 data-ng-change="itemCountChanged(selected.itemCount)"
                 data-ng-disabled="disabled.itemCount">
                   <option value=""></option>
@@ -178,7 +178,7 @@
               <td>錬金効果1</td>
               <td>
                 <select data-ng-model="selected.renkin[0].effect"
-                data-ng-options="c as c.name for c in renkinCategories"
+                data-ng-options="c as c.name for c in renkinCategorySet"
                 data-ng-disabled="disabled.renkin"
                 data-ng-change="renkinCategoryChanged(0, selected.renkin[0].effect)"></select>
               </td>
@@ -195,7 +195,7 @@
               <td>錬金効果2</td>
               <td>
                 <select data-ng-model="selected.renkin[1].effect"
-                data-ng-options="c as c.name for c in renkinCategories"
+                data-ng-options="c as c.name for c in renkinCategorySet"
                 data-ng-disabled="disabled.renkin"
                 data-ng-change="renkinCategoryChanged(1, selected.renkin[1].effect)"></select>
               </td>

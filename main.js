@@ -523,30 +523,33 @@ function($scope, $http, $resource, $log, loginService) {
   
   $scope.debug = "";
 
+  // 「種類」のoptions
+  $scope.largeCategorySet = [];
+
   var enableRenkinSet = $resource("./assets/enableRenkinSet.json").get();
   var renkinTypeSet = $resource("./assets/renkinTypeSet.json").get();
 
-  // 「種類」のoptions
-  $scope.largeCategories = [];
 
   // 「装備可能職業」のoptions
-  $scope.jobSet = $resource("./assets/jobSet.json").query();
+  var jobSet = $resource("./assets/jobSet.json").query();
 
+  var eqLvMinSet = [];
+  var eqLvMaxSet = [];
   $resource("./assets/eqLvSet.json").get(function(eqLvSet) {
     // 装備レベル下限のoptions
-    $scope.eqLvMinSet = eqLvSet.min;
+    eqLvMinSet = eqLvSet.min;
     // 装備レベル上限のoptions
-    $scope.eqLvMaxSet = eqLvSet.max;
+    eqLvMaxSet = eqLvSet.max;
   });
 
   // できのよさのoptions
-  $scope.qualitySet = $resource("./assets/qualitySet.json").query();
+  var qualitySet = $resource("./assets/qualitySet.json").query();
 
   // 錬金効果数のoptions
-  $scope.numOfRenkinSet = $resource("./assets/numOfRenkinSet.json").query();
+  var numOfRenkinSet = $resource("./assets/numOfRenkinSet.json").query();
 
   // 難易度のoptions
-  $scope.difficultySet = $resource("./assets/difficultySet.json").query();
+  var difficultySet = $resource("./assets/difficultySet.json").query();
 
   var defaultSelected = {
     largeCategory: null,
@@ -589,7 +592,7 @@ function($scope, $http, $resource, $log, loginService) {
     $scope.selected = Object.create(defaultSelected);
     $scope.disabled = Object.create(defaultDisabled);
 
-    if(!$scope.largeCategories.length) {
+    if(!$scope.largeCategorySet.length) {
       // 既に読み込み済みの場合は改めてリクエストしない
 
       var req = {
@@ -602,23 +605,44 @@ function($scope, $http, $resource, $log, loginService) {
   
       $http(req)
       .success(function(data, status, headers, config) {
-        $scope.largeCategories = data.largeCategoryValueList;
+        $scope.largeCategorySet = data.largeCategoryValueList;
       })
       .error(function(data, status, headers, config) {
       });
     }
 
     // 「種類2」のoptions
-    $scope.smallCategories = [];
+    $scope.smallCategorySet = [];
 
     // 「アイテム名」のoptions
-    $scope.itemCounts = [];
+    $scope.itemCountSet = [];
 
-    // 錬金効果のoptions
-    $scope.renkinCategories = [];
-
+    clearOptions();
   };
   
+  var clearOptions = function() {
+    
+    // 装備可能職業のoptions
+    $scope.jobSet = [];
+    
+    // 装備レベル下限, 上限
+    $scope.eqLvMinSet = [];
+    $scope.eqLvMaxSet = [];
+
+    // できのよさ
+    $scope.qualitySet = [];
+
+    // 錬金効果数
+    $scope.numOfRenkinSet = [];
+
+    // 錬金効果
+    $scope.renkinCategorySet = [];
+    
+    // 難易度
+    $scope.difficultySet = [];
+
+  };
+
   $scope.reload = function() {
     clear();
   };
@@ -633,7 +657,7 @@ function($scope, $http, $resource, $log, loginService) {
 
     if(!selected.isSmallCategory) {
       // isSmallCategory は、おそらく、smallCategoryを持っているかどうかの区分
-      $scope.smallCategories = [];
+      $scope.smallCategorySet = [];
       smallCategoryCommitted(selected.largeCategoryId, selected.smallCategoryId);
       return;
     }
@@ -650,7 +674,7 @@ function($scope, $http, $resource, $log, loginService) {
     $http(req)
     .success(function(data, status, headers, config) {
       console.log(data);
-      $scope.smallCategories = data.smallCategoryValueList;
+      $scope.smallCategorySet = data.smallCategoryValueList;
       $scope.disabled.smallCategory = false;
     })
     .error(function(data, status, headers, config) {
@@ -668,6 +692,31 @@ function($scope, $http, $resource, $log, loginService) {
     console.log("lc: " + lc + ", sc: " + sc);
 
     unsetDisabled(lc, sc);
+
+    var req = {
+      method: "GET",
+      url: "https://happy.dqx.jp/capi/bazaar/itemcount/99/" + lc + "/" + sc + "/",
+      headers: {
+        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
+      },
+    };
+
+    $http(req)
+    .success(function(data, status, headers, config) {
+      $scope.itemCountSet = data.itemCountValueList;
+      $scope.disabled.itemCount = false;
+    })
+    .error(function(data, status, headers, config) {
+    });
+    
+  };
+
+  var unsetDisabled = function(lc, sc) {
+    $scope.disabled = Object.create(defaultDisabled);
+    // smallCategoryは決定済みの前提なのでenable
+    $scope.disabled.smallCategory = false;
+
+    clearOptions();
     
     var scStr = "" + sc;
     var enableRenkins = [];
@@ -680,32 +729,6 @@ function($scope, $http, $resource, $log, loginService) {
       });
     }
 
-    $scope.renkinCategories = enableRenkins;
-
-    var req = {
-      method: "GET",
-      url: "https://happy.dqx.jp/capi/bazaar/itemcount/99/" + lc + "/" + sc + "/",
-      headers: {
-        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
-      },
-    };
-
-    $http(req)
-    .success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.itemCounts = data.itemCountValueList;
-      $scope.disabled.itemCount = false;
-    })
-    .error(function(data, status, headers, config) {
-    });
-    
-  };
-
-  var unsetDisabled = function(lc, sc) {
-    $scope.disabled = Object.create(defaultDisabled);
-    // smallCategoryは決定済みの前提なのでenable
-    $scope.disabled.smallCategory = false;
-    
     // bazaar_searching_conditions.ods の「リクエストパラメータ」シートに仕様記載
     if(lc === 1 || lc === 2 || lc === 3) {
       // 武器, 盾, 防具の場合
@@ -713,13 +736,28 @@ function($scope, $http, $resource, $log, loginService) {
       $scope.disabled.itemCount = false;
       $scope.disabled.quality = false;
       $scope.disabled.renkin = false;
+
+      $scope.jobSet = jobSet;
+      $scope.eqLvMinSet = eqLvMinSet;
+      $scope.eqLvMaxSet = eqLvMaxSet;
+
+      $scope.qualitySet = qualitySet;
+      $scope.numOfRenkinSet = numOfRenkinSet;
+      $scope.renkinCategorySet = enableRenkins;
+
     } else if(lc === 5 || lc === 11 || sc === 606) {
       // 職人どうぐ, 釣りどうぐ, 消費アイテム>料理 の場合
       $scope.disabled.itemCount = false;
       $scope.disabled.quality = false;
+
+      $scope.qualitySet = qualitySet;
+
     } else if(sc === 605) {
       // 消費アイテム>依頼書 の場合
       $scope.disabled.difficulty = false;
+
+      $scope.difficultySet = difficultySet;
+
     } else if(lc === 6 || lc === 7 || lc === 8 || lc === 12 || lc === 9 || lc === 10) {
       // (料理と依頼書以外の)消費アイテム, 素材, 家具, 庭具, レシピ帳, スカウトの書
       $scope.disabled.itemCount = false;
