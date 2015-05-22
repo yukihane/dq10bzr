@@ -660,11 +660,14 @@ function($scope, $http, $resource, $log, loginService) {
 
   $scope.smallCategoryChanged = function(selected) {
     if($scope.selected.largeCategory && selected) {
-      loadItemCount($scope.selected.largeCategory.largeCategoryId, selected.smallCategoryId);
+      smallCategoryCommitted($scope.selected.largeCategory.largeCategoryId, selected.smallCategoryId);
     }
   };
   
-  var loadItemCount = function(lc, sc) {
+  var smallCategoryCommitted = function(lc, sc) {
+    console.log("lc: " + lc + ", sc: " + sc);
+
+    unsetDisabled(lc, sc);
     
     var scStr = "" + sc;
     var enableRenkins = [];
@@ -691,14 +694,52 @@ function($scope, $http, $resource, $log, loginService) {
     .success(function(data, status, headers, config) {
       console.log(data);
       $scope.itemCounts = data.itemCountValueList;
+      $scope.disabled.itemCount = false;
     })
     .error(function(data, status, headers, config) {
     });
     
   };
 
+  var unsetDisabled = function(lc, sc) {
+    $scope.disabled = Object.create(defaultDisabled);
+    // smallCategoryは決定済みの前提なのでenable
+    $scope.disabled.smallCategory = false;
+    
+    // bazaar_searching_conditions.ods の「リクエストパラメータ」シートに仕様記載
+    if(lc === 1 || lc === 2 || lc === 3) {
+      // 武器, 盾, 防具の場合
+      $scope.disabled.eqCond = false;
+      $scope.disabled.itemCount = false;
+      $scope.disabled.quality = false;
+      $scope.disabled.renkin = false;
+    } else if(lc === 5 || lc === 11 || sc === 606) {
+      // 職人どうぐ, 釣りどうぐ, 消費アイテム>料理 の場合
+      $scope.disabled.itemCount = false;
+      $scope.disabled.quality = false;
+    } else if(sc === 605) {
+      // 消費アイテム>依頼書 の場合
+      $scope.disabled.difficulty = false;
+    } else if(lc === 6 || lc === 7 || lc === 8 || lc === 12 || lc === 9 || lc === 10) {
+      // (料理と依頼書以外の)消費アイテム, 素材, 家具, 庭具, レシピ帳, スカウトの書
+      $scope.disabled.itemCount = false;
+    }
+  };
+
   $scope.itemCountChanged = function(selected) {
-    console.log("clicked");
+    if(selected) {
+      $scope.disabled.eqCond = true;
+      $scope.selected.job = null;
+      $scope.selected.eqLvMin = null;
+      $scope.selected.eqLvMax = null;
+    } else {
+      if($scope.selected.largeCategory && $scope.selected.smallCategory) {
+        var lc = $scope.selected.largeCategory.largeCategoryId;
+        if(lc === 1 || lc === 2 || lc === 3) {
+          $scope.disabled.eqCond = false;
+        }
+      }
+    }
   };
 
 
