@@ -581,7 +581,7 @@ function($scope, $http, $resource, $log, loginService) {
     renkin: true,
     difficulty: true,
   };
-  
+
   $scope.disabled = Object.create(defaultDisabled);
 
   var clear = function(){
@@ -629,11 +629,12 @@ function($scope, $http, $resource, $log, loginService) {
 
   $scope.largeCategoryChanged = function(selected) {
 
-    $scope.smallCategoryDisabled = true;
+    $scope.disabled = Object.create(defaultDisabled);
+
     if(!selected.isSmallCategory) {
       // isSmallCategory は、おそらく、smallCategoryを持っているかどうかの区分
       $scope.smallCategories = [];
-      loadItemCount(selected.largeCategoryId, selected.smallCategoryId);
+      smallCategoryCommitted(selected.largeCategoryId, selected.smallCategoryId);
       return;
     }
 
@@ -650,7 +651,7 @@ function($scope, $http, $resource, $log, loginService) {
     .success(function(data, status, headers, config) {
       console.log(data);
       $scope.smallCategories = data.smallCategoryValueList;
-      $scope.smallCategoryDisabled = false;
+      $scope.disabled.smallCategory = false;
     })
     .error(function(data, status, headers, config) {
     });
