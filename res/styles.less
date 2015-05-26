@@ -1,2 +1,46 @@
-@import (less) "res/bootstrap-3.3.4-dist/css/bootstrap.css";
+@import (less) "bootstrap-3.3.4-dist/css/bootstrap.css";
 
+/* CSS file placeholder. */
+
+.clear {
+  clear: both;
+}
+
+/* デバッグ用 */
+pre {
+  -webkit-user-select: text;
+}
+
+div#headerPane > div {
+  float: left;
+}
+
+.tab-pane {
+  height: 400px;
+  overflow: auto;
+}
+
+
+/*
+フレンドリスト関連設定
+*/
+
+table#friendsTable {
+  -webkit-user-select: text;
+  cursor: text;
+}
+
+
+table#friendsTable td.characterName {
+  cursor: pointer;
+}
+
+/* フレンドリストでオンラインプレイヤーの背景色を変更 */
+table#friendsTable tr.online {
+  background-color: yellow;
+}
+
+/* 職人ギルド依頼の依頼リストと詳細を横並びに */
+div#syokuninContent > div {
+  float: left;
+}
