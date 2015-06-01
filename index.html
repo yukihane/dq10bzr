@@ -106,7 +106,7 @@
         <div id="bazaarSearchConditionPane">
           <form class="form-horizontal">
             <div>
-              <label>種類</label>
+              <label class="control-label">種類</label>
               <div >
                 <select class="form-control" data-ng-model="selected.largeCategory"
                 data-ng-options="lc as lc.largeCategoryName for lc in largeCategorySet"
@@ -114,7 +114,7 @@
               </div>
             </div>
             <div>
-              <label>種類2</label>
+              <label class="control-label">種類2</label>
               <div>
                 <select data-ng-model="selected.smallCategory"
                 data-ng-options="sc as sc.smallCategoryName for sc in smallCategorySet"
@@ -123,7 +123,7 @@
               </div>
             </div>
             <div>
-              <label>アイテム名</label>
+              <label class="control-label">アイテム名</label>
               <div>
                 <select data-ng-model="selected.itemCount"
                 data-ng-options="ic as ic.itemName for ic in itemCountSet"
@@ -134,7 +134,7 @@
               </div>
             </div>
             <div>
-              <label>装備可能職業</label>
+              <label class="control-label">装備可能職業</label>
               <div>
                 <select data-ng-model="selected.job"
                 data-ng-options="j as j.name for j in jobSet"
@@ -142,7 +142,7 @@
               </div>
             </div>
             <div>
-              <label>装備レベル下限</label>
+              <label class="control-label">装備レベル下限</label>
               <div>
                 <select data-ng-model="selected.eqLvMin"
                 data-ng-options="llv  for llv in eqLvMinSet"
@@ -150,7 +150,7 @@
               </div>
             </div>
             <div>
-              <label>装備レベル上限</label>
+              <label class="control-label">装備レベル上限</label>
               <div>
                 <select data-ng-model="selected.eqLvMax"
                 data-ng-options="hlv  for hlv in eqLvMaxSet"
@@ -158,7 +158,7 @@
               </div>
             </div>
             <div>
-              <label>できのよさ</label>
+              <label class="control-label">できのよさ</label>
               <div>
                 <select data-ng-model="selected.quality"
                 data-ng-options="q as q.text for q in qualitySet"
@@ -166,7 +166,7 @@
               </div>
             </div>
             <div>
-              <label>錬金効果数</label>
+              <label class="control-label">錬金効果数</label>
               <div>
                 <select data-ng-model="selected.numOfRenkin"
                 data-ng-options="n as n.text for n in numOfRenkinSet"
@@ -174,7 +174,7 @@
               </div>
             </div>
             <div>
-              <label>錬金効果1</label>
+              <label class="control-label">錬金効果1</label>
               <div>
                 <select data-ng-model="selected.renkin[0].effect"
                 data-ng-options="c as c.name for c in renkinCategorySet"
@@ -183,7 +183,7 @@
               </div>
             </div>
             <div>
-              <label>効果の合計値1</label>
+              <label class="control-label">効果の合計値1</label>
               <div>
                 <input data-ng-model="selected.renkin[0].minValue" type="number"
                 data-ng-disabled="disabled.renkin"
@@ -191,7 +191,7 @@
               </div>
             </div>
             <div>
-              <label>錬金効果2</label>
+              <label class="control-label">錬金効果2</label>
               <div>
                 <select data-ng-model="selected.renkin[1].effect"
                 data-ng-options="c as c.name for c in renkinCategorySet"
@@ -200,7 +200,7 @@
               </div>
             </div>
             <div>
-              <label>効果の合計値2</label>
+              <label class="control-label">効果の合計値2</label>
               <div>
                 <input type="number" data-ng-model="selected.renkin[1].minValue"
                 data-ng-disabled="disabled.renkin"
@@ -208,7 +208,7 @@
               </div>
             </div>
             <div>
-              <label>難易度下限</label>
+              <label class="control-label">難易度下限</label>
               <div>
                 <select data-ng-model="selected.difficultyMin"
                 data-ng-options="dl as dl.text for dl in difficultySet"
@@ -216,7 +216,7 @@
               </div>
             </div>
             <div>
-              <label>難易度上限</label>
+              <label class="control-label">難易度上限</label>
               <div>
                 <select data-ng-model="selected.difficultyMax"
                 data-ng-options="dh as dh.text for dh in difficultySet"
