@@ -107,8 +107,8 @@
           <form class="form-horizontal">
             <div>
               <label class="control-label">種類</label>
-              <div >
-                <select class="form-control" data-ng-model="selected.largeCategory"
+              <div>
+                <select data-ng-model="selected.largeCategory"
                 data-ng-options="lc as lc.largeCategoryName for lc in largeCategorySet"
                 data-ng-change="largeCategoryChanged(selected.largeCategory)"></select>
               </div>
