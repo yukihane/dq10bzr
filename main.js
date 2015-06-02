@@ -589,7 +589,9 @@ function($scope, $http, $resource, $log, loginService) {
 
   var clear = function(){
 
+    // 選択した値を保持
     $scope.selected = Object.create(defaultSelected);
+    // 入力項目がdisabledかenabledかを保持
     $scope.disabled = Object.create(defaultDisabled);
 
     if(!$scope.largeCategorySet.length) {
@@ -809,6 +811,12 @@ function($scope, $http, $resource, $log, loginService) {
     } else {
       $scope.renkin2MinValueSpec = v;
     }
+  };
+
+
+  // 検索ボタン
+  $scope.submit = function() {
+    $scope.debug = $scope.selected.renkin;
   };
 
 }]);
