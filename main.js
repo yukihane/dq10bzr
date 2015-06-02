@@ -653,6 +653,8 @@ function($scope, $http, $resource, $log, loginService) {
     clear();
   };
 
+
+  // 「種類」選択時
   $scope.largeCategoryChanged = function(selected) {
 
     $scope.disabled = Object.create(defaultDisabled);
@@ -684,6 +686,8 @@ function($scope, $http, $resource, $log, loginService) {
 
   };
 
+
+  // 「種類2」選択時
   $scope.smallCategoryChanged = function(selected) {
     if($scope.selected.largeCategory && selected) {
       smallCategoryCommitted($scope.selected.largeCategory.largeCategoryId, selected.smallCategoryId);
