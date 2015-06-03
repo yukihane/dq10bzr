@@ -1,6 +1,5 @@
 @import (less) "bootstrap-3.3.4-dist/css/bootstrap.css";
 
-/* CSS file placeholder. */
 
 .clear {
   clear: both;
@@ -44,3 +43,38 @@ table#friendsTable tr.online {
 div#syokuninContent > div {
   float: left;
 }
+
+/* バザー検索タブ */
+div#bazaarPane {
+  overflow: hidden;
+  > div {
+    overflow: left;
+  }
+  > div#bazaarSearchConditionPane {
+    .col-xs-6;
+  }
+  > div#searchResult {
+    .col-xs-6;
+  }
+}
+div#bazaarPane:after {
+  .clear;
+}
+
+/* バザー検索フォーム */
+div#bazaarSearchConditionPane > form > div {
+  .form-group;
+  > label {
+    .col-xs-5;
+  }
+  > div {
+    .col-xs-7;
+    > select, input {
+      .form-control;
+    }
+    > select[disabled], input[disabled] {
+      background-color: #eee;
+    }
+  }
+}
+
