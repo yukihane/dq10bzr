@@ -832,26 +832,27 @@ function($scope, $http, $resource, $log, loginService) {
       largecategoryid: $scope.selected.largeCategory.largeCategoryId,
       smallcategoryid: (!$scope.selected.largeCategory.isSmallCategory ? $scope.selected.largeCategory.smallCategoryId
         : $scope.selected.smallCategory.smallCategoryId),
-      webitemid: ($scope.selected.itemCount ? $scope.selected.itemCount.webItemId : null),
-      job: ($scope.selected.job ? $scope.selected.job.id : 0),
-      levelmin: ($scope.selected.eqLvMin ? $scope.selected.eqLvMin : eqLvMinSet[0]),
-      levelmax: ($scope.selected.eqLvMax ? $scope.selected.eqLvMax : eqLvMaxSet[eqLvMaxSet.length - 1]),
-      qualitymin: ($scope.selected.quality ? $scope.selected.quality.min : 0),
-      qualitymax: ($scope.selected.quality ? $scope.selected.quality.max : 0),
-      renkinmin: ($scope.selected.numOfRenkin ? $scope.selected.numOfRenkin.min : null),
-      renkinmax: ($scope.selected.numOfRenkin ? $scope.selected.numOfRenkin.max : null),
-      renkinsearchcategory: ($scope.selected.renkin[0].effect ? $scope.selected.renkin[0].effect.id : 0),
-      renkinsearchmin: ($scope.selected.renkin[0].minValue ? $scope.selected.renkin[0].minValue * $scope.selected.renkin[0].effect.scale : 0),
-      renkinsearchcategory2: ($scope.selected.renkin[1].effect ? $scope.selected.renkin[1].effect.id : 0),
-      renkinsearchmin2: ($scope.selected.renkin[1].minValue ? $scope.selected.renkin[1].minValue * $scope.selected.renkin[1].effect.scale : 0),
+      webitemid: (!!$scope.selected.itemCount ? $scope.selected.itemCount.webItemId : null),
+      job: (!!$scope.selected.job ? $scope.selected.job.id : 0),
+      levelmin: (!!$scope.selected.eqLvMin ? $scope.selected.eqLvMin : eqLvMinSet[0]),
+      levelmax: (!!$scope.selected.eqLvMax ? $scope.selected.eqLvMax : eqLvMaxSet[eqLvMaxSet.length - 1]),
+      qualitymin: (!!$scope.selected.quality ? $scope.selected.quality.min : 0),
+      qualitymax: (!!$scope.selected.quality ? $scope.selected.quality.max : 0),
+      renkinmin: (!!$scope.selected.numOfRenkin ? $scope.selected.numOfRenkin.min : null),
+      renkinmax: (!!$scope.selected.numOfRenkin ? $scope.selected.numOfRenkin.max : null),
+      renkinsearchcategory: (!!$scope.selected.renkin[0].effect ? $scope.selected.renkin[0].effect.id : 0),
+      renkinsearchmin: (!!$scope.selected.renkin[0].minValue ? $scope.selected.renkin[0].minValue * $scope.selected.renkin[0].effect.scale : 0),
+      renkinsearchcategory2: (!!$scope.selected.renkin[1].effect ? $scope.selected.renkin[1].effect.id : 0),
+      renkinsearchmin2: (!!$scope.selected.renkin[1].minValue ? $scope.selected.renkin[1].minValue * $scope.selected.renkin[1].effect.scale : 0),
     };
 
-    if($scope.selected.difficultyMin && $scope.selected.difficultyMax) {
-      params.qualitymin = $scope.selected.difficultyMin.parameter;
-      params.qualitymax = $scope.selected.difficultyMax.parameter;
+    if(params.smallcategoryid === 605) {
+      // 消費アイテム>依頼書 の場合
+      params.qualitymin = (!!$scope.selected.difficultyMin ? $scope.selected.difficultyMin.parameter : difficultySet[0].parameter);
+      params.qualitymax = (!!$scope.selected.difficultyMax ? $scope.selected.difficultyMax.parameter : difficultySet[difficultySet.length - 1].parameter);
     }
 
-    $scope.debug = $scope.selected.renkin;
+    $scope.debug = params;
   };
 
 }]);
