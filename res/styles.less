@@ -10,13 +10,24 @@ pre {
   -webkit-user-select: text;
 }
 
-div#headerPane > div {
-  float: left;
+html, body {
+  height: 100%;
+}
+
+
+/* タブ部分にスクロールバーを出すための設定(まだ調整の余地あり) */
+div#mainWindow, div.ng-isolate-scope, div.tab-content {
+  height: 100%;
 }
 
 .tab-pane {
-  height: 400px;
+  height: 78%;
   overflow: auto;
+}
+
+
+div#headerPane > div {
+  float: left;
 }
 
 
