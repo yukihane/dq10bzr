@@ -1,5 +1,8 @@
 'use strict';
 
+/*
+ワンタイムパスワード入力に関わるコントローラ.
+*/
 angular.module("dq10bzr.Main").controller('otpCtrl', ["$scope", "$modalInstance", "$http", "$log", "action",
 function ($scope, $modalInstance, $http, $log, action) {
 

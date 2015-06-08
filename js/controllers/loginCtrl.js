@@ -1,5 +1,8 @@
 'use strict';
 
+/*
+ログイン処理に関わるコントローラ.
+*/
 angular.module("dq10bzr.Main").controller('loginCtrl', ["$scope", "$modalInstance", "$http", "$log", "action",
 function ($scope, $modalInstance, $http, $log, action) {
 

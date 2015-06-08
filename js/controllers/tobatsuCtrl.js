@@ -1,5 +1,8 @@
 'use strict';
 
+/*
+討伐タブコントローラ.
+*/
 angular.module("dq10bzr.Main").controller("tobatsuCtrl", ["$scope", "$http", "$log", "loginService", 
 function($scope, $http, $log, loginService) {
 

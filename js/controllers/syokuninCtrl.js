@@ -1,5 +1,8 @@
 'use strict';
 
+/*
+職人タブコントローラ.
+*/
 angular.module("dq10bzr.Main").controller("syokuninCtrl", ["$scope", "$http", "$log", "loginService",
 function($scope, $http, $log, loginService) {
 

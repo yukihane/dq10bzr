@@ -1,5 +1,9 @@
 'use strict';
 
+/*
+キャラ変更に関わるコントローラ.
+キャラ変更ボタンなど.
+*/
 angular.module("dq10bzr.Main").controller('characterCtrl', ["$scope", "$modalInstance", "$http", "$log", "characters", "sessionId",
 function ($scope, $modalInstance, $http, $log, characters, sessionId) {
 

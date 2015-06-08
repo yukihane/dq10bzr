@@ -1,5 +1,8 @@
 'use strict';
 
+/*
+フレンドタブコントローラ.
+*/
 angular.module("dq10bzr.Main").controller("friendCtrl", ["$scope", "$http", "$log", "loginService", 
 function($scope, $http, $log, loginService) {
 

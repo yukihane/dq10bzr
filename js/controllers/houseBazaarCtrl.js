@@ -1,5 +1,8 @@
 'use strict';
 
+/*
+モーモンバザータブコントローラ.
+*/
 angular.module("dq10bzr.Main").controller("houseBazaarCtrl", ["$scope", "$http", "$log", "loginService",
 function($scope, $http, $log, loginService) {
 

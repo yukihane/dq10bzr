@@ -1,5 +1,8 @@
 'use strict';
 
+/*
+バザー検索タブ　コントローラ
+*/
 angular.module("dq10bzr.Main").controller("bazaarCtrl", ["$scope", "$http", "$resource", "$log", "loginService",
 function($scope, $http, $resource, $log, loginService) {
   
