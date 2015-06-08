@@ -3,8 +3,8 @@
 /*
 バザー検索タブ　コントローラ
 */
-angular.module("dq10bzr.Main").controller("bazaarCtrl", ["$scope", "$http", "$resource", "$log", "loginService",
-function($scope, $http, $resource, $log, loginService) {
+angular.module("dq10bzr.Main").controller("bazaarCtrl", ["$rootScope", "$scope", "$http", "$resource", "$log", "loginService",
+function($rootScope, $scope, $http, $resource, $log, loginService) {
   
   $scope.debug = "";
 
@@ -338,6 +338,7 @@ function($scope, $http, $resource, $log, loginService) {
     }
 
     $scope.debug = params;
+    $rootScope.$broadcast("footer.notify", params);
   };
 
 }]);
