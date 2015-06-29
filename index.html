@@ -12,13 +12,15 @@
 
   <div id="headerPane" data-ng-controller="userInfoCtrl">
     <div id="statusPane">
-      <div>{{loginInfo.character.characterName}} ({{loginInfo.character.smileUniqueNo}})</div>
+      <div data-ng-if="loginInfo.character.characterName">{{loginInfo.character.characterName}} ({{loginInfo.character.smileUniqueNo}})</div>
     </div>
-    <div id="characterButtonPane">
-      <button class="btn btn-default" data-ng-click="selectCharacter()">キャラ変更</button>
-    </div>
-    <div id="loginButtonPane">
-      <button class="btn btn-default" data-ng-click="login()">ログイン/アカウント変更</button>
+    <div id="headerButtonsPane">
+      <div id="characterButtonPane">
+        <button class="btn btn-default" data-ng-click="selectCharacter()">キャラ変更</button>
+      </div>
+      <div id="loginButtonPane">
+        <button class="btn btn-default" data-ng-click="login()">ログイン/アカウント変更</button>
+      </div>
     </div>
   </div>
 
