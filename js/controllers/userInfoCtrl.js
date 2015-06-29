@@ -7,7 +7,6 @@ function($scope, $modal, $http, $log, loginService) {
   $scope.loginInfo = loginService;
 
   chrome.storage.sync.get(["character", "auth"], function(items){
-    console.log("logined: " + items["character"].characterName);
     loginService.character = items["character"];
     loginService.auth = items["auth"];
     $scope.$apply();
