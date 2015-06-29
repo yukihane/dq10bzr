@@ -78,7 +78,7 @@
         <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
         <div id="syokuninContent">
           <div>
-            <table>
+            <table class="table table-bordered">
               <tr data-ng-repeat="e in list">
                 <td>{{e.isComplete | convertToProgress}}</td>
                 <td>{{e.rank}}</td>
