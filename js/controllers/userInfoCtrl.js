@@ -50,7 +50,8 @@ function($scope, $modal, $http, $log, loginService) {
       // 非同期で呼び出されます。
     });
   };
-  
+
+  // キャラ変更ボタン
   $scope.selectCharacter = function() {
     loginCompleted(loginService.auth);
   };
