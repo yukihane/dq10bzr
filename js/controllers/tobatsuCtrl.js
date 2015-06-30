@@ -3,8 +3,8 @@
 /*
 討伐タブコントローラ.
 */
-angular.module("dq10bzr.Main").controller("tobatsuCtrl", ["$scope", "$http", "$log", "loginService", 
-function($scope, $http, $log, loginService) {
+angular.module("dq10bzr.Main").controller("tobatsuCtrl", ["$rootScope", "$scope", "$http", "$log", "loginService", 
+function($rootScope, $scope, $http, $log, loginService) {
 
   $scope.list = [];
 
@@ -24,11 +24,32 @@ function($scope, $http, $log, loginService) {
     console.log("討伐リクエスト");
     $http(req)
     .success(function(data, status, headers, config) {
-      console.log(data);
+      if(data.resultCode !== 0) {
+        var msg = getErrorMsg(data.resultCode);
+        $rootScope.$broadcast("footer.notify", msg);
+        return;
+      }
+
       $scope.list = data;
+
     })
     .error(function(data, status, headers, config) {
+      $rootScope.$broadcast("footer.notify", "通信エラー");
+      console.log(data);
     });
 
   };
+
+  var getErrorMsg = function(code) {
+
+    switch(code) {
+      case 0:
+        return "";
+      case 106:
+        return "ログイン中は本操作を実行できません";
+      default:
+        return "エラー発生(" + code + ")";
+    }
+  };
+
 }]);
