@@ -56,8 +56,9 @@ function($rootScope, $scope, $modal, $http, $log, loginService) {
 
     // 認証情報が無ければログインしていない
     // (ただし, 存在していても期限切れの場合もあるが)
-    if(loginService.auth && loginService.auth.cis_sessid) {
-      loginCompleted(loginService.auth);
+    var auth = loginService.auth;
+    if(auth && auth.cis_sessid) {
+      loginCompleted(auth);
     } else {
       $rootScope.$broadcast("footer.notify", "ログインしていません");
     }
@@ -111,6 +112,7 @@ function($rootScope, $scope, $modal, $http, $log, loginService) {
       
       chrome.storage.sync.set(auth, function(){
         console.log("auth saved: " + auth);
+        loginService.auth = auth.auth;
       });
 
       loginCompleted(auth.auth);
