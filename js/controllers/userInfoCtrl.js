@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module("dq10bzr.Main").controller("userInfoCtrl", ["$scope", "$modal", "$http", "$log", "loginService",
-function($scope, $modal, $http, $log, loginService) {
+angular.module("dq10bzr.Main").controller("userInfoCtrl", ["$rootScope", "$scope", "$modal", "$http", "$log", "loginService",
+function($rootScope, $scope, $modal, $http, $log, loginService) {
   console.log("userInfo");
 
   $scope.loginInfo = loginService;
@@ -53,7 +53,15 @@ function($scope, $modal, $http, $log, loginService) {
 
   // キャラ変更ボタン
   $scope.selectCharacter = function() {
-    loginCompleted(loginService.auth);
+
+    // 認証情報が無ければログインしていない
+    // (ただし, 存在していても期限切れの場合もあるが)
+    if(loginService.auth && loginService.auth.cis_sessid) {
+      loginCompleted(loginService.auth);
+    } else {
+      $rootScope.$broadcast("footer.notify", "ログインしていません");
+    }
+
   };
 
   var openLoginDialog = function(action) {
