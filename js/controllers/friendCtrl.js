@@ -3,8 +3,8 @@
 /*
 フレンドタブコントローラ.
 */
-angular.module("dq10bzr.Main").controller("friendCtrl", ["$scope", "$http", "$log", "loginService", 
-function($scope, $http, $log, loginService) {
+angular.module("dq10bzr.Main").controller("friendCtrl", ["$scope", "$http", "$log", "request",
+function($scope, $http, $log, request) {
 
   $scope.friends = [];
   $scope.isOffsetEnd = true;
@@ -19,26 +19,13 @@ function($scope, $http, $log, loginService) {
   };
   
   $scope.query = function(index) {
-    console.log(loginService.sessionId);
-
-    var req = {
-      method: "GET",
-      url: "https://happy.dqx.jp/capi/profile/friends/1/" + index + "/",
-      headers: {
-        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
-      },
-    };
-    
-
-    console.log("フレンドリクエスト");
-    $http(req)
-    .success(function(data, status, headers, config) {
-      console.log(data);
+    var promise = request.friends(index);
+    promise.then(function(data) {
       $scope.friends = $scope.friends.concat(data.friendsValueList);
       $scope.isOffsetEnd = data.isOffsetEnd;
       $scope.nextIndex = index + 1;
-    })
-    .error(function(data, status, headers, config) {
+    }, function(data){
+      console.log("ERROR");
     });
   };
 
