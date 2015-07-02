@@ -3,8 +3,8 @@
 /*
 フレンドタブコントローラ.
 */
-angular.module("dq10bzr.Main").controller("friendCtrl", ["$scope", "$http", "$log", "request",
-function($scope, $http, $log, request) {
+angular.module("dq10bzr.Main").controller("friendCtrl", ["$rootScope", "$scope", "$http", "$log", "request",
+function($rootScope, $scope, $http, $log, request) {
 
   $scope.friends = [];
   $scope.isOffsetEnd = true;
@@ -19,14 +19,18 @@ function($scope, $http, $log, request) {
   };
   
   $scope.query = function(index) {
-    var promise = request.friends(index);
-    promise.then(function(data) {
-      $scope.friends = $scope.friends.concat(data.friendsValueList);
-      $scope.isOffsetEnd = data.isOffsetEnd;
-      $scope.nextIndex = index + 1;
-    }, function(data){
-      console.log("ERROR");
-    });
+    try {
+      var promise = request.friends(index);
+      promise.then(function(data) {
+        $scope.friends = $scope.friends.concat(data.friendsValueList);
+        $scope.isOffsetEnd = data.isOffsetEnd;
+        $scope.nextIndex = index + 1;
+      }, function(data){
+        console.log("ERROR");
+      });
+    } catch(e) {
+      $rootScope.$broadcast("footer.notify", e);
+    }
   };
 
   $scope.open = function(webPcNo) {

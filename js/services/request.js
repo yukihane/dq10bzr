@@ -1,11 +1,17 @@
 'use strict';
 
 angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService", function($http, $q, loginService){
-  var friends = function(index) {
-    
-    var getSessionId = function() {
+
+  var getSessionId = function() {
+    try {
       return loginService.character.sessionId;
-    };
+    } catch (e) {
+      // 一度もログインしたことがなければ loginService.character はundefined
+      throw "ログインしていません";
+    }
+  };
+
+  var friends = function(index) {
 
     var req = {
       method: "GET",
