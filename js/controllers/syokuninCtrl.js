@@ -7,9 +7,9 @@ angular.module("dq10bzr.Main").controller("syokuninCtrl", ["$rootScope", "$scope
 function($rootScope, $scope, $log, request) {
 
   $scope.list = [];
-  
+
   $scope.necessaryMaterials = [];
-  
+
   $scope.bzrResults = [];
 
   $scope.reload = function() {
@@ -24,24 +24,13 @@ function($rootScope, $scope, $log, request) {
 
   $scope.detail = function(jobNo, recipeNo, createWebItemNoHash) {
 
-    var req = {
-      method: "GET",
-      url: "https://happy.dqx.jp/capi/syokunin/jobdetail/" + jobNo + "/" + recipeNo + "/"
-        + (createWebItemNoHash ? createWebItemNoHash + "/" : ""),
-      headers: {
-        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
-      },
-    };
+    var promise = request.jobdetail(jobNo, recipeNo, createWebItemNoHash);
 
-    console.log("職人ギルド依頼");
-    $http(req)
-    .success(function(data, status, headers, config) {
-      console.log(data);
+    promise.then(function(data) {
       $scope.necessaryMaterials = data.recipeDetail.necessaryMaterialList;
-    })
-    .error(function(data, status, headers, config) {
+    }, function(msg) {
+      $rootScope.$broadcast("footer.notify", msg);
     });
-
   };
 
   $scope.searchBzr = function(webItemNoHash) {
@@ -66,7 +55,7 @@ function($rootScope, $scope, $log, request) {
     .error(function(data, status, headers, config) {
     });
 
-    
+
   };
 
 }]);

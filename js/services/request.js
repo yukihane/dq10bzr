@@ -86,7 +86,7 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
 
     return deferred.promise;
   };
-  
+
   var joblist = function() {
 
     var req = {
@@ -110,8 +110,31 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
 
     return deferred.promise;
   };
-  
-  var jobdetail = function() {};
+
+  var jobdetail = function(jobNo, recipeNo, createWebItemNoHash) {
+
+    var req = {
+      method: "GET",
+      url: "https://happy.dqx.jp/capi/syokunin/jobdetail/" + jobNo + "/" + recipeNo + "/"
+        + (createWebItemNoHash ? createWebItemNoHash + "/" : ""),
+      headers: {
+        "X-Smile-3DS-SESSIONID": getSessionId(),
+      },
+    };
+
+    var deferred = $q.defer();
+
+    $http(req)
+    .success(function(data, status, headers, config) {
+      deferred.resolve(data);
+    })
+    .error(function(data, status, headers, config) {
+      var msg = getHttpMessage(status);
+      deferred.reject(msg);
+    });
+
+    return deferred.promise;
+  };
 
   return {
     friends: friends,
