@@ -35,27 +35,18 @@ function($rootScope, $scope, $log, request) {
 
   $scope.searchBzr = function(webItemNoHash) {
 
-    var req = {
-      method: "GET",
-      url: "https://happy.dqx.jp/capi/bazaar/search/",
-      params: {
-        bazaarno: 99,
-        webitemid: webItemNoHash,
-      },
-      headers: {
-        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
-      },
+    var cond = {
+      bazaarno: 99,
+      webitemid: webItemNoHash,
     };
 
-    $http(req)
-    .success(function(data, status, headers, config) {
-      console.log(data);
+    var promise = request.bazaar(cond);
+
+    promise.then(function(data) {
       $scope.bzrResults = data;
-    })
-    .error(function(data, status, headers, config) {
+    }, function(msg) {
+      $rootScope.$broadcast("footer.notify", msg);
     });
-
-
   };
 
 }]);
