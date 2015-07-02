@@ -3,8 +3,8 @@
 /*
 フレンドタブコントローラ.
 */
-angular.module("dq10bzr.Main").controller("friendCtrl", ["$rootScope", "$scope", "$http", "$log", "request",
-function($rootScope, $scope, $http, $log, request) {
+angular.module("dq10bzr.Main").controller("friendCtrl", ["$rootScope", "$scope", "$log", "request",
+function($rootScope, $scope, $log, request) {
 
   $scope.friends = [];
   $scope.isOffsetEnd = true;
