@@ -25,13 +25,7 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
 
     $http(req)
     .success(function(data, status, headers, config) {
-
-      var result = {
-        friends: data.friendsValueList,
-        isOffsetEnd: data.isOffsetEnd,
-      };
-
-      deferred.resolve(result);
+      deferred.resolve(data);
     })
     .error(function(data, status, headers, config) {
       deferred.reject(data);
