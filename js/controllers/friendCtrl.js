@@ -3,8 +3,8 @@
 /*
 フレンドタブコントローラ.
 */
-angular.module("dq10bzr.Main").controller("friendCtrl", ["$scope", "$http", "$log", "loginService", 
-function($scope, $http, $log, loginService) {
+angular.module("dq10bzr.Main").controller("friendCtrl", ["$rootScope", "$scope", "$log", "request",
+function($rootScope, $scope, $log, request) {
 
   $scope.friends = [];
   $scope.isOffsetEnd = true;
@@ -19,27 +19,18 @@ function($scope, $http, $log, loginService) {
   };
   
   $scope.query = function(index) {
-    console.log(loginService.sessionId);
-
-    var req = {
-      method: "GET",
-      url: "https://happy.dqx.jp/capi/profile/friends/1/" + index + "/",
-      headers: {
-        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
-      },
-    };
-    
-
-    console.log("フレンドリクエスト");
-    $http(req)
-    .success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.friends = $scope.friends.concat(data.friendsValueList);
-      $scope.isOffsetEnd = data.isOffsetEnd;
-      $scope.nextIndex = index + 1;
-    })
-    .error(function(data, status, headers, config) {
-    });
+    try {
+      var promise = request.friends(index);
+      promise.then(function(data) {
+        $scope.friends = $scope.friends.concat(data.friendsValueList);
+        $scope.isOffsetEnd = data.isOffsetEnd;
+        $scope.nextIndex = index + 1;
+      }, function(msg){
+        $rootScope.$broadcast("footer.notify", msg);
+      });
+    } catch(e) {
+      $rootScope.$broadcast("footer.notify", e);
+    }
   };
 
   $scope.open = function(webPcNo) {
