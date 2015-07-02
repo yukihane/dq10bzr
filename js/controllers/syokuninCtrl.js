@@ -3,8 +3,8 @@
 /*
 職人タブコントローラ.
 */
-angular.module("dq10bzr.Main").controller("syokuninCtrl", ["$scope", "$http", "$log", "loginService",
-function($scope, $http, $log, loginService) {
+angular.module("dq10bzr.Main").controller("syokuninCtrl", ["$rootScope", "$scope", "$log", "request",
+function($rootScope, $scope, $log, request) {
 
   $scope.list = [];
   
@@ -14,25 +14,12 @@ function($scope, $http, $log, loginService) {
 
   $scope.reload = function() {
 
-    console.log(loginService.sessionId);
-
-    var req = {
-      method: "GET",
-      url: "https://happy.dqx.jp/capi/syokunin/joblist/",
-      headers: {
-        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
-      },
-    };
-
-    console.log("職人ギルド依頼");
-    $http(req)
-    .success(function(data, status, headers, config) {
-      console.log(data);
+    var promise = request.joblist();
+    promise.then(function(data) {
       $scope.list = data.syokuninGuildList;
-    })
-    .error(function(data, status, headers, config) {
+    }, function(msg) {
+      $rootScope.$broadcast("footer.notify", msg);
     });
-
   };
 
   $scope.detail = function(jobNo, recipeNo, createWebItemNoHash) {
