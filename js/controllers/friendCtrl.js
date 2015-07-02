@@ -25,8 +25,8 @@ function($rootScope, $scope, $http, $log, request) {
         $scope.friends = $scope.friends.concat(data.friendsValueList);
         $scope.isOffsetEnd = data.isOffsetEnd;
         $scope.nextIndex = index + 1;
-      }, function(data){
-        console.log("ERROR");
+      }, function(msg){
+        $rootScope.$broadcast("footer.notify", msg);
       });
     } catch(e) {
       $rootScope.$broadcast("footer.notify", e);

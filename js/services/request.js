@@ -11,6 +11,16 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
     }
   };
 
+  // HTTPレスポンスコードからメッセージを生成します
+  var getMessage = function(status) {
+    switch(status) {
+      case 401:
+        return "認証に失敗しました。再ログインが必要です。";
+      default:
+        return "要求が失敗しました";
+    }
+  };
+
   var friends = function(index) {
 
     var req = {
@@ -28,7 +38,8 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
       deferred.resolve(data);
     })
     .error(function(data, status, headers, config) {
-      deferred.reject(data);
+      var msg = getMessage(status);
+      deferred.reject(msg);
     });
 
     return deferred.promise;
