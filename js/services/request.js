@@ -44,11 +44,18 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "$log", "login
      */
     var requestAsync = function (req) {
 
+      $log.debug("request url: " + req.url);
+
+      var debugLog = function (data, status, headers, config) {
+        $log.debug("status code: " + status);
+        $log.debug(data);
+      };
+
       var deferred = $q.defer();
 
       $http(req)
         .success(function (data, status, headers, config) {
-          $log.debug(data);
+          debugLog(data, status, headers, config);
 
           if (data.resultCode !== 0) {
             var msg = getErrorMsg(data.resultCode);
@@ -58,6 +65,8 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "$log", "login
           deferred.resolve(data);
         })
         .error(function (data, status, headers, config) {
+          debugLog(data, status, headers, config);
+
           var msg = getHttpMessage(status);
           deferred.reject(msg);
         });
