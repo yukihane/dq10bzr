@@ -21,8 +21,8 @@ function ($scope, $modalInstance, $http, $log, characters, sessionId) {
       method: "GET",
       url: "https://happy.dqx.jp/capi/login/characterselect/"+webPcNo+"/",
       headers: {
-        "X-Smile-3DS-SESSIONID": sessionId,
-      },
+        "X-Smile-3DS-SESSIONID": sessionId
+      }
     };
 
 

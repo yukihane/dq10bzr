@@ -50,15 +50,15 @@ function($rootScope, $scope, $http, $resource, $log, loginService) {
     renkin: [
       {
         effect: null,
-        minValue: null,
+        minValue: null
       },
       {
         effect: null,
-        minValue: null,
+        minValue: null
       }
     ],
     difficultyMin: null,
-    difficultyMax: null,
+    difficultyMax: null
   };
 
   $scope.selected = Object.create(defaultSelected);
@@ -69,7 +69,7 @@ function($rootScope, $scope, $http, $resource, $log, loginService) {
     eqCond: true,
     quality: true,
     renkin: true,
-    difficulty: true,
+    difficulty: true
   };
 
   $scope.disabled = Object.create(defaultDisabled);
@@ -88,7 +88,7 @@ function($rootScope, $scope, $http, $resource, $log, loginService) {
         method: "GET",
         url: "https://happy.dqx.jp/capi/bazaar/largecategory/99/",
         headers: {
-          "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
+          "X-Smile-3DS-SESSIONID": loginService.character.sessionId
         },
       };
   
@@ -158,8 +158,8 @@ function($rootScope, $scope, $http, $resource, $log, loginService) {
       method: "GET",
       url: "https://happy.dqx.jp/capi/bazaar/smallcategory/99/" + selected.largeCategoryId + "/",
       headers: {
-        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
-      },
+        "X-Smile-3DS-SESSIONID": loginService.character.sessionId
+      }
     };
 
     $http(req)
@@ -190,8 +190,8 @@ function($rootScope, $scope, $http, $resource, $log, loginService) {
       method: "GET",
       url: "https://happy.dqx.jp/capi/bazaar/itemcount/99/" + lc + "/" + sc + "/",
       headers: {
-        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
-      },
+        "X-Smile-3DS-SESSIONID": loginService.character.sessionId
+      }
     };
 
     $http(req)
@@ -277,7 +277,7 @@ function($rootScope, $scope, $http, $resource, $log, loginService) {
   var defRenkinMinValueSpec = {
     min:0,
     max:0,
-    setp:"1",
+    setp:"1"
   };
 
   $scope.renkin1MinValueSpec = Object.create(defRenkinMinValueSpec);
@@ -293,7 +293,7 @@ function($rootScope, $scope, $http, $resource, $log, loginService) {
       v = {
         min: selected.min,
         max: selected.max,
-        step: selected.step,
+        step: selected.step
       };
     }
     
@@ -330,7 +330,7 @@ function($rootScope, $scope, $http, $resource, $log, loginService) {
       renkinsearchcategory: (!!$scope.selected.renkin[0].effect ? $scope.selected.renkin[0].effect.id : 0),
       renkinsearchmin: (!!$scope.selected.renkin[0].minValue ? $scope.selected.renkin[0].minValue * $scope.selected.renkin[0].effect.scale : 0),
       renkinsearchcategory2: (!!$scope.selected.renkin[1].effect ? $scope.selected.renkin[1].effect.id : 0),
-      renkinsearchmin2: (!!$scope.selected.renkin[1].minValue ? $scope.selected.renkin[1].minValue * $scope.selected.renkin[1].effect.scale : 0),
+      renkinsearchmin2: (!!$scope.selected.renkin[1].minValue ? $scope.selected.renkin[1].minValue * $scope.selected.renkin[1].effect.scale : 0)
     };
 
     if(params.smallcategoryid === 605) {

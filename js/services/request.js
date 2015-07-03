@@ -41,8 +41,8 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
       method: "GET",
       url: "https://happy.dqx.jp/capi/profile/friends/1/" + index + "/",
       headers: {
-        "X-Smile-3DS-SESSIONID": getSessionId(),
-      },
+        "X-Smile-3DS-SESSIONID": getSessionId()
+      }
     };
 
     var deferred = $q.defer();
@@ -66,8 +66,8 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
       method: "GET",
       url: "https://happy.dqx.jp/capi/tobatsu/tobatsulist/",
       headers: {
-        "X-Smile-3DS-SESSIONID": getSessionId(),
-      },
+        "X-Smile-3DS-SESSIONID": getSessionId()
+      }
     };
 
     var deferred = $q.defer();
@@ -95,8 +95,8 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
       method: "GET",
       url: "https://happy.dqx.jp/capi/syokunin/joblist/",
       headers: {
-        "X-Smile-3DS-SESSIONID": getSessionId(),
-      },
+        "X-Smile-3DS-SESSIONID": getSessionId()
+      }
     };
 
     var deferred = $q.defer();
@@ -120,8 +120,8 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
       url: "https://happy.dqx.jp/capi/syokunin/jobdetail/" + jobNo + "/" + recipeNo + "/"
         + (createWebItemNoHash ? createWebItemNoHash + "/" : ""),
       headers: {
-        "X-Smile-3DS-SESSIONID": getSessionId(),
-      },
+        "X-Smile-3DS-SESSIONID": getSessionId()
+      }
     };
 
     var deferred = $q.defer();
@@ -145,8 +145,8 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
       url: "https://happy.dqx.jp/capi/bazaar/search/",
       params: searchCond,
       headers: {
-        "X-Smile-3DS-SESSIONID": getSessionId(),
-      },
+        "X-Smile-3DS-SESSIONID": getSessionId()
+      }
     };
 
     var deferred = $q.defer();
@@ -168,6 +168,6 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
     tobatsu: tobatsu,
     joblist: joblist,
     jobdetail: jobdetail,
-    bazaar: bazaar,
+    bazaar: bazaar
   };
 }]);

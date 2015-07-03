@@ -39,7 +39,7 @@ function($rootScope, $scope, $log, request) {
 
     var cond = {
       bazaarno: 99,
-      webitemid: webItemNoHash,
+      webitemid: webItemNoHash
     };
 
     var promise = request.bazaar(cond);

@@ -21,7 +21,7 @@ function($rootScope, $scope, $modal, $http, $log, loginService) {
     var req = {
       method: "GET",
       url: OAUTH_URL + "oauthauth?client_id=happy&redirect_uri=https%3A%2F%2Fhappy.dqx.jp%2Fcapi%2Flogin%2Fsecurelogin%2F&response_type=code&yl=1",
-      responseType: "document",
+      responseType: "document"
     };
     
     $http(req)
@@ -74,7 +74,7 @@ function($rootScope, $scope, $modal, $http, $log, loginService) {
       resolve: {
         action: function(){
           return action;
-        },
+        }
       }
     });
 
@@ -99,7 +99,7 @@ function($rootScope, $scope, $modal, $http, $log, loginService) {
       resolve: {
         action: function(){
           return action;
-        },
+        }
       }
     });
     
@@ -108,8 +108,8 @@ function($rootScope, $scope, $modal, $http, $log, loginService) {
       var auth = {
         auth: {
           cis_sessid: input.cis_sessid,
-          _c: input._c,
-        },
+          _c: input._c
+        }
       };
       
       chrome.storage.sync.set(auth, function(){
@@ -134,12 +134,12 @@ function($rootScope, $scope, $modal, $http, $log, loginService) {
       url: action,
       responseType: "json",
       headers: {
-        "Content-type": "application/x-www-form-urlencoded",
+        "Content-type": "application/x-www-form-urlencoded"
       },
       params: {
         cis_sessid: auth.cis_sessid,
-        _c: auth._c,
-      },
+        _c: auth._c
+      }
     };
 
     $http(req)
@@ -164,7 +164,7 @@ function($rootScope, $scope, $modal, $http, $log, loginService) {
         },
         sessionId: function() {
           return sessionId;
-        },
+        }
       }
     });
     
@@ -175,7 +175,7 @@ function($rootScope, $scope, $modal, $http, $log, loginService) {
         character: {
           sessionId: sessionId,
           characterName: input.characterName,
-          smileUniqueNo: input.smileUniqueNo,
+          smileUniqueNo: input.smileUniqueNo
         }
       };
 

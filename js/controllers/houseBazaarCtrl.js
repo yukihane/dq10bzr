@@ -16,8 +16,8 @@ function($scope, $http, $log, loginService) {
       method: "GET",
       url: "https://happy.dqx.jp/capi/housing/bazaar/history/",
       headers: {
-        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
-      },
+        "X-Smile-3DS-SESSIONID": loginService.character.sessionId
+      }
     };
 
     $http(req)

@@ -17,11 +17,11 @@ function ($scope, $modalInstance, $http, $log, action) {
       url: OAUTH_URL + action,
       responseType: "document",
       headears: {
-        "Content-type": "application/x-www-form-urlencoded",
+        "Content-type": "application/x-www-form-urlencoded"
       },
       params: {
         otppw: $scope.otppw
-      },
+      }
     };
 
     $http(req)

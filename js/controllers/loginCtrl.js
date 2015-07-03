@@ -18,12 +18,12 @@ function ($scope, $modalInstance, $http, $log, action) {
       url: OAUTH_URL + action,
       responseType: "document",
       headears: {
-        "Content-type": "application/x-www-form-urlencoded",
+        "Content-type": "application/x-www-form-urlencoded"
       },
       params: {
         sqexid: $scope.sqexid,
-        password: $scope.password,
-      },
+        password: $scope.password
+      }
     };
 
     $http(req)
