@@ -1,3 +1,5 @@
+/* global angular, chrome */
+
 'use strict';
 
 /*

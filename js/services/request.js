@@ -1,3 +1,5 @@
+/* global angular, chrome */
+
 'use strict';
 
 angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService", function($http, $q, loginService){

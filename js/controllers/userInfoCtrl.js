@@ -1,3 +1,5 @@
+/* global angular, chrome */
+
 'use strict';
 
 angular.module("dq10bzr.Main").controller("userInfoCtrl", ["$rootScope", "$scope", "$modal", "$http", "$log", "loginService",
