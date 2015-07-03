@@ -97,23 +97,7 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "$log", "login
         }
       };
 
-      var deferred = $q.defer();
-
-      $http(req)
-        .success(function (data, status, headers, config) {
-          if (data.resultCode !== 0) {
-            var msg = getErrorMsg(data.resultCode);
-            deferred.reject(msg);
-          }
-
-          deferred.resolve(data);
-        })
-        .error(function (data, status, headers, config) {
-          var msg = getHttpMessage(status);
-          deferred.reject(msg);
-        });
-
-      return deferred.promise;
+      return requestAsync(req);
     };
 
     /**
