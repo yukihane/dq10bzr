@@ -4,6 +4,9 @@ var OAUTH_URL = "https://secure.square-enix.com/oauth/oa/";
 
 var mainModule = angular.module("dq10bzr.Main", ["ui.bootstrap", "ngResource"]);
 
+mainModule.config(["$logProvider", function($logProvider){
+  $logProvider.debugEnabled(true);
+}]);
 
 // アカウント(現在は1アカウントのみを想定)情報を管理するサービス
 mainModule.factory("loginService", function(){
