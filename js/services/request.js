@@ -65,6 +65,11 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "$log", "login
       return deferred.promise;
     };
 
+    /**
+     * フレンドリストを要求します.
+     * @param {int} index ページ番号.
+     * @returns {$q@call;defer.promise}
+     */
     var friends = function (index) {
 
       var req = {
@@ -78,6 +83,10 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "$log", "login
       return requestAsync(req);
     };
 
+    /**
+     * 討伐リストを要求します.
+     * @returns {$q@call;defer.promise}
+     */
     var tobatsu = function () {
 
       var req = {
@@ -107,6 +116,10 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "$log", "login
       return deferred.promise;
     };
 
+    /**
+     * 職人依頼リストを要求します.
+     * @returns {$q@call;defer.promise}
+     */
     var joblist = function () {
 
       var req = {
@@ -131,6 +144,13 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "$log", "login
       return deferred.promise;
     };
 
+    /**
+     * 職人依頼の詳細要求.
+     * @param {type} jobNo 職人依頼一覧で取得できるjobNo.
+     * @param {type} recipeNo 職人依頼一覧で取得できるrecipeNo.
+     * @param {type} createWebItemNoHash 職人依頼一覧で取得できるcreateWebItemNoHash.
+     * @returns {$q@call;defer.promise}
+     */
     var jobdetail = function (jobNo, recipeNo, createWebItemNoHash) {
 
       var req = {
@@ -156,6 +176,11 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "$log", "login
       return deferred.promise;
     };
 
+    /**
+     * バザー検索.
+     * @param {type} searchCond 検索条件.
+     * @returns {$q@call;defer.promise}
+     */
     var bazaar = function (searchCond) {
 
       var req = {
