@@ -1,22 +1,26 @@
-/* global angular, chrome */
+/* global angular, chrome, console */
 
 var OAUTH_URL = "https://secure.square-enix.com/oauth/oa/";
 
 var mainModule = angular.module("dq10bzr.Main", ["ui.bootstrap", "ngResource"]);
 
 mainModule.config(["$logProvider", function ($logProvider) {
+    'use strict';
+
     $logProvider.debugEnabled(true);
   }
 ]);
 
 // アカウント(現在は1アカウントのみを想定)情報を管理するサービス
 mainModule.factory("loginService", function () {
+  'use strict';
+
   return {
     // 認証情報
     // この情報を持っていればキャラクタ選択可能
     auth: {
       cis_sessid: null,
-      _c: null,
+      _c: null
     },
     character: {
       // キャラクタ選択をすればこの情報が取得できる
@@ -28,12 +32,14 @@ mainModule.factory("loginService", function () {
       // ZZ999-999 といったキャラクタID
       smileUniqueNo: null,
       // 数字列で表されるユニーク番号
-      webPcNo: null,
+      webPcNo: null
     }
   };
 });
 
 mainModule.filter("convertToProgress", function () {
+  'use strict';
+
   return function (isComplete) {
     if (isComplete) {
       return "済";
@@ -47,6 +53,8 @@ mainModule.filter("convertToProgress", function () {
  エポックミリ秒文字列を受け取り、「日本時間帯における」月日文字列を返します.
  */
 mainModule.filter("epochStrToJpDateStr", function () {
+  'use strict';
+
   return function (epoch) {
     var offsetEpoch = parseInt(epoch, 10) + 9 * 60 * 60 * 1000;
     var date = new Date(offsetEpoch);
