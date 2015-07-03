@@ -1,31 +1,33 @@
-'use strict';
+/* global angular, chrome, console */
 
 /*
-モーモンバザータブコントローラ.
-*/
+ モーモンバザータブコントローラ.
+ */
 angular.module("dq10bzr.Main").controller("houseBazaarCtrl", ["$scope", "$http", "$log", "loginService",
-function($scope, $http, $log, loginService) {
+  function ($scope, $http, $log, loginService) {
+    'use strict';
 
-  $scope.reload = function() {
+    $scope.reload = function () {
 
-    console.log(loginService.sessionId);
+      console.log(loginService.sessionId);
 
-    var req = {
-      method: "GET",
-      url: "https://happy.dqx.jp/capi/housing/bazaar/history/",
-      headers: {
-        "X-Smile-3DS-SESSIONID": loginService.character.sessionId,
-      },
+      var req = {
+        method: "GET",
+        url: "https://happy.dqx.jp/capi/housing/bazaar/history/",
+        headers: {
+          "X-Smile-3DS-SESSIONID": loginService.character.sessionId
+        }
+      };
+
+      $http(req)
+        .success(function (data, status, headers, config) {
+          console.log(data);
+          $scope.debug = data;
+        })
+        .error(function (data, status, headers, config) {
+        });
+
     };
 
-    $http(req)
-    .success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.debug = data;
-    })
-    .error(function(data, status, headers, config) {
-    });
-
-  };
-
-}]);
+  }
+]);

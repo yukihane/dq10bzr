@@ -1,3 +1,5 @@
+/* global angular, chrome */
+
 var OAUTH_URL = "https://secure.square-enix.com/oauth/oa/";
 
 var mainModule = angular.module("dq10bzr.Main", ["ui.bootstrap", "ngResource"]);

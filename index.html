@@ -1,331 +1,331 @@
 <!DOCTYPE html>
 <html data-ng-app="dq10bzr.Main" data-ng-csp data-ng-strict-di>
-<head>
-  <title>Bazaar Search Condition</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <script src="venderjs/angular-1.4.0-rc.2/angular.js"></script>
-  <script src="venderjs/angular-1.4.0-rc.2/angular-resource.js"></script>
-  <script src="venderjs/ui-bootstrap-tpls-0.12.1.js"></script>
-</head>
+  <head>
+    <title>Bazaar Search Condition</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <script src="venderjs/angular-1.4.0-rc.2/angular.js"></script>
+    <script src="venderjs/angular-1.4.0-rc.2/angular-resource.js"></script>
+    <script src="venderjs/ui-bootstrap-tpls-0.12.1.js"></script>
+  </head>
 
-<body>
+  <body>
 
-  <div id="headerPane" data-ng-controller="userInfoCtrl">
-    <div id="statusPane">
-      <div data-ng-if="loginInfo.character.characterName">{{loginInfo.character.characterName}} ({{loginInfo.character.smileUniqueNo}})</div>
-    </div>
-    <div id="headerButtonsPane">
-      <div id="characterButtonPane">
-        <button class="btn btn-default" data-ng-click="selectCharacter()">キャラ変更</button>
+    <div id="headerPane" data-ng-controller="userInfoCtrl">
+      <div id="statusPane">
+        <div data-ng-if="loginInfo.character.characterName">{{loginInfo.character.characterName}} ({{loginInfo.character.smileUniqueNo}})</div>
       </div>
-      <div id="loginButtonPane">
-        <button class="btn btn-default" data-ng-click="login()">(再)ログイン</button>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="clear"></div>
-
-
-  <div id="mainPane">
-    <tabset>
-
-      <tab heading="フレンド" data-ng-controller="friendCtrl">
-        <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
-        <table id="friendsTable" class="table">
-          <tr><th>キャラクター名</th><th>ID</th><th>職業</th><th>Lv</th></tr>
-          <tr data-ng-repeat="f in friends" data-ng-class="{online: f.isLoggedin}">
-            <td class="characterName" data-ng-click="open(f.webPcNo)">{{f.characterName}}</td>
-            <td>{{f.smileUniqueNo}}</td>
-            <td>{{f.job}}</td>
-            <td>{{f.lv}}</td>
-          </tr>
-        </table>
-        <div data-ng-if="!isOffsetEnd">
-          <button class="btn" data-ng-click="query(nextIndex)">次</button>
+      <div id="headerButtonsPane">
+        <div id="characterButtonPane">
+          <button class="btn btn-default" data-ng-click="selectCharacter()">キャラ変更</button>
         </div>
-      </tab>
+        <div id="loginButtonPane">
+          <button class="btn btn-default" data-ng-click="login()">(再)ログイン</button>
+        </div>
+      </div>
+    </div>
 
 
-      <tab heading="討伐" data-ng-controller="tobatsuCtrl">
-        <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
+    <div class="clear"></div>
 
-        <div><h3>受注済み</h3></div>
-        <div data-ng-repeat="al in list.acceptedTobatsuDataList">
-          <div><h4>{{al.continentName}} {{al.issuedDate | epochStrToJpDateStr}}</h4></div>
-          <table class="table table-bordered">
-            <tr data-ng-repeat="e in al.tobatsuList">
-              <td>{{e.area}} {{e.monsterName}} {{e.count}}匹</td>
-              <td>{{e.point | number }} P</td>
+
+    <div id="mainPane">
+      <tabset>
+
+        <tab heading="フレンド" data-ng-controller="friendCtrl">
+          <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
+          <table id="friendsTable" class="table">
+            <tr><th>キャラクター名</th><th>ID</th><th>職業</th><th>Lv</th></tr>
+            <tr data-ng-repeat="f in friends" data-ng-class="{online: f.isLoggedin}">
+              <td class="characterName" data-ng-click="open(f.webPcNo)">{{f.characterName}}</td>
+              <td>{{f.smileUniqueNo}}</td>
+              <td>{{f.job}}</td>
+              <td>{{f.lv}}</td>
             </tr>
           </table>
-        </div>
-
-        <hr/>
-
-        <div><h3>討伐リスト</h3></div>
-        <div data-ng-repeat="cl in list.countryTobatsuDataList">
-          <div><h4>{{cl.continentName}} {{cl.issuedDate | epochStrToJpDateStr}}</h4></div>
-          <table class="table table-bordered">
-            <tr data-ng-repeat="c in cl.tobatsuList">
-              <td>{{c.area}} {{c.monsterName}} {{c.count}}匹</td>
-              <td>{{c.point | number}} P</td>
-            </tr>
-          </table>
-        </div>
-      </tab>
+          <div data-ng-if="!isOffsetEnd">
+            <button class="btn" data-ng-click="query(nextIndex)">次</button>
+          </div>
+        </tab>
 
 
-      <tab heading="職人" data-ng-controller="syokuninCtrl">
-        <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
-        <div id="syokuninContent">
-          <div>
+        <tab heading="討伐" data-ng-controller="tobatsuCtrl">
+          <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
+
+          <div><h3>受注済み</h3></div>
+          <div data-ng-repeat="al in list.acceptedTobatsuDataList">
+            <div><h4>{{al.continentName}} {{al.issuedDate| epochStrToJpDateStr}}</h4></div>
             <table class="table table-bordered">
-              <tr data-ng-repeat="e in list">
-                <td>{{e.isComplete | convertToProgress}}</td>
-                <td>{{e.rank}}</td>
-                <td>{{e.jobName}}</td>
-                <td>{{e.reward.exp | number}}P</td>
-                <td>{{e.reward.gold | number}}G</td>
-                <td><button data-ng-click="detail(e.jobNo, e.recipeNo, e.createWebItemNoHash)">>></button></td>
+              <tr data-ng-repeat="e in al.tobatsuList">
+                <td>{{e.area}} {{e.monsterName}} {{e.count}}匹</td>
+                <td>{{e.point| number }} P</td>
               </tr>
             </table>
           </div>
-          <div>
-            <table>
-              <tr data-ng-repeat=" m in necessaryMaterials">
-                <td>{{m.itemName}}</td>
-                <td>{{m.length}}</td>
-                <td><button data-ng-click="searchBzr(m.webItemNoHash)">>></button></td>
+
+          <hr/>
+
+          <div><h3>討伐リスト</h3></div>
+          <div data-ng-repeat="cl in list.countryTobatsuDataList">
+            <div><h4>{{cl.continentName}} {{cl.issuedDate| epochStrToJpDateStr}}</h4></div>
+            <table class="table table-bordered">
+              <tr data-ng-repeat="c in cl.tobatsuList">
+                <td>{{c.area}} {{c.monsterName}} {{c.count}}匹</td>
+                <td>{{c.point| number}} P</td>
               </tr>
             </table>
           </div>
-        </div>
-        <pre>{{bzrResults}}</pre>
-      </tab>
+        </tab>
 
 
-      <tab heading="モーモンバザー" data-ng-controller="houseBazaarCtrl">
-        <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
-        <pre>{{debug}}</pre>
-      </tab>
-
-
-      <tab heading="バザー検索" data-ng-controller="bazaarCtrl" data-ng-click="clickTab()">
-        <div id="bazaarPane">
-          <!-- バザー検索条件指定Pane -->
-          <div id="bazaarSearchConditionPane">
-            <form class="form-horizontal">
-              <div>
-                <label class="control-label">種類</label>
-                <div>
-                  <select data-ng-model="selected.largeCategory"
-                  data-ng-options="lc as lc.largeCategoryName for lc in largeCategorySet"
-                  data-ng-change="largeCategoryChanged(selected.largeCategory)"></select>
-                </div>
-              </div>
-              <div>
-                <label class="control-label">種類2</label>
-                <div>
-                  <select data-ng-model="selected.smallCategory"
-                  data-ng-options="sc as sc.smallCategoryName for sc in smallCategorySet"
-                  data-ng-change="smallCategoryChanged(selected.smallCategory)"
-                  data-ng-disabled="disabled.smallCategory"></select>
-                </div>
-              </div>
-              <div>
-                <label class="control-label">アイテム名</label>
-                <div>
-                  <select data-ng-model="selected.itemCount"
-                  data-ng-options="ic as ic.itemName for ic in itemCountSet"
-                  data-ng-change="itemCountChanged(selected.itemCount)"
-                  data-ng-disabled="disabled.itemCount">
-                    <option value=""></option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label class="control-label">装備可能職業</label>
-                <div>
-                  <select data-ng-model="selected.job"
-                  data-ng-options="j as j.name for j in jobSet"
-                  data-ng-disabled="disabled.eqCond"></select>
-                </div>
-              </div>
-              <div>
-                <label class="control-label">装備レベル下限</label>
-                <div>
-                  <select data-ng-model="selected.eqLvMin"
-                  data-ng-options="llv  for llv in eqLvMinSet"
-                  data-ng-disabled="disabled.eqCond"></select>
-                </div>
-              </div>
-              <div>
-                <label class="control-label">装備レベル上限</label>
-                <div>
-                  <select data-ng-model="selected.eqLvMax"
-                  data-ng-options="hlv  for hlv in eqLvMaxSet"
-                  data-ng-disabled="disabled.eqCond"></select>
-                </div>
-              </div>
-              <div>
-                <label class="control-label">できのよさ</label>
-                <div>
-                  <select data-ng-model="selected.quality"
-                  data-ng-options="q as q.text for q in qualitySet"
-                  data-ng-disabled="disabled.quality"></select>
-                </div>
-              </div>
-              <div>
-                <label class="control-label">錬金効果数</label>
-                <div>
-                  <select data-ng-model="selected.numOfRenkin"
-                  data-ng-options="n as n.text for n in numOfRenkinSet"
-                  data-ng-disabled="disabled.renkin"></select>
-                </div>
-              </div>
-              <div>
-                <label class="control-label">錬金効果1</label>
-                <div>
-                  <select data-ng-model="selected.renkin[0].effect"
-                  data-ng-options="c as c.name for c in renkinCategorySet"
-                  data-ng-disabled="disabled.renkin"
-                  data-ng-change="renkinCategoryChanged(0, selected.renkin[0].effect)"></select>
-                </div>
-              </div>
-              <div>
-                <label class="control-label">効果の合計値1</label>
-                <div>
-                  <input data-ng-model="selected.renkin[0].minValue" type="number"
-                  data-ng-disabled="disabled.renkin"
-                  min="{{renkin1MinValueSpec.min}}" max="{{renkin1MinValueSpec.max}}" step="{{renkin1MinValueSpec.step}}">
-                </div>
-              </div>
-              <div>
-                <label class="control-label">錬金効果2</label>
-                <div>
-                  <select data-ng-model="selected.renkin[1].effect"
-                  data-ng-options="c as c.name for c in renkinCategorySet"
-                  data-ng-disabled="disabled.renkin"
-                  data-ng-change="renkinCategoryChanged(1, selected.renkin[1].effect)"></select>
-                </div>
-              </div>
-              <div>
-                <label class="control-label">効果の合計値2</label>
-                <div>
-                  <input type="number" data-ng-model="selected.renkin[1].minValue"
-                  data-ng-disabled="disabled.renkin"
-                  min="{{renkin2MinValueSpec.min}}" max="{{renkin2MinValueSpec.max}}" step="{{renkin2MinValueSpec.step}}">
-                </div>
-              </div>
-              <div>
-                <label class="control-label">難易度下限</label>
-                <div>
-                  <select data-ng-model="selected.difficultyMin"
-                  data-ng-options="dl as dl.text for dl in difficultySet"
-                  data-ng-disabled="disabled.difficulty"></select>
-                </div>
-              </div>
-              <div>
-                <label class="control-label">難易度上限</label>
-                <div>
-                  <select data-ng-model="selected.difficultyMax"
-                  data-ng-options="dh as dh.text for dh in difficultySet"
-                  data-ng-disabled="disabled.difficulty"></select>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <button id="searchButton" class="btn btn-default" data-ng-click="submit()">検索</button>
-                </div>
-              </div>
-            </form>
+        <tab heading="職人" data-ng-controller="syokuninCtrl">
+          <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
+          <div id="syokuninContent">
+            <div>
+              <table class="table table-bordered">
+                <tr data-ng-repeat="e in list">
+                  <td>{{e.isComplete| convertToProgress}}</td>
+                  <td>{{e.rank}}</td>
+                  <td>{{e.jobName}}</td>
+                  <td>{{e.reward.exp| number}}P</td>
+                  <td>{{e.reward.gold| number}}G</td>
+                  <td><button data-ng-click="detail(e.jobNo, e.recipeNo, e.createWebItemNoHash)">>></button></td>
+                </tr>
+              </table>
+            </div>
+            <div>
+              <table>
+                <tr data-ng-repeat=" m in necessaryMaterials">
+                  <td>{{m.itemName}}</td>
+                  <td>{{m.length}}</td>
+                  <td><button data-ng-click="searchBzr(m.webItemNoHash)">>></button></td>
+                </tr>
+              </table>
+            </div>
           </div>
-  
-          <!-- バザー検索結果表示Pane -->
-          <div id="searchResult"></div>
+          <pre>{{bzrResults}}</pre>
+        </tab>
+
+
+        <tab heading="モーモンバザー" data-ng-controller="houseBazaarCtrl">
+          <button class="btn btn-primaty" data-ng-click="reload()">更新</button>
           <pre>{{debug}}</pre>
-        </div>
-      </tab>
-    </tabset>
-  </div>
+        </tab>
 
 
-  <div id="footerPane" data-ng-controller="footerCtrl">
-    {{message}}
-  </div>
+        <tab heading="バザー検索" data-ng-controller="bazaarCtrl" data-ng-click="clickTab()">
+          <div id="bazaarPane">
+            <!-- バザー検索条件指定Pane -->
+            <div id="bazaarSearchConditionPane">
+              <form class="form-horizontal">
+                <div>
+                  <label class="control-label">種類</label>
+                  <div>
+                    <select data-ng-model="selected.largeCategory"
+                            data-ng-options="lc as lc.largeCategoryName for lc in largeCategorySet"
+                            data-ng-change="largeCategoryChanged(selected.largeCategory)"></select>
+                  </div>
+                </div>
+                <div>
+                  <label class="control-label">種類2</label>
+                  <div>
+                    <select data-ng-model="selected.smallCategory"
+                            data-ng-options="sc as sc.smallCategoryName for sc in smallCategorySet"
+                            data-ng-change="smallCategoryChanged(selected.smallCategory)"
+                            data-ng-disabled="disabled.smallCategory"></select>
+                  </div>
+                </div>
+                <div>
+                  <label class="control-label">アイテム名</label>
+                  <div>
+                    <select data-ng-model="selected.itemCount"
+                            data-ng-options="ic as ic.itemName for ic in itemCountSet"
+                            data-ng-change="itemCountChanged(selected.itemCount)"
+                            data-ng-disabled="disabled.itemCount">
+                      <option value=""></option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label class="control-label">装備可能職業</label>
+                  <div>
+                    <select data-ng-model="selected.job"
+                            data-ng-options="j as j.name for j in jobSet"
+                            data-ng-disabled="disabled.eqCond"></select>
+                  </div>
+                </div>
+                <div>
+                  <label class="control-label">装備レベル下限</label>
+                  <div>
+                    <select data-ng-model="selected.eqLvMin"
+                            data-ng-options="llv  for llv in eqLvMinSet"
+                            data-ng-disabled="disabled.eqCond"></select>
+                  </div>
+                </div>
+                <div>
+                  <label class="control-label">装備レベル上限</label>
+                  <div>
+                    <select data-ng-model="selected.eqLvMax"
+                            data-ng-options="hlv  for hlv in eqLvMaxSet"
+                            data-ng-disabled="disabled.eqCond"></select>
+                  </div>
+                </div>
+                <div>
+                  <label class="control-label">できのよさ</label>
+                  <div>
+                    <select data-ng-model="selected.quality"
+                            data-ng-options="q as q.text for q in qualitySet"
+                            data-ng-disabled="disabled.quality"></select>
+                  </div>
+                </div>
+                <div>
+                  <label class="control-label">錬金効果数</label>
+                  <div>
+                    <select data-ng-model="selected.numOfRenkin"
+                            data-ng-options="n as n.text for n in numOfRenkinSet"
+                            data-ng-disabled="disabled.renkin"></select>
+                  </div>
+                </div>
+                <div>
+                  <label class="control-label">錬金効果1</label>
+                  <div>
+                    <select data-ng-model="selected.renkin[0].effect"
+                            data-ng-options="c as c.name for c in renkinCategorySet"
+                            data-ng-disabled="disabled.renkin"
+                            data-ng-change="renkinCategoryChanged(0, selected.renkin[0].effect)"></select>
+                  </div>
+                </div>
+                <div>
+                  <label class="control-label">効果の合計値1</label>
+                  <div>
+                    <input data-ng-model="selected.renkin[0].minValue" type="number"
+                           data-ng-disabled="disabled.renkin"
+                           min="{{renkin1MinValueSpec.min}}" max="{{renkin1MinValueSpec.max}}" step="{{renkin1MinValueSpec.step}}">
+                  </div>
+                </div>
+                <div>
+                  <label class="control-label">錬金効果2</label>
+                  <div>
+                    <select data-ng-model="selected.renkin[1].effect"
+                            data-ng-options="c as c.name for c in renkinCategorySet"
+                            data-ng-disabled="disabled.renkin"
+                            data-ng-change="renkinCategoryChanged(1, selected.renkin[1].effect)"></select>
+                  </div>
+                </div>
+                <div>
+                  <label class="control-label">効果の合計値2</label>
+                  <div>
+                    <input type="number" data-ng-model="selected.renkin[1].minValue"
+                           data-ng-disabled="disabled.renkin"
+                           min="{{renkin2MinValueSpec.min}}" max="{{renkin2MinValueSpec.max}}" step="{{renkin2MinValueSpec.step}}">
+                  </div>
+                </div>
+                <div>
+                  <label class="control-label">難易度下限</label>
+                  <div>
+                    <select data-ng-model="selected.difficultyMin"
+                            data-ng-options="dl as dl.text for dl in difficultySet"
+                            data-ng-disabled="disabled.difficulty"></select>
+                  </div>
+                </div>
+                <div>
+                  <label class="control-label">難易度上限</label>
+                  <div>
+                    <select data-ng-model="selected.difficultyMax"
+                            data-ng-options="dh as dh.text for dh in difficultySet"
+                            data-ng-disabled="disabled.difficulty"></select>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <button id="searchButton" class="btn btn-default" data-ng-click="submit()">検索</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- バザー検索結果表示Pane -->
+            <div id="searchResult"></div>
+            <pre>{{debug}}</pre>
+          </div>
+        </tab>
+      </tabset>
+    </div>
 
 
-  <!-- IDとPasswordを入力,送信するためのPane -->
-  <div id="loginPane">
-    <script type="text/ng-template" id="loginPane.html">
-      <div class="modal-header">
+    <div id="footerPane" data-ng-controller="footerCtrl">
+      {{message}}
+    </div>
+
+
+    <!-- IDとPasswordを入力,送信するためのPane -->
+    <div id="loginPane">
+      <script type="text/ng-template" id="loginPane.html">
+        <div class="modal-header">
         <h3 class="modal-title">ログイン</h3>
-      </div>
-      <div class="modal-body">
+        </div>
+        <div class="modal-body">
         <table>
-          <tr><td>ID</td><td><input type="text" class="form-control" data-ng-model="sqexid"/></td></tr>
-          <tr><td>Password</td><td><input type="password" class="form-control" data-ng-model="password"/></td></tr>
+        <tr><td>ID</td><td><input type="text" class="form-control" data-ng-model="sqexid"/></td></tr>
+        <tr><td>Password</td><td><input type="password" class="form-control" data-ng-model="password"/></td></tr>
         </table>
-      </div>
-      <div class="modal-footer">
+        </div>
+        <div class="modal-footer">
         <button class="btn btn-primary" data-ng-click="ok()">OK</button>
         <button class="btn" data-ng-click="cancel()">キャンセル</button>
-      </div>
-    </script>
-  </div>
+        </div>
+      </script>
+    </div>
 
-  <!-- OTPを入力,送信するためのPane -->
-  <div id="otpPane">
-    <script type="text/ng-template" id="otpPane.html">
-      <div class="modal-header">
+    <!-- OTPを入力,送信するためのPane -->
+    <div id="otpPane">
+      <script type="text/ng-template" id="otpPane.html">
+        <div class="modal-header">
         <h3 class="modal-title">ワンタイムパスワード</h3>
-      </div>
-      <div class="modal-body">
+        </div>
+        <div class="modal-body">
         <table>
-          <tr><td>OTP</td><td><input type="password"  pattern="[0-9]{6}" class="form-control" data-ng-model="otppw"/></td></tr>
+        <tr><td>OTP</td><td><input type="password"  pattern="[0-9]{6}" class="form-control" data-ng-model="otppw"/></td></tr>
         </table>
-      </div>
-      <div class="modal-footer">
+        </div>
+        <div class="modal-footer">
         <button class="btn btn-primary" data-ng-click="ok()">OK</button>
         <button class="btn" data-ng-click="cancel()">キャンセル</button>
-      </div>
-    </script>
-  </div>
+        </div>
+      </script>
+    </div>
 
 
-  <!-- キャラクター選択のためのPane -->
-  <div id="characterSelectionPane">
-    <script type="text/ng-template" id="characterSelectionPane.html">
-      <div class="modal-header">
+    <!-- キャラクター選択のためのPane -->
+    <div id="characterSelectionPane">
+      <script type="text/ng-template" id="characterSelectionPane.html">
+        <div class="modal-header">
         <h3 class="modal-title">キャラクター選択</h3>
-      </div>
-      <div class="modal-body">
+        </div>
+        <div class="modal-body">
         <table>
-          <tr data-ng-repeat="c in characters">
-            <td>{{c.characterName}}({{c.smileUniqueNo}})</td>
-            <td><button data-ng-click="select($index)">選択</button>
-          </tr>
+        <tr data-ng-repeat="c in characters">
+        <td>{{c.characterName}}({{c.smileUniqueNo}})</td>
+        <td><button data-ng-click="select($index)">選択</button>
+        </tr>
         </table>
-      </div>
-      <div class="modal-footer">
+        </div>
+        <div class="modal-footer">
         <button class="btn" data-ng-click="cancel()">キャンセル</button>
-      </div>
-    </script>
-  </div>
+        </div>
+      </script>
+    </div>
 
-  <script src="js/app.js"></script>
-  <script src="js/services/request.js"></script>
-  <script src="js/controllers/userInfoCtrl.js"></script>
-  <script src="js/controllers/loginCtrl.js"></script>
-  <script src="js/controllers/otpCtrl.js"></script>
-  <script src="js/controllers/characterCtrl.js"></script>
-  <script src="js/controllers/friendCtrl.js"></script>
-  <script src="js/controllers/tobatsuCtrl.js"></script>
-  <script src="js/controllers/syokuninCtrl.js"></script>
-  <script src="js/controllers/houseBazaarCtrl.js"></script>
-  <script src="js/controllers/bazaarCtrl.js"></script>
-  <script src="js/controllers/footerCtrl.js"></script>
-</body>
+    <script src="js/app.js"></script>
+    <script src="js/services/request.js"></script>
+    <script src="js/controllers/userInfoCtrl.js"></script>
+    <script src="js/controllers/loginCtrl.js"></script>
+    <script src="js/controllers/otpCtrl.js"></script>
+    <script src="js/controllers/characterCtrl.js"></script>
+    <script src="js/controllers/friendCtrl.js"></script>
+    <script src="js/controllers/tobatsuCtrl.js"></script>
+    <script src="js/controllers/syokuninCtrl.js"></script>
+    <script src="js/controllers/houseBazaarCtrl.js"></script>
+    <script src="js/controllers/bazaarCtrl.js"></script>
+    <script src="js/controllers/footerCtrl.js"></script>
+  </body>
 </html>

@@ -8,7 +8,7 @@ styles.lessを編集した後ここに記載した方法で生成します。
 [Command-line With Rhino](http://lesscss.org/#command-line-with-rhino)
 
 ```
-$ java -jar tools/less/js.jar -f tools/less/less-rhino-1.7.5.js tools/less/lessc-rhino-1.7.5.js res/styles.less styles.css
+$ java -jar tools/less/js.jar -f tools/less/less-rhino-1.7.5.js tools/less/lessc-rhino-1.7.5.js res/less/styles.less css/styles.css
 ```
 
 
