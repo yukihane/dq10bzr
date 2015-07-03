@@ -1,12 +1,11 @@
-/* global angular, chrome */
-
-'use strict';
+/* global angular, chrome, console */
 
 /*
  バザー検索タブ　コントローラ
  */
 angular.module("dq10bzr.Main").controller("bazaarCtrl", ["$rootScope", "$scope", "$http", "$resource", "$log", "loginService",
   function ($rootScope, $scope, $http, $resource, $log, loginService) {
+    'use strict';
 
     $scope.debug = "";
 

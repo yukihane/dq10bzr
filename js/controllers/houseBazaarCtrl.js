@@ -1,12 +1,11 @@
-/* global angular, chrome */
-
-'use strict';
+/* global angular, chrome, console */
 
 /*
  モーモンバザータブコントローラ.
  */
 angular.module("dq10bzr.Main").controller("houseBazaarCtrl", ["$scope", "$http", "$log", "loginService",
   function ($scope, $http, $log, loginService) {
+    'use strict';
 
     $scope.reload = function () {
 

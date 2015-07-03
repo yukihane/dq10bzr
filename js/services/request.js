@@ -1,8 +1,8 @@
-/* global angular, chrome */
+/* global angular, chrome, console */
 
-'use strict';
-
-angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService", function ($http, $q, loginService) {
+angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService",
+  function ($http, $q, loginService) {
+    'use strict';
 
     var getSessionId = function () {
       try {

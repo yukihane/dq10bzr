@@ -1,6 +1,4 @@
-/* global angular, chrome */
-
-'use strict';
+/* global angular, chrome, console */
 
 /*
  キャラ変更に関わるコントローラ.
@@ -8,6 +6,7 @@
  */
 angular.module("dq10bzr.Main").controller('characterCtrl', ["$scope", "$modalInstance", "$http", "$log", "characters", "sessionId",
   function ($scope, $modalInstance, $http, $log, characters, sessionId) {
+    'use strict';
 
     $scope.characters = characters;
 

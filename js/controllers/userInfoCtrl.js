@@ -1,9 +1,9 @@
-/* global angular, chrome */
-
-'use strict';
+/* global angular, chrome, console */
 
 angular.module("dq10bzr.Main").controller("userInfoCtrl", ["$rootScope", "$scope", "$modal", "$http", "$log", "loginService",
   function ($rootScope, $scope, $modal, $http, $log, loginService) {
+    'use strict';
+
     console.log("userInfo");
 
     $scope.loginInfo = loginService;

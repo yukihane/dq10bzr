@@ -1,12 +1,11 @@
-/* global angular, chrome */
-
-'use strict';
+/* global angular, chrome, console */
 
 /*
  ログイン処理に関わるコントローラ.
  */
 angular.module("dq10bzr.Main").controller('loginCtrl', ["$scope", "$modalInstance", "$http", "$log", "action",
   function ($scope, $modalInstance, $http, $log, action) {
+    'use strict';
 
     $scope.sqexid = "";
     $scope.password = "";

@@ -1,12 +1,11 @@
-/* global angular, chrome */
-
-'use strict';
+/* global angular, chrome, console */
 
 /*
  フレンドタブコントローラ.
  */
 angular.module("dq10bzr.Main").controller("friendCtrl", ["$rootScope", "$scope", "$log", "request",
   function ($rootScope, $scope, $log, request) {
+    'use strict';
 
     $scope.friends = [];
     $scope.isOffsetEnd = true;

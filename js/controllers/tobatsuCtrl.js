@@ -1,12 +1,11 @@
-/* global angular, chrome */
-
-'use strict';
+/* global angular, chrome, console */
 
 /*
  討伐タブコントローラ.
  */
 angular.module("dq10bzr.Main").controller("tobatsuCtrl", ["$rootScope", "$scope", "$log", "request",
   function ($rootScope, $scope, $log, request) {
+    'use strict';
 
     $scope.list = [];
 

@@ -1,12 +1,11 @@
-/* global angular, chrome */
-
-'use strict';
+/* global angular, chrome, console */
 
 /*
  職人タブコントローラ.
  */
 angular.module("dq10bzr.Main").controller("syokuninCtrl", ["$rootScope", "$scope", "$log", "request",
   function ($rootScope, $scope, $log, request) {
+    'use strict';
 
     $scope.list = [];
 
