@@ -45,6 +45,10 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "$log", "login
     var requestAsync = function (req) {
 
       $log.debug("request url: " + req.url);
+      if(req.params) {
+        // バザー検索時の検索条件出力を想定
+        $log.debug("params: " + JSON.stringify(req.params));
+      }
 
       var debugLog = function (data, status, headers, config) {
         $log.debug("status code: " + status);
