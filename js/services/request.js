@@ -35,6 +35,34 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "$log", "login
       }
     };
 
+    /**
+     * HTTP(S)リクエストを行い, 結果をpromiseで返します.
+     * @param req リクエストパラメータ.
+     * @returns {$q@call;defer.promise}
+     */
+    var requestAsync = function (req) {
+
+      var deferred = $q.defer();
+
+      $http(req)
+        .success(function (data, status, headers, config) {
+          $log.debug(data);
+
+          if (data.resultCode !== 0) {
+            var msg = getErrorMsg(data.resultCode);
+            deferred.reject(msg);
+          }
+
+          deferred.resolve(data);
+        })
+        .error(function (data, status, headers, config) {
+          var msg = getHttpMessage(status);
+          deferred.reject(msg);
+        });
+
+      return deferred.promise;
+    };
+
     var friends = function (index) {
 
       var req = {
@@ -45,19 +73,7 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "$log", "login
         }
       };
 
-      var deferred = $q.defer();
-
-      $http(req)
-        .success(function (data, status, headers, config) {
-          deferred.resolve(data);
-        })
-        .error(function (data, status, headers, config) {
-          var msg = getHttpMessage(status);
-          deferred.reject(msg);
-        });
-
-      return deferred.promise;
-
+      return requestAsync(req);
     };
 
     var tobatsu = function () {
