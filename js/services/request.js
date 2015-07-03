@@ -1,7 +1,7 @@
 /* global angular, chrome, console */
 
-angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService",
-  function ($http, $q, loginService) {
+angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "$log", "loginService",
+  function ($http, $q, $log, loginService) {
     'use strict';
 
     var getSessionId = function () {
@@ -17,9 +17,9 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
     var getHttpMessage = function (status) {
       switch (status) {
         case 401:
-          return "認証に失敗しました。再ログインが必要です。";
+          return "認証に失敗しました。再ログインが必要です。(" + status + ")";
         default:
-          return "要求が失敗しました";
+          return "要求が失敗しました(" + status + ")";
       }
     };
 
@@ -29,12 +29,60 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
         case 0:
           return "";
         case 106:
-          return "ログイン中は本操作を実行できません";
+          return "ログイン中は本操作を実行できません(" + code + ")";
+        case 22001:
+          return "取得に失敗しました。しばらくしてから再実行してください。(" + code + ")";
         default:
-          return "エラー発生(" + code + ")";
+          return "エラーが発生しました。(" + code + ")";
       }
     };
 
+    /**
+     * HTTP(S)リクエストを行い, 結果をpromiseで返します.
+     * @param req リクエストパラメータ.
+     * @returns {$q@call;defer.promise}
+     */
+    var requestAsync = function (req) {
+
+      $log.debug("request url: " + req.url);
+      if(req.params) {
+        // バザー検索時の検索条件出力を想定
+        $log.debug("params: " + JSON.stringify(req.params));
+      }
+
+      var debugLog = function (data, status, headers, config) {
+        $log.debug("status code: " + status);
+        $log.debug(data);
+      };
+
+      var deferred = $q.defer();
+
+      $http(req)
+        .success(function (data, status, headers, config) {
+          debugLog(data, status, headers, config);
+
+          if (data.resultCode !== 0) {
+            var msg = getErrorMsg(data.resultCode);
+            deferred.reject(msg);
+          }
+
+          deferred.resolve(data);
+        })
+        .error(function (data, status, headers, config) {
+          debugLog(data, status, headers, config);
+
+          var msg = getHttpMessage(status);
+          deferred.reject(msg);
+        });
+
+      return deferred.promise;
+    };
+
+    /**
+     * フレンドリストを要求します.
+     * @param {int} index ページ番号.
+     * @returns {$q@call;defer.promise}
+     */
     var friends = function (index) {
 
       var req = {
@@ -45,21 +93,13 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
         }
       };
 
-      var deferred = $q.defer();
-
-      $http(req)
-        .success(function (data, status, headers, config) {
-          deferred.resolve(data);
-        })
-        .error(function (data, status, headers, config) {
-          var msg = getHttpMessage(status);
-          deferred.reject(msg);
-        });
-
-      return deferred.promise;
-
+      return requestAsync(req);
     };
 
+    /**
+     * 討伐リストを要求します.
+     * @returns {$q@call;defer.promise}
+     */
     var tobatsu = function () {
 
       var req = {
@@ -70,25 +110,13 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
         }
       };
 
-      var deferred = $q.defer();
-
-      $http(req)
-        .success(function (data, status, headers, config) {
-          if (data.resultCode !== 0) {
-            var msg = getErrorMsg(data.resultCode);
-            deferred.reject(msg);
-          }
-
-          deferred.resolve(data);
-        })
-        .error(function (data, status, headers, config) {
-          var msg = getHttpMessage(status);
-          deferred.reject(msg);
-        });
-
-      return deferred.promise;
+      return requestAsync(req);
     };
 
+    /**
+     * 職人依頼リストを要求します.
+     * @returns {$q@call;defer.promise}
+     */
     var joblist = function () {
 
       var req = {
@@ -99,20 +127,16 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
         }
       };
 
-      var deferred = $q.defer();
-
-      $http(req)
-        .success(function (data, status, headers, config) {
-          deferred.resolve(data);
-        })
-        .error(function (data, status, headers, config) {
-          var msg = getHttpMessage(status);
-          deferred.reject(msg);
-        });
-
-      return deferred.promise;
+      return requestAsync(req);
     };
 
+    /**
+     * 職人依頼の詳細要求.
+     * @param {type} jobNo 職人依頼一覧で取得できるjobNo.
+     * @param {type} recipeNo 職人依頼一覧で取得できるrecipeNo.
+     * @param {type} createWebItemNoHash 職人依頼一覧で取得できるcreateWebItemNoHash.
+     * @returns {$q@call;defer.promise}
+     */
     var jobdetail = function (jobNo, recipeNo, createWebItemNoHash) {
 
       var req = {
@@ -124,20 +148,14 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
         }
       };
 
-      var deferred = $q.defer();
-
-      $http(req)
-        .success(function (data, status, headers, config) {
-          deferred.resolve(data);
-        })
-        .error(function (data, status, headers, config) {
-          var msg = getHttpMessage(status);
-          deferred.reject(msg);
-        });
-
-      return deferred.promise;
+      return requestAsync(req);
     };
 
+    /**
+     * バザー検索.
+     * @param {type} searchCond 検索条件.
+     * @returns {$q@call;defer.promise}
+     */
     var bazaar = function (searchCond) {
 
       var req = {
@@ -149,18 +167,7 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "loginService"
         }
       };
 
-      var deferred = $q.defer();
-
-      $http(req)
-        .success(function (data, status, headers, config) {
-          deferred.resolve(data);
-        })
-        .error(function (data, status, headers, config) {
-          var msg = getHttpMessage(status);
-          deferred.reject(msg);
-        });
-
-      return deferred.promise;
+      return requestAsync(req);
     };
 
     return {
