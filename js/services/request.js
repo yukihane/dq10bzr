@@ -114,18 +114,7 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "$log", "login
         }
       };
 
-      var deferred = $q.defer();
-
-      $http(req)
-        .success(function (data, status, headers, config) {
-          deferred.resolve(data);
-        })
-        .error(function (data, status, headers, config) {
-          var msg = getHttpMessage(status);
-          deferred.reject(msg);
-        });
-
-      return deferred.promise;
+      return requestAsync(req);
     };
 
     /**
