@@ -17,9 +17,9 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "$log", "login
     var getHttpMessage = function (status) {
       switch (status) {
         case 401:
-          return "認証に失敗しました。再ログインが必要です。";
+          return "認証に失敗しました。再ログインが必要です。(" + status + ")";
         default:
-          return "要求が失敗しました";
+          return "要求が失敗しました(" + status + ")";
       }
     };
 
@@ -29,9 +29,11 @@ angular.module("dq10bzr.Main").factory("request", ["$http", "$q", "$log", "login
         case 0:
           return "";
         case 106:
-          return "ログイン中は本操作を実行できません";
+          return "ログイン中は本操作を実行できません(" + code + ")";
+        case 22001:
+          return "取得に失敗しました。しばらくしてから再実行してください。(" + code + ")";
         default:
-          return "エラー発生(" + code + ")";
+          return "エラーが発生しました。(" + code + ")";
       }
     };
 
